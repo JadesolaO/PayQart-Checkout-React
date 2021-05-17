@@ -20,12 +20,6 @@ function App() {
             </Col>
             <Col md={5}>
               <Route exact path='/' component={EmploymentScreen} />
-              {/* <Route exact path='/planscreen' component={PlanScreen} /> */}
-              {/* <Route exact path='/signup' component={SignUpScreen} /> */}
-              {/* <Route exact path='/signin' component={SignInScreen} /> */}
-              {/* <Route exact path='/forgotpassword' component={ForgotPasswordScreen} /> */}
-              {/* <Route exact path='/creditscreen' component={CreditScreen} /> */}
-
             </Col>
           </Route>
           <Route exact path='/planscreen'>
