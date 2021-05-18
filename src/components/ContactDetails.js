@@ -21,7 +21,8 @@ const ContactDetails = () => {
         {
           label: 'Home Address',
           type: 'text',
-          value: ''
+          value: '',
+          className: 'single-frm'
         }
       ]}
       formDetails3={[

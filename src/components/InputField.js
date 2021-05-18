@@ -88,6 +88,7 @@ const InputField = (props) => {
           variant="outline-secondary"
           className='loan-btn'
           onClick={() => props.setExistingLoan(true)}
+          onFocus={() => props.setShow(false)}
         >
           Yes
         </Button>
@@ -96,6 +97,7 @@ const InputField = (props) => {
           variant="outline-secondary"
           className='loan-btn'
           onClick={() => props.setExistingLoan(false)}
+          onFocus={() => props.setShow(false)}
         >
           No
         </Button>

@@ -11,12 +11,16 @@ import ContactDetails from '../components/ContactDetails'
 import EmploymentInformation from '../components/EmploymentInformation'
 import BankInformation from '../components/BankInformation'
 import RefereeInformation from '../components/RefereeInformation'
+import { Link } from 'react-router-dom'
 
 const CreditApplicationScreen = () => {
   const [form, setForm] = useState('personalInfo')
   return (
     <Container>
       <Row className='justify-content-md-center my-auto'>
+      <div className="top-sect">
+        <Link to="/"><i className="fas fa-arrow-left"></i> Back</Link>
+      </div>
         <Col className='app-form' md={9} xs={12}>
           <Row className='justify-content-md-center'>
             <Col className='side-bar text-center' md={4}>
@@ -67,15 +71,50 @@ const CreditApplicationScreen = () => {
             <Col className='form-sec' md={8}>
               {
                 form === 'personalInfo' ?
-                <PersonalInformation />:
+                <>
+                <PersonalInformation />
+                <div className="cont-btn text-center">
+                  <Button onClick={() => setForm('contactInfo')}>
+                    Continue
+                  </Button>
+                </div>
+                </>:
                 form === 'contactInfo' ?
-                <ContactDetails />:
+                <>
+                <ContactDetails />
+                <div className="cont-btn text-center">
+                  <Button onClick={() => setForm('employmentInfo')}>
+                    Continue
+                  </Button>
+                </div>
+                </>:
                 form === 'employmentInfo' ?
-                <EmploymentInformation /> :
+                <>
+                <EmploymentInformation />
+                <div className="cont-btn text-center">
+                  <Button onClick={() => setForm('bankInfo')}>
+                    Continue
+                  </Button>
+                </div> 
+                </>:
                 form === 'bankInfo' ?
-                <BankInformation /> :
+                <>
+                <BankInformation />
+                <div className="cont-btn text-center">
+                  <Button onClick={() => setForm('refInfo')}>
+                    Continue
+                  </Button>
+                </div> 
+                </>:
                 form === 'refInfo' && 
+                <>
                 <RefereeInformation />
+                <div className="cont-btn text-center">
+                  <Button className='pay-btn' onClick={() => setForm('refInfo')}>
+                    Pay Verification Fee
+                  </Button>
+                </div>
+                </>
               }
             </Col>
           </Row>

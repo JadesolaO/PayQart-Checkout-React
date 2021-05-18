@@ -1,3 +1,17 @@
+.top-sect {
+  a, i {
+    text-decoration: none;
+    color: #710157;
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+    &:active {
+      color:#ff005e
+    }
+  }
+}
 .app-form {
   margin-bottom: 30px !important;
 
@@ -10,7 +24,7 @@
     border-radius: 8px;
     border-bottom-right-radius: 0px !important;
     border-top-right-radius: 0px !important;
-    position: "relative";
+    position: relative;
 
     h3 {
       font-size: 18px;
@@ -59,6 +73,25 @@
     position: relative;
     height: 700px;
   }
+  .cont-btn {
+    position: relative;
+    top: 70px;
+
+    .pay-btn {
+      padding: 9px 30px !important;
+    }
+
+    button {
+      background: linear-gradient(223.39deg, #ff005e 0%, #720056 64.05%);
+      padding: 8px 45px !important;
+      border: none;
+      border-radius: 8px;
+
+      &:hover {
+        background: linear-gradient(223.39deg, #852648 0%, #ff005e 70.05%);
+      }
+    }
+  }
 }
 
 .crdfrm {
@@ -66,14 +99,15 @@
   top: 3vh;
   .row {
     .col {
-      margin-right: 15px !important;
-      .frm-grp {
-        // margin-bottom: ;
+      // @if :nth-child(2)
+      // margin-right: 15px !important;
+      &:nth-child(1) {
+        margin-right: 15px !important;
       }
+
       .frm-lbl {
         font-size: 12px;
         font-weight: bold;
-        // margin-top: 8px !important;
         margin-bottom: 6px !important;
       }
 
@@ -81,12 +115,14 @@
         background: #fff;
       }
       .frm-ctrl {
-        // max-width: 500px;
-        // min-width: none;
-        // width: 90%;
-        margin-right: 6px !important;
         padding: 8px 7px !important;
         font-size: 13px;
+      }
+    }
+
+    .single-frm {
+      &:nth-child(1) {
+        margin-right: 0px !important;
       }
     }
   }
@@ -100,8 +136,8 @@
       margin-bottom: 20px !important;
     }
 
-    .form-sec{
-      height: 500px;
+    .form-sec {
+      height: 600px;
       border: 1px solid #707070;
       border-radius: 8px;
     }
