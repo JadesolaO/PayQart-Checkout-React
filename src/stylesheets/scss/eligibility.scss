@@ -1,0 +1,73 @@
+
+.container {
+    margin-top: 0px !important;
+    width: 100% !important;
+    height: 100vh;
+
+    .backtostore {
+        margin-bottom: 1rem !important;
+    
+        a {
+            text-decoration: none;
+            color: #720056;
+            position: absolute;
+            top: 5vh;
+        }
+    }
+
+    .card {
+        margin: auto !important;
+        background: #FFFFFF;
+        box-shadow: 0px 0px 11px 9px rgba(125, 125, 125, 0.09);
+        border-radius: 15px;
+        padding: 1rem 13% !important;
+        
+        .logo {
+            margin: 1rem;
+            color: white;
+        }
+    
+        .text-p {
+            font-size: 16px;
+            margin: 1rem 0rem !important;
+        }
+    
+        .list-section {
+            background-color: #720056;
+            color: #fff;
+            margin: auto !important;
+            padding: 1rem 3rem !important;
+            width: 100%;
+            
+            ul, p,
+            li {
+                text-align: start;
+                font-size: 15px;
+                color: white;
+            }
+        }
+        
+        .proced-button {
+            padding: 8px 50px !important;
+            border-radius: 5px;
+            border: 3px solid #710157;
+            background-color: #ffffff;
+            color: #710157;
+
+            &:hover {
+                color: #fff;
+                background-color: #710157;
+            }
+        }
+    }
+}
+
+.content {
+    text-align: justify;
+}
+
+.content:after {
+    content: "";
+    display: inline-block;
+    width: 100%;
+}
