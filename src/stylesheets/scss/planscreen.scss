@@ -60,6 +60,7 @@
       margin: 10px 0 !important;
       border-radius: 6px;
       cursor: pointer;
+      // margin-right: 3px !important;
 
       &:focus, &:hover {
         background: linear-gradient(223.39deg, #ff005e 0%, #720056 64.05%);
@@ -100,22 +101,25 @@
   .brkdwn {
     border: 1px solid #bebebe;
     border-radius: 10px;
+    border-bottom-right-radius: 0px;
+    border-top-right-radius: 0px;
     padding: 0px 0px 0px 30px !important;
     line-height: 30px;
 
     .bkdn {
       // line-height: 50px;
+      margin: auto !important;
       .row {
         .col {
           padding: 20px 0px !important;
         }
       }
     }
-    .sumry {
-      .col {
-        // line-height: 50px;
-      }
-    }
+    // .sumry {
+    //   .col {
+    //     // line-height: 50px;
+    //   }
+    // }
 
     .lbo {
       font-size: 15px;
@@ -131,13 +135,15 @@
     background: linear-gradient(223.39deg, #ff005e 0%, #720056 64.05%);
     border-radius: 10px;
     padding: 20px 0 0 0 !important;
+    border-bottom-left-radius: 0px;
+    border-top-left-radius: 0px;
 
     .frmctn {
       margin: 10px 0 !important;
     }
-    .col {
-      // margin: 10px 0 !important;
-    }
+    // .col {
+    //   // margin: 10px 0 !important;
+    // }
 
     span {
       font-size: 14px;
@@ -152,8 +158,9 @@
   border-bottom-right-radius: 0px !important;
   padding: 0 3px !important;
   border-right: none;
-  span {
-  }
+  
+  // span {
+  // }
 }
 
 .frm {
@@ -185,5 +192,14 @@
 @media only screen and (max-width: 600px) {
   .brkdwn {
     line-height: 30px !important;
+    border-radius: 10px !important;
+    border-bottom-left-radius: 0px !important;
+    border-bottom-right-radius: 0px !important;
+  }
+
+  .customside {
+    border-radius: 10px !important;
+    border-top-left-radius: 0px !important;
+    border-top-right-radius: 0px !important;
   }
 }
