@@ -21,6 +21,7 @@ const InputField = (props) => {
           <Form.Control
             type="number"
             className="formcontrol"
+            onFocus={() => props.setShow(false)}
           // value={ }
           // onChange={ }
           />

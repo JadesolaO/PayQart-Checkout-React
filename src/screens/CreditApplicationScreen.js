@@ -13,7 +13,7 @@ import BankInformation from '../components/BankInformation'
 import RefereeInformation from '../components/RefereeInformation'
 import { Link } from 'react-router-dom'
 
-const CreditApplicationScreen = () => {
+const CreditApplicationScreen = (props) => {
   const [form, setForm] = useState('personalInfo')
   return (
     <Container>
@@ -101,7 +101,7 @@ const CreditApplicationScreen = () => {
                 <>
                 <BankInformation />
                 <div className="cont-btn text-center">
-                  <Button onClick={() => setForm('refInfo')}>
+                  <Button  onClick={() => setForm('refInfo')}>
                     Continue
                   </Button>
                 </div> 
@@ -110,7 +110,7 @@ const CreditApplicationScreen = () => {
                 <>
                 <RefereeInformation />
                 <div className="cont-btn text-center">
-                  <Button className='pay-btn' onClick={() => setForm('refInfo')}>
+                  <Button className='pay-btn' onClick={() => props.history.push('/success')}>
                     Pay Verification Fee
                   </Button>
                 </div>

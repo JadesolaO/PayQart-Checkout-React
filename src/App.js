@@ -1,5 +1,5 @@
 import { Col, Row } from "react-bootstrap";
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 import Cart from "./components/Cart";
 import EmploymentScreen from "./screens/EmploymentScreen";
 import PlanScreen from "./screens/PlanScreen";
@@ -8,12 +8,13 @@ import SignInScreen from "./screens/SignInScreen";
 import ForgotPasswordScreen from "./screens/ForgotPasswordScreen";
 import CreditScreen from "./screens/CreditScreen";
 import CreditApplicationScreen from "./screens/CreditApplicationScreen";
+import SuccessScreen from "./screens/SuccessScreen";
 
 function App() {
   return (
     <Router>
-      <Row className='app'>
-        <Switch>
+      <>
+        <Row className='app'>
           <Route exact path='/'>
             <Col md={7}>
               <Cart />
@@ -70,8 +71,12 @@ function App() {
           <Col md={12}>
             <Route exact path='/creditapplication' component={CreditApplicationScreen} />
           </Col>
-        </Switch>
-      </Row>
+
+          <Col md={12}>
+            <Route exact path='/success' component={SuccessScreen} />
+          </Col>
+        </Row>
+      </>
     </Router>
   );
 }

@@ -75,10 +75,14 @@
 .paymentbreakdown .brkdwn {
   border: 1px solid #bebebe;
   border-radius: 10px;
+  border-bottom-right-radius: 0px;
+  border-top-right-radius: 0px;
   padding: 0px 0px 0px 30px !important;
   line-height: 30px; }
-  .paymentbreakdown .brkdwn .bkdn .row .col {
-    padding: 20px 0px !important; }
+  .paymentbreakdown .brkdwn .bkdn {
+    margin: auto !important; }
+    .paymentbreakdown .brkdwn .bkdn .row .col {
+      padding: 20px 0px !important; }
   .paymentbreakdown .brkdwn .lbo {
     font-size: 15px; }
   .paymentbreakdown .brkdwn .bdtxt {
@@ -88,7 +92,9 @@
 .paymentbreakdown .customside {
   background: linear-gradient(223.39deg, #ff005e 0%, #720056 64.05%);
   border-radius: 10px;
-  padding: 20px 0 0 0 !important; }
+  padding: 20px 0 0 0 !important;
+  border-bottom-left-radius: 0px;
+  border-top-left-radius: 0px; }
   .paymentbreakdown .customside .frmctn {
     margin: 10px 0 !important; }
   .paymentbreakdown .customside span {
@@ -120,4 +126,11 @@
 
 @media only screen and (max-width: 600px) {
   .brkdwn {
-    line-height: 30px !important; } }
+    line-height: 30px !important;
+    border-radius: 10px !important;
+    border-bottom-left-radius: 0px !important;
+    border-bottom-right-radius: 0px !important; }
+  .customside {
+    border-radius: 10px !important;
+    border-top-left-radius: 0px !important;
+    border-top-right-radius: 0px !important; } }

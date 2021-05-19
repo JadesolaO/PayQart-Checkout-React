@@ -7,7 +7,7 @@ const CreditForm = (props) => {
   const formFunction = (props) => {
     return (
       <>
-        {props.map(({ label, type, options, className }) => (
+        {props.map(({ label, type, options, className, value }) => (
           <Form.Group key={label} className={`frm-grp mb-3 ${className}`} as={Col}>
             <Form.Label className='frm-lbl'>{label}</Form.Label>
             {type === 'select' ?
@@ -19,7 +19,7 @@ const CreditForm = (props) => {
               <Form.Control
                 className='frm-ctrl'
                 type={type}
-                value={props.value}
+                value={value}
               />
             }
           </Form.Group>
