@@ -54,7 +54,7 @@
   color: #000;
   line-height: 24px;
   font-size: 14px;
-  font-family: 'Nunito Sans', sans-serif;
+  font-family: "Nunito Sans", sans-serif;
   font-style: normal;
   font-weight: normal;
   // margin: 5% 0 !important;
@@ -85,10 +85,15 @@
   }
 }
 
-.calendar{
-  margin-top: 10px !important;
+.coloradd {
+  box-shadow: none !important;
+  background: linear-gradient(223.39deg, #ff005e 0%, #720056 64.05%);
+  outline: none !important;
+  color: white;
+}
 
-  
+.calendar {
+  margin-top: 10px !important;
 }
 
 .react-calendar__tile {

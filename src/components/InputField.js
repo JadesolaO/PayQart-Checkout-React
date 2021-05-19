@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Form, InputGroup, Button } from 'react-bootstrap'
 import Calendar from 'react-calendar'
 import '../stylesheets/scss/inputfield.scss'
@@ -6,8 +6,9 @@ import 'react-calendar/dist/Calendar.css'
 
 
 const InputField = (props) => {
-  // const []
-  console.log(props.value2)
+  const [yes, setYes] = useState(false)
+  const [no, setNo] = useState(false)
+  console.log(no)
   return (
     <>
       <Form.Group className='mb-2'>
@@ -47,7 +48,7 @@ const InputField = (props) => {
               id='inpot'
               onFocus={() => props.setShow(true)}
               style={{ padding: "2px !important" }}
-              // value={props.value2}
+            // value={props.value2}
             />
           </InputGroup>
           {props.show &&
@@ -87,8 +88,12 @@ const InputField = (props) => {
         <span className='formlabel'>Do you have any existing loan(s)?</span>
         <Button
           variant="outline-secondary"
-          className='loan-btn'
-          onClick={() => props.setExistingLoan(true)}
+          className={`loan-btn ${yes && 'coloradd'}`}
+          onClick={() => {
+            props.setExistingLoan(true)
+            setNo(false)
+            setYes(prevYes => !prevYes)
+          }}
           onFocus={() => props.setShow(false)}
         >
           Yes
@@ -96,8 +101,12 @@ const InputField = (props) => {
 
         <Button
           variant="outline-secondary"
-          className='loan-btn'
-          onClick={() => props.setExistingLoan(false)}
+          className={`loan-btn ${no && 'coloradd'}`}
+          onClick={() => {
+            props.setExistingLoan(false)
+            setYes(false)
+            setNo(prevNo => !prevNo)
+          }}
           onFocus={() => props.setShow(false)}
         >
           No

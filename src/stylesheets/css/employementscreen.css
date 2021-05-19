@@ -33,6 +33,8 @@
     border: none; }
     .continuebutton #bottombutton:disabled {
       background: #AFAFAF; }
+    .continuebutton #bottombutton:hover {
+      background: linear-gradient(223.39deg, #852648 0%, #ff005e 70.05%); }
 
 .pager {
   height: 100vh;

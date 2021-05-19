@@ -21,3 +21,9 @@
   margin-right: auto !important;
   margin-left: auto !important;
   margin-top: 30px !important; }
+
+.successScreen {
+  background: #e5e5e5;
+  overflow: scroll;
+  overflow-x: hidden;
+  overflow-y: auto; }

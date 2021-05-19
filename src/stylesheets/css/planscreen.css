@@ -71,6 +71,8 @@
     background: linear-gradient(223.39deg, #ff005e 0%, #720056 64.05%);
     border-radius: 9px;
     border: none; }
+    .btmbtn #btmbtn:hover {
+      background: linear-gradient(223.39deg, #852648 0%, #ff005e 70.05%); }
 
 .paymentbreakdown .brkdwn {
   border: 1px solid #bebebe;
@@ -82,7 +84,7 @@
   .paymentbreakdown .brkdwn .bkdn {
     margin: auto !important; }
     .paymentbreakdown .brkdwn .bkdn .row .col {
-      padding: 20px 0px !important; }
+      padding: 15px 0px !important; }
   .paymentbreakdown .brkdwn .lbo {
     font-size: 15px; }
   .paymentbreakdown .brkdwn .bdtxt {

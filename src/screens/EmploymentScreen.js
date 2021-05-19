@@ -76,6 +76,8 @@ const EmploymentScreen = (props) => {
                     label2='What is your average monthly expense?'
                     existingLoan={existingLoan}
                     setExistingLoan={setExistingLoan}
+                    show={show}
+                    setShow={setShow}
                   />
                 </Row>
               }
@@ -86,6 +88,8 @@ const EmploymentScreen = (props) => {
                     label2='What is your average monthly expense?'
                     existingLoan={existingLoan}
                     setExistingLoan={setExistingLoan}
+                    show={show}
+                    setShow={setShow}
                   />
                 </Row>
               }
@@ -97,7 +101,7 @@ const EmploymentScreen = (props) => {
                   disabled={employmentType === ''}
                 >
                   Continue
-            </Button>
+               </Button>
               </div>
             </Form>
           </Col>

@@ -64,3 +64,5 @@
   border-radius: 10px;
   border: none;
   background: linear-gradient(223.39deg, #FF005E 0%, #720056 64.05%); }
+  .apply-button button:hover {
+    background: linear-gradient(223.39deg, #852648 0%, #ff005e 70.05%); }

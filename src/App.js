@@ -72,7 +72,7 @@ function App() {
             <Route exact path='/creditapplication' component={CreditApplicationScreen} />
           </Col>
 
-          <Col md={12}>
+          <Col className='successScreen' md={12}>
             <Route exact path='/success' component={SuccessScreen} />
           </Col>
         </Row>

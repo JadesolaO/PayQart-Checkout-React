@@ -1,23 +1,38 @@
 import React from 'react'
-import {Container, Row, Col} from 'react-bootstrap'
+import { Container, Row, Col, Button } from 'react-bootstrap'
 import FileUpload from '../components/FileUpload'
 import '../stylesheets/scss/successScreen.scss'
 
-const SuccessScreen = () => {
+const SuccessScreen = (props) => {
   return (
-    <Container fluid>
+    <Container className='success' fluid>
       <Row className='justify-content-md-center'>
-        <Col md={7}>
+        <Col md={9}>
           <div className="top-text text-center mb-4">
-            <h3 className='mb-3'>Success!</h3>
-            <p>Your application has been submitted successfully. <br/> Next Steps, please provide the required documents below:</p>
+            <h2 className='mb-3'><strong>Success!</strong></h2>
+            <p>Your application has been submitted successfully. <br /> Next Steps, please provide the required documents below:</p>
           </div>
-          <div className="uploadforms text-center">
+          <Row className="uploadforms text-center justify-content-md-center">
             <p>REQUIRED DOCUMENTS</p>
-            <div className="file-upload">
-              <FileUpload />
-            </div>
-          </div>
+            <Col md={5} className="file-upload">
+              <FileUpload name='Bank Statement' />
+              <FileUpload name='Govt Issued ID' />
+              <FileUpload name='Work ID' />
+              <FileUpload name='Proof Of Address' />
+              <FileUpload name='Passport Photo' />
+            </Col>
+          </Row>
+          <Row className='justify-content-md-center'>
+            <Col md={6}>
+              <div className="btn-buttons text-center">
+                <a href='mailto: '>Send via email</a> <span>Instead?</span>
+                <div className="btom-butn text-center mt-5">
+                  <Button onClick={() => props.history.push('/')}>Back To Store</Button>
+                  <Button>Go To Dashboard</Button>
+                </div>
+              </div>
+            </Col>
+          </Row>
         </Col>
       </Row>
     </Container>

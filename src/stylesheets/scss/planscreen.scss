@@ -94,6 +94,10 @@
     background: linear-gradient(223.39deg, #ff005e 0%, #720056 64.05%);
     border-radius: 9px;
     border: none;
+
+    &:hover {
+      background: linear-gradient(223.39deg, #852648 0%, #ff005e 70.05%);
+    }
   }
 }
 
@@ -111,7 +115,7 @@
       margin: auto !important;
       .row {
         .col {
-          padding: 20px 0px !important;
+          padding: 15px 0px !important;
         }
       }
     }
