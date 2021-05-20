@@ -7,13 +7,10 @@ import SignInScreen from "./screens/SignInScreen";
 import ForgotPasswordScreen from "./screens/ForgotPasswordScreen";
 import CreditScreen from "./screens/CreditScreen";
 import CreditApplicationScreen from "./screens/CreditApplicationScreen";
-<<<<<<< HEAD
 import EmploymentScreen from "./screens/EmploymentScreen";
 import WalletStatusScreen from "./screens/WalletStatusScreen";
 import EligibilityScreen from "./screens/EligibilityScreen";
-=======
 import SuccessScreen from "./screens/SuccessScreen";
->>>>>>> 9c87aabb918dc74c06d3e873f44c1da629158683
 
 function App() {
   return (
