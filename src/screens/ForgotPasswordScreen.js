@@ -1,12 +1,16 @@
 import React from 'react'
 import { Col, Form, Row, Container, Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
+import ProgressSteps from '../components/ProgressSteps'
 
 const ForgotPasswordScreen = () => {
   return (
     <div className='signup'>
-      <div className="topsection">
-        <Link to="/signin"><i style={{ color: "#FF005E" }} className="fas fa-arrow-left"></i> Back</Link>
+      <div className="top-section">
+        <Link to="/planscreen"><i style={{ color: "#FF005E" }} className="fas fa-arrow-left"></i> Back</Link>
+      </div>
+      <div className="steps s-checks">
+      <ProgressSteps step1 step2 complete/>
       </div>
 
       <Row className='justify-content-md-center text-center'>

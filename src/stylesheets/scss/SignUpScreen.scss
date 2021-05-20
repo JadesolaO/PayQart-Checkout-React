@@ -76,6 +76,10 @@
 
   a {
     color: #ff005e;
+
+    &:hover {
+      color: #720056;
+    }
   }
 }
 
@@ -149,6 +153,10 @@
       color: #720056;
       font-size: 13px;
       font-weight: bold;
+
+      &:hover {
+        color: #ff005e;
+      }
     }
   }
 }

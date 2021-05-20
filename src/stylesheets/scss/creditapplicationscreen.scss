@@ -1,5 +1,9 @@
 .top-sect {
-  a, i {
+  // margin-top: 10px !important;
+  position: relative;
+  top: 2vh;
+  a,
+  i {
     text-decoration: none;
     color: #710157;
 
@@ -8,7 +12,7 @@
     }
 
     &:active {
-      color:#ff005e
+      color: #ff005e;
     }
   }
 }

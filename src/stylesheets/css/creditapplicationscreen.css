@@ -1,10 +1,16 @@
-.top-sect a, .top-sect i {
-  text-decoration: none;
-  color: #710157; }
-  .top-sect a:hover, .top-sect i:hover {
-    text-decoration: underline; }
-  .top-sect a:active, .top-sect i:active {
-    color: #ff005e; }
+.top-sect {
+  position: relative;
+  top: 2vh; }
+  .top-sect a,
+  .top-sect i {
+    text-decoration: none;
+    color: #710157; }
+    .top-sect a:hover,
+    .top-sect i:hover {
+      text-decoration: underline; }
+    .top-sect a:active,
+    .top-sect i:active {
+      color: #ff005e; }
 
 .app-form {
   margin-bottom: 30px !important; }

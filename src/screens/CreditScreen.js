@@ -8,7 +8,7 @@ const CreditScreen = (props) => {
   return (
     <div className='creditscreen'>
       <div className="topsection">
-        <Link to="/"><i style={{ color: "#FF005E" }} className="fas fa-arrow-left"></i> Back</Link>
+        <Link to="/employmentscreen"><i style={{ color: "#FF005E" }} className="fas fa-arrow-left"></i> Back</Link>
       </div>
       <div className="steps">
       <ProgressSteps step1 step2 step3 complete/>

@@ -8,7 +8,8 @@ import 'react-calendar/dist/Calendar.css'
 const InputField = (props) => {
   const [yes, setYes] = useState(false)
   const [no, setNo] = useState(false)
-  console.log(no)
+  const [dValue, setDValue] = useState(false)
+
   return (
     <>
       <Form.Group className='mb-2'>
@@ -23,8 +24,9 @@ const InputField = (props) => {
             type="number"
             className="formcontrol"
             onFocus={() => props.setShow(false)}
-          // value={ }
-          // onChange={ }
+            value={props.value1}
+            onChange={(e) => props.setValue1(e.target.value.toString())}
+            required
           />
         </InputGroup>
       </Form.Group>
@@ -48,7 +50,9 @@ const InputField = (props) => {
               id='inpot'
               onFocus={() => props.setShow(true)}
               style={{ padding: "2px !important" }}
-            // value={props.value2}
+              value={dValue ? props.dateValue : ''}
+              readOnly
+              required
             />
           </InputGroup>
           {props.show &&
@@ -58,14 +62,13 @@ const InputField = (props) => {
                 minDate={new Date()}
                 value={props.value2}
                 onChange={props.setValue2}
-                // onBlur={() => props.setShow(false)}
                 next2Label={null}
                 prev2Label={null}
+                onClickDay={() => setDValue(true)}
               />
-            </Form.Group>
-          }
-
+            </Form.Group>}
         </Form.Group> :
+
         <Form.Group className='mb-2'>
           <Form.Label className='mb-2'><span className='formlabel'>{props.label2}</span></Form.Label>
           <InputGroup>
@@ -77,8 +80,9 @@ const InputField = (props) => {
             <Form.Control
               type="number"
               className="formcontrol"
-            // value={ }
-            // onChange={ }
+              value={props.value2}
+              onChange={(e) => props.setValue2(e.target.value.toString())}
+              required
             />
           </InputGroup>
         </Form.Group>
@@ -90,11 +94,11 @@ const InputField = (props) => {
           variant="outline-secondary"
           className={`loan-btn ${yes && 'coloradd'}`}
           onClick={() => {
+            props.setShow(false)
             props.setExistingLoan(true)
             setNo(false)
             setYes(prevYes => !prevYes)
           }}
-          onFocus={() => props.setShow(false)}
         >
           Yes
         </Button>
@@ -103,11 +107,11 @@ const InputField = (props) => {
           variant="outline-secondary"
           className={`loan-btn ${no && 'coloradd'}`}
           onClick={() => {
+            props.setShow(false)
             props.setExistingLoan(false)
             setYes(false)
             setNo(prevNo => !prevNo)
           }}
-          onFocus={() => props.setShow(false)}
         >
           No
         </Button>
@@ -125,8 +129,8 @@ const InputField = (props) => {
             <Form.Control
               type="number"
               className="formcontrol"
-            // value={ }
-            // onChange={ }
+              value={props.value3}
+              onChange={(e) => props.setValue3(e.target.value)}
             />
           </InputGroup>
         </Form.Group>}

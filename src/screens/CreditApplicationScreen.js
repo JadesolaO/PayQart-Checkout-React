@@ -19,7 +19,7 @@ const CreditApplicationScreen = (props) => {
   const [form, setForm] = useState('personalInfo');
 
   const startPayment = () => {
-    var obj = { id : '6700', email: 'isaacanyam@gmail.com' }
+    var obj = { id: '6700', email: 'isaacanyam@gmail.com' }
     makeFeePayment(obj)
       .then(res => {
         console.log(res.data);
@@ -28,15 +28,15 @@ const CreditApplicationScreen = (props) => {
         // window.localStorage.setItem("current_reference",reference)
         window.location.href = url;
       })
-      .catch(() => {});
+      .catch(() => { });
   }
 
   return (
     <Container>
-      <Row className='justify-content-md-center my-auto'>
-      <div className="top-sect">
-        <Link to="/"><i className="fas fa-arrow-left"></i> Back</Link>
-      </div>
+      <Row className='justify-content-md-center '>
+        <div className="top-sect">
+          <Link to="/"><i className="fas fa-arrow-left"></i> Back</Link>
+        </div>
         <Col className='app-form' md={9} xs={12}>
           <Row className='justify-content-md-center'>
             <Col className='side-bar text-center' md={4}>
@@ -46,7 +46,7 @@ const CreditApplicationScreen = (props) => {
                   <Button
                     id='side-btn'
                     onClick={() => setForm('personalInfo')}
-                    >
+                  >
                     <Image height='14' src={contact} /> <span>Personal Information</span>
                   </Button>
                 </div>
@@ -54,7 +54,7 @@ const CreditApplicationScreen = (props) => {
                   <Button
                     id='side-btn'
                     onClick={() => setForm('contactInfo')}
-                    >
+                  >
                     <Image height='14' src={mail} /> <span>Contact Information</span>
                   </Button>
                 </div>
@@ -62,7 +62,7 @@ const CreditApplicationScreen = (props) => {
                   <Button
                     id='side-btn'
                     onClick={() => setForm('employmentInfo')}
-                    >
+                  >
                     <Image height='14' src={Union} /> <span>Employment Information</span>
                   </Button>
                 </div>
@@ -70,7 +70,7 @@ const CreditApplicationScreen = (props) => {
                   <Button
                     id='side-btn'
                     onClick={() => setForm('bankInfo')}
-                    >
+                  >
                     <Image height='14' src={bank} /> <span>Bank Information</span>
                   </Button>
                 </div>
@@ -78,7 +78,7 @@ const CreditApplicationScreen = (props) => {
                   <Button
                     id='side-btn'
                     onClick={() => setForm('refInfo')}
-                    >
+                  >
                     <Image height='14' src={ref} /> <span>Referee Information</span>
                   </Button>
                 </div>
@@ -87,50 +87,50 @@ const CreditApplicationScreen = (props) => {
             <Col className='form-sec' md={8}>
               {
                 form === 'personalInfo' ?
-                <>
-                <PersonalInformation />
-                <div className="cont-btn text-center">
-                  <Button onClick={() => setForm('contactInfo')}>
-                    Continue
+                  <>
+                    <PersonalInformation />
+                    <div className="cont-btn text-center">
+                      <Button onClick={() => setForm('contactInfo')}>
+                        Continue
                   </Button>
-                </div>
-                </>:
-                form === 'contactInfo' ?
-                <>
-                <ContactDetails />
-                <div className="cont-btn text-center">
-                  <Button onClick={() => setForm('employmentInfo')}>
-                    Continue
+                    </div>
+                  </> :
+                  form === 'contactInfo' ?
+                    <>
+                      <ContactDetails />
+                      <div className="cont-btn text-center">
+                        <Button onClick={() => setForm('employmentInfo')}>
+                          Continue
                   </Button>
-                </div>
-                </>:
-                form === 'employmentInfo' ?
-                <>
-                <EmploymentInformation />
-                <div className="cont-btn text-center">
-                  <Button onClick={() => setForm('bankInfo')}>
-                    Continue
+                      </div>
+                    </> :
+                    form === 'employmentInfo' ?
+                      <>
+                        <EmploymentInformation />
+                        <div className="cont-btn text-center">
+                          <Button onClick={() => setForm('bankInfo')}>
+                            Continue
                   </Button>
-                </div> 
-                </>:
-                form === 'bankInfo' ?
-                <>
-                <BankInformation />
-                <div className="cont-btn text-center">
-                  <Button  onClick={() => setForm('refInfo')}>
-                    Continue
+                        </div>
+                      </> :
+                      form === 'bankInfo' ?
+                        <>
+                          <BankInformation />
+                          <div className="cont-btn text-center">
+                            <Button onClick={() => setForm('refInfo')}>
+                              Continue
                   </Button>
-                </div> 
-                </>:
-                form === 'refInfo' && 
-                <>
-                <RefereeInformation />
-                <div className="cont-btn text-center">
-                  <Button className='pay-btn' onClick={startPayment}>
-                    Pay Verification Fee
-                  </Button>
-                </div>
-                </>
+                          </div>
+                        </> :
+                        form === 'refInfo' &&
+                        <>
+                          <RefereeInformation />
+                          <div className="cont-btn text-center">
+                            <Button className='pay-btn' onClick={startPayment}>
+                              Pay Verification Fee
+                           </Button>
+                          </div>
+                        </>
               }
             </Col>
           </Row>

@@ -57,6 +57,8 @@
   font-size: 14px; }
   .sitxt a {
     color: #ff005e; }
+    .sitxt a:hover {
+      color: #720056; }
 
 .form_ {
   margin-top: 60px !important;
@@ -102,6 +104,8 @@
       color: #720056;
       font-size: 13px;
       font-weight: bold; }
+      .check .forgotpass a:hover {
+        color: #ff005e; }
 
 .inputgroup_ {
   position: relative; }

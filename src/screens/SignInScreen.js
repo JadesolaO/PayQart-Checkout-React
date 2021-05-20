@@ -6,8 +6,8 @@ import eye from '../images/Path 38.png'
 const SignInScreen = (props) => {
   return (
    <div className='signup'>
-      <div className="topsection">
-        <Link to="/"><i style={{ color: "#FF005E" }} className="fas fa-arrow-left"></i> Back</Link>
+      <div className="top-section">
+        <Link to="/planscreen"><i style={{ color: "#FF005E" }} className="fas fa-arrow-left"></i> Back</Link>
       </div>
 
       <Row className='justify-content-md-center text-center'>

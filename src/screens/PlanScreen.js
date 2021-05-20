@@ -3,15 +3,18 @@ import { Row, Col, Form, Button, Container, InputGroup } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import ProgressSteps from '../components/ProgressSteps'
 import '../stylesheets/scss/planscreen.scss'
+import { employeeDti, setStatus } from '../services/Formulae'
 
 const PlanScreen = (props) => {
+  const data = localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo')) : {}
+  console.log(data)
   return (
     <div className="planScreen">
       <div className="topsection">
-        <Link to="/"><i style={{ color: "#FF005E" }} className="fas fa-arrow-left"></i> Back</Link>
+        <Link to="/employmentscreen"><i style={{ color: "#FF005E" }} className="fas fa-arrow-left"></i> Back</Link>
       </div>
       <div className="steps">
-      <ProgressSteps step1 complete/>
+        <ProgressSteps step1 complete />
       </div>
       <Row className='justify-content-md-center'>
         <Col>
@@ -158,14 +161,14 @@ const PlanScreen = (props) => {
                   </Row>
                 </Container>
               </div>
-          <div className='btmbtn text-center mx-auto'>
-            <Button
-              id='btmbtn'
-              onClick={() => props.history.push('/signup')}
-            >
-              Continue
+              <div className='btmbtn text-center mx-auto'>
+                <Button
+                  id='btmbtn'
+                  onClick={() => props.history.push('/signup')}
+                >
+                  Continue
             </Button>
-          </div>
+              </div>
             </Row>
           </div>
         </Col>

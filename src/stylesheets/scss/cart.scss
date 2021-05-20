@@ -22,6 +22,10 @@ $imagePath: "../../images/image 7.png";
       left: 5%;
       top: 7vh;
       // padding: 10px;
+
+      &:hover {
+        text-decoration: underline;
+      }
     }
   }
 

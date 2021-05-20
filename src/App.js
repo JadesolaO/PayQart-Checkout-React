@@ -12,13 +12,13 @@ import WalletStatusScreen from "./screens/WalletStatusScreen";
 import EligibilityScreen from "./screens/EligibilityScreen";
 import SuccessScreen from "./screens/SuccessScreen";
 
-function App() {
+function App() { 
   return (
     <Router>
       <>
         <Row className='app'>
           <Route exact path='/'>
-            <Col md={12}>
+            <Col className='eligibityscreen' md={12}>
               <Route exact path='/' component={EligibilityScreen} />
             </Col>
           </Route>
@@ -27,7 +27,7 @@ function App() {
               <Cart />
             </Col>
             <Col md={5}>
-              <Route exact path='/' component={EmploymentScreen} />
+              <Route exact path='/employmentscreen' component={EmploymentScreen} />
             </Col>
           </Route>
           <Route exact path='/planscreen'>
