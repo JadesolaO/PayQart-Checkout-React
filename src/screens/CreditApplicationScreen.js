@@ -12,9 +12,25 @@ import EmploymentInformation from '../components/EmploymentInformation'
 import BankInformation from '../components/BankInformation'
 import RefereeInformation from '../components/RefereeInformation'
 import { Link } from 'react-router-dom'
+import { makeFeePayment } from '../services/creditFormService';
+
 
 const CreditApplicationScreen = (props) => {
-  const [form, setForm] = useState('personalInfo')
+  const [form, setForm] = useState('personalInfo');
+
+  const startPayment = () => {
+    var obj = { id : '6700', email: 'isaacanyam@gmail.com' }
+    makeFeePayment(obj)
+      .then(res => {
+        console.log(res.data);
+        const url = res.data['data']['data']['authorization_url']
+        // let reference = data["data"]["data"]["reference"]
+        // window.localStorage.setItem("current_reference",reference)
+        window.location.href = url;
+      })
+      .catch(() => {});
+  }
+
   return (
     <Container>
       <Row className='justify-content-md-center my-auto'>
@@ -110,7 +126,7 @@ const CreditApplicationScreen = (props) => {
                 <>
                 <RefereeInformation />
                 <div className="cont-btn text-center">
-                  <Button className='pay-btn' onClick={() => props.history.push('/success')}>
+                  <Button className='pay-btn' onClick={startPayment}>
                     Pay Verification Fee
                   </Button>
                 </div>
