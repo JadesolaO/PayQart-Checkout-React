@@ -5,6 +5,7 @@ import '../stylesheets/scss/employementscreen.scss'
 import paid from '../images/image 4.png'
 import free from '../images/image 5.png'
 import coop from '../images/image 6.png'
+import ProgressSteps from '../components/ProgressSteps'
 
 const EmploymentScreen = (props) => {
   const [employmentType, setEmploymentType] = useState('')
@@ -14,7 +15,10 @@ const EmploymentScreen = (props) => {
   return (
     <div className="pager">
       <Container fluid>
-        <Row className='justify-content-md-center'>
+        <div className="stps">
+        <ProgressSteps />
+        </div>
+        <Row className='justify-content-md-center f-row mt-3'>
           <Col md={9} xs={12}>
             <h5 id='occu-text' className='text-center my-3'>Select Your Employment Type</h5>
             <Row className='justify-content-md-center mb-4'>

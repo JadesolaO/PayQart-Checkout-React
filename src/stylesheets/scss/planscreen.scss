@@ -7,18 +7,25 @@
   padding: 0 0 30px 0 !important;
 }
 .topsection {
-  position: relative;
-  // display: inline-flex;
+  position: absolute;
+  // display: flex;
+  top: 7vh;
+  left: 5%;
+  // width: auto;
 
   a {
     text-decoration: none;
     color: #ff005e;
-    position: absolute;
-    left: 5%;
-    top: 7vh;
-    // position: fixed;
-    // padding: 10px;
+    &:hover {
+      text-decoration: underline;
+    }
   }
+}
+
+.steps {
+  position: relative;
+  top: 9vh;
+  // display: inline-block;
 }
 
 .plans {
@@ -119,11 +126,10 @@
         }
       }
     }
-    // .sumry {
-    //   .col {
-    //     // line-height: 50px;
-    //   }
-    // }
+    .sumry {
+      display: flex;
+      justify-content: space-between;
+    }
 
     .lbo {
       font-size: 15px;
@@ -205,5 +211,10 @@
     border-radius: 10px !important;
     border-top-left-radius: 0px !important;
     border-top-right-radius: 0px !important;
+  }
+
+  .steps {
+    top: 11vh;
+    margin: 5px auto !important;
   }
 }

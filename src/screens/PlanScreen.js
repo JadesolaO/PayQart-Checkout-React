@@ -1,6 +1,7 @@
 import React from 'react'
 import { Row, Col, Form, Button, Container, InputGroup } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
+import ProgressSteps from '../components/ProgressSteps'
 import '../stylesheets/scss/planscreen.scss'
 
 const PlanScreen = (props) => {
@@ -8,6 +9,9 @@ const PlanScreen = (props) => {
     <div className="planScreen">
       <div className="topsection">
         <Link to="/"><i style={{ color: "#FF005E" }} className="fas fa-arrow-left"></i> Back</Link>
+      </div>
+      <div className="steps">
+      <ProgressSteps step1 complete/>
       </div>
       <Row className='justify-content-md-center'>
         <Col>

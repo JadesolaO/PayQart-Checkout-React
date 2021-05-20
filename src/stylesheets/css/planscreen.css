@@ -7,13 +7,18 @@
   padding: 0 0 30px 0 !important; }
 
 .topsection {
-  position: relative; }
+  position: absolute;
+  top: 7vh;
+  left: 5%; }
   .topsection a {
     text-decoration: none;
-    color: #ff005e;
-    position: absolute;
-    left: 5%;
-    top: 7vh; }
+    color: #ff005e; }
+    .topsection a:hover {
+      text-decoration: underline; }
+
+.steps {
+  position: relative;
+  top: 9vh; }
 
 .plans {
   position: relative;
@@ -85,6 +90,9 @@
     margin: auto !important; }
     .paymentbreakdown .brkdwn .bkdn .row .col {
       padding: 15px 0px !important; }
+  .paymentbreakdown .brkdwn .sumry {
+    display: flex;
+    justify-content: space-between; }
   .paymentbreakdown .brkdwn .lbo {
     font-size: 15px; }
   .paymentbreakdown .brkdwn .bdtxt {
@@ -135,4 +143,7 @@
   .customside {
     border-radius: 10px !important;
     border-top-left-radius: 0px !important;
-    border-top-right-radius: 0px !important; } }
+    border-top-right-radius: 0px !important; }
+  .steps {
+    top: 11vh;
+    margin: 5px auto !important; } }

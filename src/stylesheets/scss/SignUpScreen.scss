@@ -8,7 +8,7 @@
 
 .suform {
   position: relative;
-  top: 13vh;
+  top: 10vh;
   // font-size: 50px;
 }
 
@@ -171,4 +171,23 @@
 
 .mid {
   margin: 2rem 0 !important;
+}
+
+.top-section {
+  position: relative;
+  top: 7vh;
+  left: 5%;
+
+  a {
+    color: #FF005E;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.s-checks {
+  top: 6vh;
 }
