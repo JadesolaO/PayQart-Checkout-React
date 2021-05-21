@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Container, Row, Col, Image, Button } from 'react-bootstrap';
+import { Row, Col, Image, Button } from 'react-bootstrap';
 import logo from '../images/pink-logo.svg';
 import emptyWalletIcon from '../images/empty-wallet.svg';
 import fundedWalletIcon from '../images/funded-wallet.svg';

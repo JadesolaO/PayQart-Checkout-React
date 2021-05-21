@@ -18,8 +18,12 @@ import { makeFeePayment } from '../services/creditFormService';
 const CreditApplicationScreen = (props) => {
   const [form, setForm] = useState('personalInfo');
 
+  const setPage = (page) => {
+    setForm(page);
+  }
+
   const startPayment = () => {
-    var obj = { id : '6700', email: 'isaacanyam@gmail.com' }
+    var obj = { id : '6700', email: localStorage.getItem('userEmail') }
     makeFeePayment(obj)
       .then(res => {
         console.log(res.data);
@@ -88,48 +92,23 @@ const CreditApplicationScreen = (props) => {
               {
                 form === 'personalInfo' ?
                 <>
-                <PersonalInformation />
-                <div className="cont-btn text-center">
-                  <Button onClick={() => setForm('contactInfo')}>
-                    Continue
-                  </Button>
-                </div>
+                  <PersonalInformation setPage={setPage} />
                 </>:
                 form === 'contactInfo' ?
                 <>
-                <ContactDetails />
-                <div className="cont-btn text-center">
-                  <Button onClick={() => setForm('employmentInfo')}>
-                    Continue
-                  </Button>
-                </div>
+                  <ContactDetails setPage={setPage} />
                 </>:
                 form === 'employmentInfo' ?
                 <>
-                <EmploymentInformation />
-                <div className="cont-btn text-center">
-                  <Button onClick={() => setForm('bankInfo')}>
-                    Continue
-                  </Button>
-                </div> 
+                  <EmploymentInformation setPage={setPage} />
                 </>:
                 form === 'bankInfo' ?
                 <>
-                <BankInformation />
-                <div className="cont-btn text-center">
-                  <Button  onClick={() => setForm('refInfo')}>
-                    Continue
-                  </Button>
-                </div> 
+                  <BankInformation setPage={setPage} />
                 </>:
                 form === 'refInfo' && 
                 <>
-                <RefereeInformation />
-                <div className="cont-btn text-center">
-                  <Button className='pay-btn' onClick={startPayment}>
-                    Pay Verification Fee
-                  </Button>
-                </div>
+                  <RefereeInformation setPage={setPage} />
                 </>
               }
             </Col>
