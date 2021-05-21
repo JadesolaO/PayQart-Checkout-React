@@ -35,7 +35,6 @@ const PlanScreen = (props) => {
   // console.log('first', setStatus(80500, 100000, 0, 0, 0.04, 30000,))
 
   useEffect(() => {
-    try {
       const info = setStatus(cartValue, income, monthlyExpense, loanAmount, interestRate, downPayment, 4)
       console.log(info)
       setInfo(info)
@@ -46,9 +45,6 @@ const PlanScreen = (props) => {
       setTenure(`4 months`)
       setTenureNum(4)
       setMonthlyAmount(info.repay)
-    } catch (error) {
-      console.log(error)
-    }
 
   }, [downPayment])
 

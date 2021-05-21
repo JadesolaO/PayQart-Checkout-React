@@ -16,9 +16,7 @@ export const employeeDti = (cartValue, monthlyIncome, loan, interestRate, minimu
 
 export const businessDti = (cartValue, monthlyIncome, monthlyExpenses, loan, interestRate, minimumDownPay, tenor,) => {
   if (minimumDownPay < cartValue * 0.3) {
-    return {
-      message: `Down Payment cannot be lower than ${cartValue * 0.3}`
-    }
+    return
   }
   if (minimumDownPay > cartValue){
     return
@@ -41,15 +39,9 @@ export const setStatus = (cartValue, monthlyIncome, monthlyExpenses, loan, inter
   let textString = '';
   let monthlyRepay = [];
   let repay;
-  let errorMessage;
   for (let i = 0; i < arrayOfStatuses.length; i++) {
     let tenor = i + 1
     data = businessDti(cartValue, monthlyIncome, monthlyExpenses, loan, interestRate, minimumDownPay, tenor)
-    console.log(data)
-    if (data.message) {
-      errorMessage = data.message
-      return
-    }
     const dti = data.dti
     monthlyRepay.push(data.monthlyRepayment)
     if (dti < 16) {
@@ -77,7 +69,6 @@ export const setStatus = (cartValue, monthlyIncome, monthlyExpenses, loan, inter
     monthlyRepay,
     textString,
     repay,
-    errorMessage
   };
 }
 

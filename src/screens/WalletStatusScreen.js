@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { Container, Row, Col, Image, Button } from 'react-bootstrap';
+import { Row, Col, Image, Button } from 'react-bootstrap';
 import logo from '../images/pink-logo.svg';
 import emptyWalletIcon from '../images/empty-wallet.svg';
 import fundedWalletIcon from '../images/funded-wallet.svg';
 import '../stylesheets/scss/walletStatusScreen.scss';
 
-const WalletStatusScreen = () => {
+const WalletStatusScreen = (props) => {
 
-  const [statusSelected, setStatus] = useState(false);
+  const [statusSelected, setStatus] = useState('');
 
   return (
     <div className='wallet-root-class'>
@@ -32,7 +32,7 @@ const WalletStatusScreen = () => {
                     <h3>My PayQart Wallet is funded</h3>
                     <p>I have shopping credit</p>
                     <div className='wallet-button text-center'>
-                      <Button variant="outline-secondary" id='wallet-button-id' onClick={() => setStatus(true)}>
+                      <Button variant="outline-secondary" id='wallet-button-id' onClick={() => setStatus('/signin')}>
                         Select
                       </Button>
                     </div>
@@ -49,7 +49,7 @@ const WalletStatusScreen = () => {
                     <h3>My PayQart Wallet is not funded</h3>
                     <p>I don't have shopping credit</p>
                     <div className='wallet-button text-center'>
-                      <Button variant="outline-secondary" id='wallet-button-id' onClick={() => setStatus(true)}>
+                      <Button variant="outline-secondary" id='wallet-button-id' onClick={() => setStatus('/signin')}>
                         Select
                       </Button>
                     </div>
@@ -66,7 +66,7 @@ const WalletStatusScreen = () => {
                     <h3>I don't know my PayQart wallet status.</h3>
                     <p>This is the first time I am seeing this.</p>
                     <div className='wallet-button text-center'>
-                      <Button variant="outline-secondary" id='wallet-button-id' onClick={() => setStatus(true)}>
+                      <Button variant="outline-secondary" id='wallet-button-id' onClick={() => setStatus('/employmentscreen')}>
                         Select
                       </Button>
                     </div>
@@ -76,7 +76,7 @@ const WalletStatusScreen = () => {
 
             </Row>
 
-            <Button className='proceed-button' disabled={!statusSelected} onClick={() => console.log('clicked!')}>
+            <Button className='proceed-button' disabled={statusSelected === ''} onClick={() => props.history.push(statusSelected)}>
                 Proceed
             </Button>
           </Col>

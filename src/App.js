@@ -19,7 +19,12 @@ function App() {
         <Row className='app'>
           <Route exact path='/'>
             <Col className='eligibityscreen' md={12}>
-              <Route exact path='/' component={EligibilityScreen} />
+              <Route exact path='/' component={WalletStatusScreen} />
+            </Col>
+          </Route>
+          <Route exact path='/eligibityscreen'>
+            <Col className='eligibityscreen' md={12}>
+              <Route exact path='/eligibityscreen' component={EligibilityScreen} />
             </Col>
           </Route>
           <Route exact path='/employmentscreen'>

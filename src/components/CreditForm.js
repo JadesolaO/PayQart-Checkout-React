@@ -7,11 +7,11 @@ const CreditForm = (props) => {
   const formFunction = (props) => {
     return (
       <>
-        {props.map(({ label, type, options, className, value }) => (
+        {props.map(({ label, type, options, className, value, name, handleChange }) => (
           <Form.Group key={label} className={`frm-grp mb-3 ${className}`} as={Col}>
             <Form.Label className='frm-lbl'>{label}</Form.Label>
             {type === 'select' ?
-              <Form.Control className='frm-ctrl slt' as='select'>
+              <Form.Control className='frm-ctrl slt' as='select' onChange={(text) => handleChange(name, text)}>
                 {options.map((option, ind) => (
                   <option key={ind} value={option}>{option}</option>
                 ))}
@@ -20,6 +20,7 @@ const CreditForm = (props) => {
                 className='frm-ctrl'
                 type={type}
                 value={value}
+                onChange={(text) => handleChange(name, text)}
               />
             }
           </Form.Group>
