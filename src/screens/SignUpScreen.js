@@ -5,12 +5,24 @@ import ProgressSteps from '../components/ProgressSteps'
 import eye from '../images/Path 38.png'
 import lock from '../images/Path 44.png'
 import '../stylesheets/scss/SignUpScreen.scss'
+import { successToast, doSignUp } from '../services/authService';
 
-const SignUpScreen = () => {
+const SignUpScreen = (props) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [bvn, setBvn] = useState('')
   const [agree, setAgree] = useState('')
+
+  const signUpUser = () => {
+    const user = { email: email, pin: password, bvn: bvn };
+    doSignUp(user)
+        .then(res => {
+            successToast(res.data);
+            props.history.push('/creditscreen')
+        })
+        .catch(() => {})
+  }
+
   return (
     <div className='signup'>
       <div className="top-section">
@@ -108,6 +120,7 @@ const SignUpScreen = () => {
                 <div className="contdbtn">
                   <Button
                     id='btmbtn'
+                    onClick={signUpUser}
                   >
                     Create Account
                     </Button>
