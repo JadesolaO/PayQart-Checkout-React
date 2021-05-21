@@ -68,6 +68,10 @@
         font-size: 13px;
         color: #afafaf;
         margin-top: 6px !important; }
+  .plans .focused {
+    background: linear-gradient(223.39deg, #ff005e 0%, #720056 64.05%); }
+    .plans .focused h5 {
+      color: #fff; }
 
 .btmbtn {
   margin: 25px 0 !important; }
@@ -84,7 +88,7 @@
   border-radius: 10px;
   border-bottom-right-radius: 0px;
   border-top-right-radius: 0px;
-  padding: 0px 0px 0px 30px !important;
+  padding: 0px 0px 0px 15px !important;
   line-height: 30px; }
   .paymentbreakdown .brkdwn .bkdn {
     margin: auto !important; }

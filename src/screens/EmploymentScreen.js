@@ -23,7 +23,7 @@ const EmploymentScreen = (props) => {
     localStorage.setItem('userInfo', JSON.stringify({
       income: Number(salary),
       monthlyExpense: Number(monthlyExpense),
-      loanAmount,
+      loanAmount: Number(loanAmount),
       employmentType
     }))
     props.history.push('/planscreen')

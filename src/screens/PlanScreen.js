@@ -1,13 +1,65 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Row, Col, Form, Button, Container, InputGroup } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import ProgressSteps from '../components/ProgressSteps'
 import '../stylesheets/scss/planscreen.scss'
 import { employeeDti, setStatus } from '../services/Formulae'
+import Message from '../components/Message'
 
 const PlanScreen = (props) => {
   const data = localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo')) : {}
-  console.log(data)
+  // console.log(data)
+
+  const [plans, setPlans] = useState([])
+  const [cartValue, setCartValue] = useState(80500)
+  const [downPayment, setDownPayment] = useState(cartValue * 0.3)
+  const [payInfo, setPayInfo] = useState({})
+  const [tenure, setTenure] = useState('')
+  const [tenureNum, setTenureNum] = useState(Number)
+  const [monthlyRepay, setMonthlyRepay] = useState([])
+  const [updatedDownPayment, setUpdatedDownPayment] = useState('')
+  const [info, setInfo] = useState({})
+  const [monthlyAmount, setMonthlyAmount] = useState(Number)
+  const [textString, setTextString] = useState(String)
+  const [error, setError] = useState('')
+  console.log(tenure)
+
+
+  const income = data.income
+  const loanAmount = data.loanAmount
+  const monthlyExpense = data.monthlyExpense
+  const interestRate = 0.04
+
+  console.log(plans)
+  console.log(payInfo)
+  // console.log('first', setStatus(80500, 100000, 0, 0, 0.04, 30000,))
+
+  useEffect(() => {
+    try {
+      const info = setStatus(cartValue, income, monthlyExpense, loanAmount, interestRate, downPayment, 4)
+      console.log(info)
+      setInfo(info)
+      setTextString(info.textString)
+      setPlans(info.monthsArray)
+      setPayInfo(info.data)
+      setMonthlyRepay(info.monthlyRepay)
+      setTenure(`4 months`)
+      setTenureNum(4)
+      setMonthlyAmount(info.repay)
+    } catch (error) {
+      console.log(error)
+    }
+
+  }, [downPayment])
+
+  const formSubmit = (e) => {
+    e.preventDefault()
+    if (updatedDownPayment < cartValue * 0.3) {
+      setError(`Down Payment cannot be lower than 30% of cart value (${cartValue * 0.3})`)
+      return
+    }
+    setDownPayment(Number(updatedDownPayment))
+  }
   return (
     <div className="planScreen">
       <div className="topsection">
@@ -28,57 +80,24 @@ const PlanScreen = (props) => {
             </h3>
             <Container fluid>
               <Row>
-                <Col className='boxz' tabIndex="1" md={2} xs={3}>
-                  <h5>
-                    1 month
-                </h5>
-                  <p>
-                    High
-                </p>
-                </Col>
-                <Col className='boxz' tabIndex="2" md={2} xs={3}>
-                  <h5>
-                    2 months
-                </h5>
-                  <p>
-                    Agressive
-                </p>
-                </Col>
-                <Col className='boxz' tabIndex="3" md={2} xs={3}>
-                  <h5>
-                    3 months
-                </h5>
-                  <p>
-                    Stretching
-                </p>
-                </Col>
-                <Col className='boxz' tabIndex="4" md={2} xs={3}>
-                  <h5>
-                    4 months
-                </h5>
-                  <p>
-                    Fair
-                </p>
-                </Col>
-                <Col className='boxz' tabIndex="5" md={2} xs={3}>
-                  <h5>
-                    5 months
-                </h5>
-                  <p>
-                    Good
-                </p>
-                </Col>
-                <Col className='boxz' tabIndex="6" md={2} xs={3}>
-                  <h5>
-                    6 months
-                </h5>
-                  <p>
-                    Great
-                </p>
-                </Col>
+                {plans.map(item => (
+                  <Col key={item.id} className={`boxz ${tenureNum === item.id && `focused`}`} tabIndex={`${item.id}`} md={2} xs={3} onClick={() => {
+                    setTenure(`${item.id > 1 ? `${item.id} months` : `${item.id} month`}`)
+                    setTenureNum(item.id)
+                    setTextString(plans[item.id - 1].description)
+                    setMonthlyAmount(plans[item.id - 1].monthlyRepayment)
+                  }}>
+                    <h5>
+                      {`${item.id} ${item.id > 1 ? 'months' : 'month'}`}
+                    </h5>
+                    <p>
+                      {item.text}
+                    </p>
+                  </Col>
+                ))}
               </Row>
               <Row className='text-center infotext'>
-                <p>Based on your information provided, this is a healthy plan for you. The payback period and the downpayment option is just about right</p>
+                <p>{textString}</p>
               </Row>
             </Container>
             <Row className='justify-content-md-center text-center mt-5'>
@@ -89,6 +108,7 @@ const PlanScreen = (props) => {
               </h3>
               <div className="paymentbreakdown">
                 <Container fluid>
+                  {error && <Message>{error} <i style={{ cursor: 'pointer' }} onClick={() => setError('')} className="far fa-times-circle"></i></Message>}
                   <Row className='justify-content-md-center '>
                     <Col className='brkdwn' md={8}>
                       <Row className='bkdn py-2 justify-content-md-center'>
@@ -96,25 +116,25 @@ const PlanScreen = (props) => {
                           <Col md={6} xs={6}>
                             <p className='bdtxt text-muted'>Shopping Credit</p>
                           </Col>
-                          <Col className='lbl' md={6} xs={6}><p className='lbo'>₦50000</p></Col>
+                          <Col className='lbl' md={6} xs={6}><p className='lbo'>{`₦${payInfo.shoppingCredit ? payInfo.shoppingCredit : ''}`}</p></Col>
                         </Row>
                         <Row className=''>
                           <Col md={6} xs={6}>
                             <p className='bdtxt text-muted'>Down Payment</p>
                           </Col>
-                          <Col className='lbl' md={6} xs={6}><p className='lbo'>₦50000</p></Col>
+                          <Col className='lbl' md={6} xs={6}><p className='lbo'>{`₦${downPayment}`}</p></Col>
                         </Row>
                         <Row className=''>
                           <Col md={6} xs={6}>
                             <p className='bdtxt text-muted'>Monthly Installment</p>
                           </Col>
-                          <Col className='lbl' md={6} xs={6}><p className='lbo'>₦50000</p></Col>
+                          <Col className='lbl' md={6} xs={6}><p className='lbo'>{`₦${monthlyAmount}`}</p></Col>
                         </Row>
                         <Row className=''>
                           <Col md={6} xs={6}>
                             <p className='bdtxt text-muted'>Tenure</p>
                           </Col>
-                          <Col className='lbl' md={6} xs={6}><p className='lbo'>₦50000</p></Col>
+                          <Col className='lbl' md={6} xs={6}><p className='lbo'>{tenure}</p></Col>
                         </Row>
                       </Row>
                     </Col>
@@ -123,7 +143,7 @@ const PlanScreen = (props) => {
                       <span>Customize Down Payment</span>
                       <Row className='justify-content-md-center '>
                         <Col md={9} xs={6} lg={9}>
-                          <Form className='frmctn'>
+                          <Form className='frmctn' onSubmit={formSubmit}>
                             <Form.Group>
                               <InputGroup>
                                 <InputGroup.Prepend>
@@ -134,8 +154,8 @@ const PlanScreen = (props) => {
                                 <Form.Control
                                   type="text"
                                   className="frm"
-                                  // value={downPayment}
-                                  // onChange={(e) => setDownPayment(e.target.value)}
+                                  value={updatedDownPayment}
+                                  onChange={(e) => setUpdatedDownPayment(e.target.value)}
                                   required
                                 />
                               </InputGroup>

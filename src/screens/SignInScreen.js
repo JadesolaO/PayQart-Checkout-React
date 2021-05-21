@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Col, Form, Row, Container, Button, InputGroup, Image } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import eye from '../images/Path 38.png'
 
 const SignInScreen = (props) => {
+  // const [email, setEmail] = useState('')
+  // const [password, setPassword] = useState('')
   return (
    <div className='signup'>
       <div className="top-section">
@@ -28,6 +30,8 @@ const SignInScreen = (props) => {
                     type="text"
                     placeholder="Email Address"
                     className='form-control_'
+                    // value={email}
+                    // onChange={(e) => setEmail(e.target.value)}
                   />
                 </Form.Group>
                 <Form.Group>
@@ -36,6 +40,8 @@ const SignInScreen = (props) => {
                       type="password"
                       placeholder="Password"
                       className='form-control_'
+                      // value={password}
+                      // onChange={(e) => setPassword(e.target.value)}
                     />
                     <span><Image src={eye} fluid /></span>
                   </InputGroup>

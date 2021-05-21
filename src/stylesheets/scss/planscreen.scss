@@ -69,7 +69,8 @@
       cursor: pointer;
       // margin-right: 3px !important;
 
-      &:focus, &:hover {
+      &:focus,
+      &:hover {
         background: linear-gradient(223.39deg, #ff005e 0%, #720056 64.05%);
         // padding: 12px !important;
 
@@ -88,6 +89,14 @@
         color: #afafaf;
         margin-top: 6px !important;
       }
+    }
+  }
+
+  .focused {
+    background: linear-gradient(223.39deg, #ff005e 0%, #720056 64.05%);
+
+    h5 {
+      color: #fff;
     }
   }
 }
@@ -114,7 +123,7 @@
     border-radius: 10px;
     border-bottom-right-radius: 0px;
     border-top-right-radius: 0px;
-    padding: 0px 0px 0px 30px !important;
+    padding: 0px 0px 0px 15px !important;
     line-height: 30px;
 
     .bkdn {
@@ -168,7 +177,7 @@
   border-bottom-right-radius: 0px !important;
   padding: 0 3px !important;
   border-right: none;
-  
+
   // span {
   // }
 }

@@ -16,6 +16,11 @@ export const employeeDti = (cartValue, monthlyIncome, loan, interestRate, minimu
 
 export const businessDti = (cartValue, monthlyIncome, monthlyExpenses, loan, interestRate, minimumDownPay, tenor,) => {
   if (minimumDownPay < cartValue * 0.3) {
+    return {
+      message: `Down Payment cannot be lower than ${cartValue * 0.3}`
+    }
+  }
+  if (minimumDownPay > cartValue){
     return
   }
   const monthlyNetIncome = monthlyIncome - monthlyExpenses - loan;
@@ -29,34 +34,51 @@ export const businessDti = (cartValue, monthlyIncome, monthlyExpenses, loan, int
   }
 }
 
-export const setStatus = (shoppingCredit, netIncome) => {
+export const setStatus = (cartValue, monthlyIncome, monthlyExpenses, loan, interestRate, minimumDownPay, passedMonth) => {
 
   let monthsArray = [];
+  let data;
+  let textString = '';
+  let monthlyRepay = [];
+  let repay;
+  let errorMessage;
   for (let i = 0; i < arrayOfStatuses.length; i++) {
-    const monthlyRepayment = ((shoppingCredit * 0.04 * (i + 1)) + shoppingCredit) / (i + 1);
-    const dti = (monthlyRepayment / netIncome) * 100;
-    if (dti < 16) {
-      console.log('DTI is here less than 16', i, dti,);
-      monthsArray.push({ id: (i + 1), text: arrayOfStatuses[0].status, description: arrayOfStatuses[0].description });
-    } else if (dti < 26) {
-      console.log('DTI is here less than 26', i, dti,);
-      monthsArray.push({ id: (i + 1), text: arrayOfStatuses[1].status, description: arrayOfStatuses[1].description });
-    } else if (dti < 36) {
-      console.log('DTI is here less than 36', i, dti,);
-      monthsArray.push({ id: (i + 1), text: arrayOfStatuses[2].status, description: arrayOfStatuses[2].description });
-    } else if (dti < 41) {
-      console.log('DTI is here less than 41', i, dti,);
-      monthsArray.push({ id: (i + 1), text: arrayOfStatuses[3].status, description: arrayOfStatuses[3].description });
-    } else if (dti < 46) {
-      console.log('DTI is here less than 46', i, dti,);
-      monthsArray.push({ id: (i + 1), text: arrayOfStatuses[4].status, description: arrayOfStatuses[4].description });
-    } else {
-      console.log('DTI is here more than 46', i, dti,);
-      monthsArray.push({ id: (i + 1), text: arrayOfStatuses[5].status, description: arrayOfStatuses[5].description });
+    let tenor = i + 1
+    data = businessDti(cartValue, monthlyIncome, monthlyExpenses, loan, interestRate, minimumDownPay, tenor)
+    console.log(data)
+    if (data.message) {
+      errorMessage = data.message
+      return
     }
+    const dti = data.dti
+    monthlyRepay.push(data.monthlyRepayment)
+    if (dti < 16) {
+      monthsArray.push({ id: (i + 1), monthlyRepayment: monthlyRepay[i], text: arrayOfStatuses[0].status, description: arrayOfStatuses[0].description });
+    } else if (dti < 26) {
+      monthsArray.push({ id: (i + 1), monthlyRepayment: monthlyRepay[i], text: arrayOfStatuses[1].status, description: arrayOfStatuses[1].description });
+    } else if (dti < 36) {
+      monthsArray.push({ id: (i + 1), monthlyRepayment: monthlyRepay[i], text: arrayOfStatuses[2].status, description: arrayOfStatuses[2].description });
+    } else if (dti < 41) {
+      monthsArray.push({ id: (i + 1), monthlyRepayment: monthlyRepay[i], text: arrayOfStatuses[3].status, description: arrayOfStatuses[3].description });
+    } else if (dti < 46) {
+      monthsArray.push({ id: (i + 1), monthlyRepayment: monthlyRepay[i], text: arrayOfStatuses[4].status, description: arrayOfStatuses[4].description });
+    } else {
+      monthsArray.push({ id: (i + 1), monthlyRepayment: monthlyRepay[i], text: arrayOfStatuses[5].status, description: arrayOfStatuses[5].description });
+    }
+
+    textString = monthsArray[passedMonth - 1]?.description;
+    repay = monthsArray[passedMonth - 1]?.monthlyRepayment
   }
-  console.log(monthsArray);
-  return monthsArray;
+
+  // console.log(monthlyRepay)
+  return {
+    monthsArray,
+    data,
+    monthlyRepay,
+    textString,
+    repay,
+    errorMessage
+  };
 }
 
 const arrayOfStatuses = [

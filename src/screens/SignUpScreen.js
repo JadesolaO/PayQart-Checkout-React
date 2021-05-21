@@ -7,6 +7,9 @@ import lock from '../images/Path 44.png'
 import '../stylesheets/scss/SignUpScreen.scss'
 
 const SignUpScreen = () => {
+  // const [email, setEmail] = useState('')
+  // const [password, setPassword] = useState('')
+  // const [bvn, setBvn] = useState('')
   return (
     <div className='signup'>
       <div className="top-section">
@@ -33,6 +36,8 @@ const SignUpScreen = () => {
                     type="text"
                     placeholder="Email Address"
                     className='form-control_'
+                    // value={email}
+                    // onChange={(e) => setEmail(e.target.value)}
                   />
                 </Form.Group>
                 <Form.Group>
@@ -41,13 +46,10 @@ const SignUpScreen = () => {
                       type="password"
                       placeholder="Password"
                       className='form-control_'
+                      // value={password}
+                      // onChange={(e) => setPassword(e.target.value)}
                     />
                     <span style={{top: '15px'}}><Image src={eye} fluid /></span>
-                    {/* <InputGroup.Append>
-                      <InputGroup.Text ClassName='iconright'>
-                        <Image src={eye} fluid />
-                      </InputGroup.Text>
-                    </InputGroup.Append> */}
                   </InputGroup>
                 </Form.Group>
 
@@ -57,6 +59,8 @@ const SignUpScreen = () => {
                     type="text"
                     placeholder="Bank Verification Number"
                     className='form-control_'
+                    // value={bvn}
+                    // onChange={(e) => setBvn(e.target.value)}
                   />
                   <span><Image src={lock} fluid /></span>
                   </InputGroup>
