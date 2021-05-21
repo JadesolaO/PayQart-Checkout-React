@@ -8,7 +8,7 @@
 
 .suform {
   position: relative;
-  top: 13vh;
+  top: 10vh;
   // font-size: 50px;
 }
 
@@ -76,6 +76,10 @@
 
   a {
     color: #ff005e;
+
+    &:hover {
+      color: #720056;
+    }
   }
 }
 
@@ -112,6 +116,10 @@
     background: linear-gradient(223.39deg, #ff005e 0%, #720056 64.05%);
     border-radius: 9px;
     border: none;
+
+    &:hover {
+      background: linear-gradient(223.39deg, #852648 0%, #ff005e 70.05%);
+    }
   }
 }
 
@@ -145,6 +153,10 @@
       color: #720056;
       font-size: 13px;
       font-weight: bold;
+
+      &:hover {
+        color: #ff005e;
+      }
     }
   }
 }
@@ -167,4 +179,23 @@
 
 .mid {
   margin: 2rem 0 !important;
+}
+
+.top-section {
+  position: relative;
+  top: 7vh;
+  left: 5%;
+
+  a {
+    color: #FF005E;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.s-checks {
+  top: 6vh;
 }

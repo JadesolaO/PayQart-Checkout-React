@@ -7,18 +7,25 @@
   padding: 0 0 30px 0 !important;
 }
 .topsection {
-  position: relative;
-  // display: inline-flex;
+  position: absolute;
+  // display: flex;
+  top: 7vh;
+  left: 5%;
+  // width: auto;
 
   a {
     text-decoration: none;
     color: #ff005e;
-    position: absolute;
-    left: 5%;
-    top: 7vh;
-    // position: fixed;
-    // padding: 10px;
+    &:hover {
+      text-decoration: underline;
+    }
   }
+}
+
+.steps {
+  position: relative;
+  top: 9vh;
+  // display: inline-block;
 }
 
 .plans {
@@ -62,7 +69,8 @@
       cursor: pointer;
       // margin-right: 3px !important;
 
-      &:focus, &:hover {
+      &:focus,
+      &:hover {
         background: linear-gradient(223.39deg, #ff005e 0%, #720056 64.05%);
         // padding: 12px !important;
 
@@ -83,6 +91,14 @@
       }
     }
   }
+
+  .focused {
+    background: linear-gradient(223.39deg, #ff005e 0%, #720056 64.05%);
+
+    h5 {
+      color: #fff;
+    }
+  }
 }
 .btmbtn {
   // position: relative;
@@ -94,6 +110,10 @@
     background: linear-gradient(223.39deg, #ff005e 0%, #720056 64.05%);
     border-radius: 9px;
     border: none;
+
+    &:hover {
+      background: linear-gradient(223.39deg, #852648 0%, #ff005e 70.05%);
+    }
   }
 }
 
@@ -103,7 +123,7 @@
     border-radius: 10px;
     border-bottom-right-radius: 0px;
     border-top-right-radius: 0px;
-    padding: 0px 0px 0px 30px !important;
+    padding: 0px 0px 0px 15px !important;
     line-height: 30px;
 
     .bkdn {
@@ -111,15 +131,14 @@
       margin: auto !important;
       .row {
         .col {
-          padding: 20px 0px !important;
+          padding: 15px 0px !important;
         }
       }
     }
-    // .sumry {
-    //   .col {
-    //     // line-height: 50px;
-    //   }
-    // }
+    .sumry {
+      display: flex;
+      justify-content: space-between;
+    }
 
     .lbo {
       font-size: 15px;
@@ -158,7 +177,7 @@
   border-bottom-right-radius: 0px !important;
   padding: 0 3px !important;
   border-right: none;
-  
+
   // span {
   // }
 }
@@ -201,5 +220,10 @@
     border-radius: 10px !important;
     border-top-left-radius: 0px !important;
     border-top-right-radius: 0px !important;
+  }
+
+  .steps {
+    top: 11vh;
+    margin: 5px auto !important;
   }
 }

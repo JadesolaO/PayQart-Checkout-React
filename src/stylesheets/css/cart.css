@@ -12,6 +12,8 @@
       position: absolute;
       left: 5%;
       top: 7vh; }
+      .sidescreen .backtostore a:hover {
+        text-decoration: underline; }
   .sidescreen .logo {
     margin: 0;
     position: absolute;

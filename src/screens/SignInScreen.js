@@ -1,13 +1,17 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Col, Form, Row, Container, Button, InputGroup, Image } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import eye from '../images/Path 38.png'
 
 const SignInScreen = (props) => {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [remember, setRemember] = useState('')
+  const [agree, setAgree] = useState('')
   return (
-   <div className='signup'>
-      <div className="topsection">
-        <Link to="/"><i style={{ color: "#FF005E" }} className="fas fa-arrow-left"></i> Back</Link>
+    <div className='signup'>
+      <div className="top-section">
+        <Link to="/planscreen"><i style={{ color: "#FF005E" }} className="fas fa-arrow-left"></i> Back</Link>
       </div>
 
       <Row className='justify-content-md-center text-center'>
@@ -28,6 +32,9 @@ const SignInScreen = (props) => {
                     type="text"
                     placeholder="Email Address"
                     className='form-control_'
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
                   />
                 </Form.Group>
                 <Form.Group>
@@ -36,6 +43,9 @@ const SignInScreen = (props) => {
                       type="password"
                       placeholder="Password"
                       className='form-control_'
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      required
                     />
                     <span><Image src={eye} fluid /></span>
                   </InputGroup>
@@ -51,9 +61,10 @@ const SignInScreen = (props) => {
                         type='checkbox'
                         label=""
                         className='form-check-inline checker'
-                        name='existingLoans'
-                        value=''
-                      // onChange={(e) => setExistingLoan(e.target.value)}
+                        name='Details'
+                        value='Yes'
+                        onChange={(e) => setRemember(e.target.value)}
+                        required
                       />
                       <span
                         style={{
@@ -75,9 +86,10 @@ const SignInScreen = (props) => {
                         type='checkbox'
                         label=""
                         className='form-check-inline checker'
-                        name='existingLoans'
-                        value=''
-                      // onChange={(e) => setExistingLoan(e.target.value)}
+                        name='Terms'
+                        value='agree'
+                        onChange={(e) => setAgree(e.target.value)}
+                        required
                       />
                       <span
                         style={{
@@ -102,7 +114,8 @@ const SignInScreen = (props) => {
                 <div className="contdbtn">
                   <Button
                     id='btmbtn'
-                    onClick={() => props.history.push('/creditscreen')}
+                    type='submit'
+                    // onClick={() => props.history.push('/creditscreen')}
                   >
                     Sign In
                     </Button>

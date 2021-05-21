@@ -6,7 +6,7 @@
 
 .suform {
   position: relative;
-  top: 13vh; }
+  top: 10vh; }
 
 .container,
 .container-fluid,
@@ -57,6 +57,8 @@
   font-size: 14px; }
   .sitxt a {
     color: #ff005e; }
+    .sitxt a:hover {
+      color: #720056; }
 
 .form_ {
   margin-top: 60px !important;
@@ -79,6 +81,8 @@
     background: linear-gradient(223.39deg, #ff005e 0%, #720056 64.05%);
     border-radius: 9px;
     border: none; }
+    .contdbtn #btmbtn:hover {
+      background: linear-gradient(223.39deg, #852648 0%, #ff005e 70.05%); }
 
 .check {
   margin-top: 4rem !important; }
@@ -100,6 +104,8 @@
       color: #720056;
       font-size: 13px;
       font-weight: bold; }
+      .check .forgotpass a:hover {
+        color: #ff005e; }
 
 .inputgroup_ {
   position: relative; }
@@ -113,3 +119,16 @@
 
 .mid {
   margin: 2rem 0 !important; }
+
+.top-section {
+  position: relative;
+  top: 7vh;
+  left: 5%; }
+  .top-section a {
+    color: #FF005E;
+    text-decoration: none; }
+    .top-section a:hover {
+      text-decoration: underline; }
+
+.s-checks {
+  top: 6vh; }

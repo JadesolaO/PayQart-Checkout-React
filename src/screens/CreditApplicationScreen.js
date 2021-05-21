@@ -32,15 +32,15 @@ const CreditApplicationScreen = (props) => {
         // window.localStorage.setItem("current_reference",reference)
         window.location.href = url;
       })
-      .catch(() => {});
+      .catch(() => { });
   }
 
   return (
     <Container>
-      <Row className='justify-content-md-center my-auto'>
-      <div className="top-sect">
-        <Link to="/"><i className="fas fa-arrow-left"></i> Back</Link>
-      </div>
+      <Row className='justify-content-md-center '>
+        <div className="top-sect">
+          <Link to="/"><i className="fas fa-arrow-left"></i> Back</Link>
+        </div>
         <Col className='app-form' md={9} xs={12}>
           <Row className='justify-content-md-center'>
             <Col className='side-bar text-center' md={4}>
@@ -50,7 +50,7 @@ const CreditApplicationScreen = (props) => {
                   <Button
                     id='side-btn'
                     onClick={() => setForm('personalInfo')}
-                    >
+                  >
                     <Image height='14' src={contact} /> <span>Personal Information</span>
                   </Button>
                 </div>
@@ -58,7 +58,7 @@ const CreditApplicationScreen = (props) => {
                   <Button
                     id='side-btn'
                     onClick={() => setForm('contactInfo')}
-                    >
+                  >
                     <Image height='14' src={mail} /> <span>Contact Information</span>
                   </Button>
                 </div>
@@ -66,7 +66,7 @@ const CreditApplicationScreen = (props) => {
                   <Button
                     id='side-btn'
                     onClick={() => setForm('employmentInfo')}
-                    >
+                  >
                     <Image height='14' src={Union} /> <span>Employment Information</span>
                   </Button>
                 </div>
@@ -74,7 +74,7 @@ const CreditApplicationScreen = (props) => {
                   <Button
                     id='side-btn'
                     onClick={() => setForm('bankInfo')}
-                    >
+                  >
                     <Image height='14' src={bank} /> <span>Bank Information</span>
                   </Button>
                 </div>
@@ -82,7 +82,7 @@ const CreditApplicationScreen = (props) => {
                   <Button
                     id='side-btn'
                     onClick={() => setForm('refInfo')}
-                    >
+                  >
                     <Image height='14' src={ref} /> <span>Referee Information</span>
                   </Button>
                 </div>

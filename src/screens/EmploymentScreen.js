@@ -5,16 +5,36 @@ import '../stylesheets/scss/employementscreen.scss'
 import paid from '../images/image 4.png'
 import free from '../images/image 5.png'
 import coop from '../images/image 6.png'
+import ProgressSteps from '../components/ProgressSteps'
 
 const EmploymentScreen = (props) => {
   const [employmentType, setEmploymentType] = useState('')
   const [show, setShow] = useState(false)
   const [existingLoan, setExistingLoan] = useState(false)
   const [payDate, setPayDate] = useState(new Date())
+  const [salary, setSalary] = useState('')
+  const [monthlyExpense, setMonthlyExpense] = useState('')
+  const [loanAmount, setLoanAmount] = useState(Number)
+
+  const dateValue = payDate.toDateString()
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    localStorage.setItem('userInfo', JSON.stringify({
+      income: Number(salary),
+      monthlyExpense: Number(monthlyExpense),
+      loanAmount: Number(loanAmount),
+      employmentType
+    }))
+    props.history.push('/planscreen')
+  }
   return (
     <div className="pager">
       <Container fluid>
-        <Row className='justify-content-md-center'>
+        <div className="stps">
+          <ProgressSteps />
+        </div>
+        <Row className='justify-content-md-center f-row mt-3'>
           <Col md={9} xs={12}>
             <h5 id='occu-text' className='text-center my-3'>Select Your Employment Type</h5>
             <Row className='justify-content-md-center mb-4'>
@@ -54,7 +74,7 @@ const EmploymentScreen = (props) => {
             </Row>
           </Col>
           <Col className='formdiv' md={6} xs={12}>
-            <Form>
+            <Form onSubmit={handleSubmit}>
               {employmentType === 'Paid employment' &&
                 <Row>
                   <InputField
@@ -64,8 +84,13 @@ const EmploymentScreen = (props) => {
                     setExistingLoan={setExistingLoan}
                     show={show}
                     setShow={setShow}
+                    value1={salary}
+                    setValue1={setSalary}
                     value2={payDate}
                     setValue2={setPayDate}
+                    dateValue={dateValue}
+                    value3={loanAmount}
+                    setValue3={setLoanAmount}
                   />
                 </Row>
               }
@@ -76,6 +101,14 @@ const EmploymentScreen = (props) => {
                     label2='What is your average monthly expense?'
                     existingLoan={existingLoan}
                     setExistingLoan={setExistingLoan}
+                    show={show}
+                    setShow={setShow}
+                    value1={salary}
+                    setValue1={setSalary}
+                    value2={monthlyExpense}
+                    setValue2={setMonthlyExpense}
+                    value3={loanAmount}
+                    setValue3={setLoanAmount}
                   />
                 </Row>
               }
@@ -86,18 +119,27 @@ const EmploymentScreen = (props) => {
                     label2='What is your average monthly expense?'
                     existingLoan={existingLoan}
                     setExistingLoan={setExistingLoan}
+                    show={show}
+                    setShow={setShow}
+                    value1={salary}
+                    setValue1={setSalary}
+                    value2={monthlyExpense}
+                    setValue2={setMonthlyExpense}
+                    value3={loanAmount}
+                    setValue3={setLoanAmount}
                   />
                 </Row>
               }
 
               <div className='continuebutton text-center'>
                 <Button
+                  type='submit'
                   id='bottombutton'
-                  onClick={() => props.history.push('/planscreen')}
+                  // onClick={() => props.history.push('/planscreen')}
                   disabled={employmentType === ''}
                 >
                   Continue
-            </Button>
+               </Button>
               </div>
             </Form>
           </Col>

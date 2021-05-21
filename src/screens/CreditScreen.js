@@ -1,13 +1,17 @@
 import React from 'react'
 import { Container, Row, Col, Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
+import ProgressSteps from '../components/ProgressSteps';
 import '../stylesheets/scss/creditscreen.scss';
 
 const CreditScreen = (props) => {
   return (
     <div className='creditscreen'>
       <div className="topsection">
-        <Link to="/"><i style={{ color: "#FF005E" }} className="fas fa-arrow-left"></i> Back</Link>
+        <Link to="/employmentscreen"><i style={{ color: "#FF005E" }} className="fas fa-arrow-left"></i> Back</Link>
+      </div>
+      <div className="steps">
+      <ProgressSteps step1 step2 step3 complete/>
       </div>
       <Container fluid>
         <Row className='justify-content-md-center'>

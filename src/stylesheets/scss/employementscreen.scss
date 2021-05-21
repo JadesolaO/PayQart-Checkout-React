@@ -55,11 +55,26 @@
       background:#AFAFAF;
     }
 
+    &:hover {
+      background: linear-gradient(223.39deg, #852648 0%, #ff005e 70.05%);
+    }
     
   }
 }
 
+.stps {
+  position: relative;
+  margin-bottom: 10px !important;
+  top: 3vh;
+}
+
+.f-row {
+  position: relative;
+  top: 3vh;
+}
+
 .pager {
+  // position: relative;
   height: 100vh;
   overflow: scroll;
   overflow-x: auto;
