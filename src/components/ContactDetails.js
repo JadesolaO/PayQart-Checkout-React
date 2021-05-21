@@ -14,7 +14,7 @@ const ContactDetails = ({ setPage }) => {
     telephone: '',
     city: '',
     state: ''
-  });
+  }); 
 
   const handleChange = (name, e) => {
     setContactInfo({...contactInfo, [name]: e.target.value });
