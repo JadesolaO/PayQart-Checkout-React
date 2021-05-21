@@ -2,9 +2,21 @@ import React, { useState } from 'react'
 import { Col, Form, Row, Container, Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import ProgressSteps from '../components/ProgressSteps'
+import { successToast, doPasswordReset } from '../services/authService';
 
-const ForgotPasswordScreen = () => {
+const ForgotPasswordScreen = (props) => {
   const [email, setEmail] = useState('')
+
+  const resetUserPassword = () => {
+    const user = { email: email };
+    doPasswordReset(user)
+        .then(res => {
+            successToast(res.data);
+            props.history.push('/signin')
+        })
+        .catch(() => {})
+  }
+
   return (
     <div className='signup'>
       <div className="top-section">
@@ -40,6 +52,7 @@ const ForgotPasswordScreen = () => {
                 <div className="contdbtn">
                   <Button
                     id='btmbtn'
+                    onClick={resetUserPassword}
                   >
                     Reset Password
                     </Button>

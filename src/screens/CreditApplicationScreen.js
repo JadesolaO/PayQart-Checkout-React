@@ -108,7 +108,7 @@ const CreditApplicationScreen = (props) => {
                 </>:
                 form === 'refInfo' && 
                 <>
-                  <RefereeInformation setPage={setPage} />
+                  <RefereeInformation startPayment={startPayment} />
                 </>
               }
             </Col>

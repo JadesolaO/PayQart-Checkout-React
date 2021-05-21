@@ -2,12 +2,24 @@ import React, { useState } from 'react'
 import { Col, Form, Row, Container, Button, InputGroup, Image } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import eye from '../images/Path 38.png'
+import { successToast, doLogin } from '../services/authService';
 
 const SignInScreen = (props) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [remember, setRemember] = useState('')
   const [agree, setAgree] = useState('')
+
+  const loginUser = () => {
+    const user = { email: email, pin: password };
+    doLogin(user)
+        .then(res => {
+            successToast(res.data);
+            props.history.push('/creditscreen')
+        })
+        .catch(() => {})
+  }
+
   return (
     <div className='signup'>
       <div className="top-section">
@@ -114,8 +126,8 @@ const SignInScreen = (props) => {
                 <div className="contdbtn">
                   <Button
                     id='btmbtn'
-                    type='submit'
                     // onClick={() => props.history.push('/creditscreen')}
+                    onClick={() => loginUser()}
                   >
                     Sign In
                     </Button>

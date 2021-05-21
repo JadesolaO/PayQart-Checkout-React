@@ -8,10 +8,14 @@ const RefereeInformation = ({ startPayment }) => {
 
   const [referenceInfo, setReferenceInfo] = useState({
     rname: '',
+    rfirstName: '',
+    rlastName: '',
     rtelephone: '',
     remail: '',
     raddress: '',
-    relationship: ''
+    relationship: '',
+    rcity: '',
+    rstate: ''
   });
 
   const handleChange = (name, e) => {
@@ -20,7 +24,10 @@ const RefereeInformation = ({ startPayment }) => {
 
   const handleSubmit = () => {
     console.log(referenceInfo);
-    submitReferenceInfo(referenceInfo)
+    let newReferenceObj = (({ rname, rtelephone, remail, raddress, relationship, rcity, rstate }) => 
+        ({ rname, rtelephone, remail, raddress, relationship, rcity, rstate }))(referenceInfo);
+        newReferenceObj.rname = referenceInfo.rfirstName + ' ' + referenceInfo.rlastName;
+    submitReferenceInfo(newReferenceObj)
         .then(res => {
             successToast(res.data);
             startPayment();
@@ -35,14 +42,16 @@ const RefereeInformation = ({ startPayment }) => {
           {
             label: 'First Name',
             type: 'text',
-            value: referenceInfo.rname,
-            name: 'rname',
+            value: referenceInfo.rfirstName,
+            name: 'rfirstName',
             handleChange: handleChange
           },
           {
             label: 'Last Name',
             type: 'text',
-            value: ''
+            value: referenceInfo.rlastName,
+            name: 'rlastName',
+            handleChange: handleChange
           }
         ]}
         formDetails2={[
@@ -81,12 +90,17 @@ const RefereeInformation = ({ startPayment }) => {
           {
             label: 'City',
             type: 'text',
-            value: ''
+            value: referenceInfo.rcity,
+            name: 'rcity',
+            handleChange: handleChange
           },
           {
             label: 'State',
             type: 'select',
-            options: ['Select']
+            options: ['Select', 'Lagos', 'Abuja', 'Ondo', 'Ogun', 'Rivers'],
+            value: referenceInfo.rstate,
+            name: 'rstate',
+            handleChange: handleChange
           }
         ]}
       />
