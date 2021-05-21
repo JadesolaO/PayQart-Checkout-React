@@ -21,6 +21,7 @@ const CreditForm = (props) => {
                 type={type}
                 value={value}
                 onChange={(text) => handleChange(name, text)}
+                required
               />
             }
           </Form.Group>
