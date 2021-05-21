@@ -7,6 +7,11 @@ import '../stylesheets/scss/successScreen.scss'
 import { Link } from 'react-router-dom'
 
 const SuccessScreen = (props) => {
+
+  const routeToMono = () => {
+    window.location.href = 'https://mono.co/statements/3e5AuEa';
+  }
+
   return (
     <Container className='success' fluid>
       <Row className='justify-content-md-center'>
@@ -21,7 +26,7 @@ const SuccessScreen = (props) => {
               {/* <FileUpload name='Bank Statement' /> */}
               <div className="fileUpload text-center">
                 <p><strong>Bank Statement</strong></p>
-                <label onClick={() => console.log('you')} className='lablef'><Image fluid src={upload} />  Generate</label>
+                <label onClick={routeToMono} className='lablef'><Image fluid src={upload} />  Generate</label>
               </div>
               <FileUpload name='Govt Issued ID' />
               <FileUpload name='Work ID' />
