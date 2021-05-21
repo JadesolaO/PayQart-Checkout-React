@@ -24,6 +24,7 @@ const ContactDetails = ({ setPage }) => {
     console.log(contactInfo);
     submitContactInfo(contactInfo)
         .then(res => {
+            localStorage.setItem('userEmail', contactInfo.email);
             successToast(res.data);
             setPage('employmentInfo');
         })

@@ -23,7 +23,6 @@ const PersonalInformation = ({ setPage }) => {
 
   const handleSubmit = () => {
     console.log(personalInfo);
-    localStorage.setItem('userEmail', personalInfo.email);
     submitPersonalInfo(personalInfo)
         .then(res => {
             successToast(res.data);
