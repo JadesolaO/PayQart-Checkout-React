@@ -1,7 +1,10 @@
 import React from 'react'
 import { Container, Row, Col, Button } from 'react-bootstrap'
 import FileUpload from '../components/FileUpload'
+import { Image } from 'react-bootstrap'
+import upload from '../images/upload.svg'
 import '../stylesheets/scss/successScreen.scss'
+import { Link } from 'react-router-dom'
 
 const SuccessScreen = (props) => {
   return (
@@ -15,7 +18,11 @@ const SuccessScreen = (props) => {
           <Row className="uploadforms text-center justify-content-md-center">
             <p>REQUIRED DOCUMENTS</p>
             <Col md={5} className="file-upload">
-              <FileUpload name='Bank Statement' />
+              {/* <FileUpload name='Bank Statement' /> */}
+              <div className="fileUpload text-center">
+                <p><strong>Bank Statement</strong></p>
+                <label onClick={() => console.log('you')} className='lablef'><Image fluid src={upload} />  Generate</label>
+              </div>
               <FileUpload name='Govt Issued ID' />
               <FileUpload name='Work ID' />
               <FileUpload name='Proof Of Address' />
