@@ -18,14 +18,14 @@ const CreditScreen = (props) => {
           <Col className='boxes mx-3 mb-3' xs={12} md={6}>
             <div className="text">
               <p className='mb-2'>Wallet Balance</p>
-              <h5 className='mb-2'>₦45,000</h5>
+              <h5 className='mb-2'>₦0.00</h5>
               <p className="text-muted">Expires in 29 days</p>
             </div>
           </Col>
           <Col className='boxes mx-3 mb-3' xs={12} md={6}>
             <div className="text">
               <p className='mb-2'>Available Shopping Credit</p>
-              <h5 className='mb-2'>₦25,000</h5>
+              <h5 className='mb-2'>₦0.00</h5>
               <p className="text-muted">Approved Tenor: 5 months</p>
             </div>
           </Col>

@@ -7,7 +7,8 @@ import { successToast, doPasswordReset } from '../services/authService';
 const ForgotPasswordScreen = (props) => {
   const [email, setEmail] = useState('')
 
-  const resetUserPassword = () => {
+  const resetUserPassword = (e) => {
+    e.preventDefault()
     const user = { email: email };
     doPasswordReset(user)
         .then(res => {
@@ -38,7 +39,7 @@ const ForgotPasswordScreen = (props) => {
             </h3>
 
             <Container fluid>
-              <Form className='form_'>                
+              <Form className='form_' onSubmit={resetUserPassword}>                
                 <Form.Group>
                   <Form.Control
                     type="email"
@@ -52,8 +53,8 @@ const ForgotPasswordScreen = (props) => {
                 <div className="contdbtn">
                   <Button
                     id='btmbtn'
-                    onClick={resetUserPassword}
-                  >
+                    type='submit'
+                    >
                     Reset Password
                     </Button>
                 </div>

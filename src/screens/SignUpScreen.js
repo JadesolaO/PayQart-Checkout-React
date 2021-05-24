@@ -13,7 +13,8 @@ const SignUpScreen = (props) => {
   const [bvn, setBvn] = useState('')
   const [agree, setAgree] = useState('')
 
-  const signUpUser = () => {
+  const signUpUser = (e) => {
+    e.preventDefault()
     // const user = { email: email, pin: password, bvn: bvn };
     // doSignUp(user)
     //     .then(res => {
@@ -45,7 +46,7 @@ const SignUpScreen = (props) => {
             </h3>
 
             <Container fluid>
-              <Form className='form_ mb-2'>
+              <Form className='form_ mb-2' onSubmit={signUpUser}>
                 <Form.Group>
                   <Form.Control
                     type="email"
@@ -122,7 +123,7 @@ const SignUpScreen = (props) => {
                 <div className="contdbtn">
                   <Button
                     id='btmbtn'
-                    onClick={signUpUser}
+                    type='submit'
                   >
                     Create Account
                     </Button>

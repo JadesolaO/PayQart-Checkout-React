@@ -1,5 +1,5 @@
 import React from 'react'
-import { Row, Col, Container, Form } from 'react-bootstrap'
+import { Row, Col, Container, Form, Button } from 'react-bootstrap'
 import '../stylesheets/scss/creditapplicationscreen.scss'
 
 const CreditForm = (props) => {
@@ -32,7 +32,7 @@ const CreditForm = (props) => {
 
   return (
     <Container fluid>
-      <Form className='crdfrm'>
+      <Form className='crdfrm' onSubmit={props.handleSubmit}>
         {props.formDetails &&
           <Row className='justify-content-md-center'>
             {formFunction(props.formDetails)}
@@ -49,6 +49,11 @@ const CreditForm = (props) => {
           <Row className='justify-content-md-center'>
             {formFunction(props.formDetails4)}
           </Row>}
+        <div className="cont-btn text-center">
+          <Button type='submit'>
+            {props.buttonText}
+          </Button>
+        </div>
       </Form>
     </Container>
   )

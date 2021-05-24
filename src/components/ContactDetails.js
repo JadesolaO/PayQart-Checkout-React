@@ -20,7 +20,8 @@ const ContactDetails = ({ setPage }) => {
     setContactInfo({...contactInfo, [name]: e.target.value });
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
     console.log(contactInfo);
     submitContactInfo(contactInfo)
         .then(res => {
@@ -94,12 +95,14 @@ const ContactDetails = ({ setPage }) => {
             handleChange: handleChange
           }
         ]}
+        handleSubmit={handleSubmit}
+        buttonText='Continue'
       />
-      <div className="cont-btn text-center">
+      {/* <div className="cont-btn text-center">
         <Button onClick={handleSubmit}>
           Continue
         </Button>
-      </div>
+      </div> */}
     </div>
   )
 }

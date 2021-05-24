@@ -22,7 +22,8 @@ const RefereeInformation = ({ startPayment }) => {
     setReferenceInfo({...referenceInfo, [name]: e.target.value });
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
     // console.log(referenceInfo);
     // let newReferenceObj = (({ rname, rtelephone, remail, raddress, relationship, rcity, rstate }) => 
     //     ({ rname, rtelephone, remail, raddress, relationship, rcity, rstate }))(referenceInfo);
@@ -104,12 +105,14 @@ const RefereeInformation = ({ startPayment }) => {
             handleChange: handleChange
           }
         ]}
+        handleSubmit={handleSubmit}
+        buttonText='Pay Verification Fee'
       />
-      <div className="cont-btn text-center">
+      {/* <div className="cont-btn text-center">
         <Button className='pay-btn' onClick={handleSubmit}>
           Pay Verification Fee
         </Button>
-      </div>
+      </div> */}
     </div>
   )
 }

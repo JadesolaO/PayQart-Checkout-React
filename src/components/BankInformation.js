@@ -17,7 +17,8 @@ const BankInformation = ({ setPage }) => {
     setBankInfo({...bankInfo, [name]: e.target.value });
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
     console.log(bankInfo);
     submitBankInfo(bankInfo)
         .then(res => {
@@ -64,13 +65,15 @@ const BankInformation = ({ setPage }) => {
             handleChange: handleChange
           }
         ]}
+        handleSubmit={handleSubmit}
+        buttonText='Continue'
       />
-      <div className="cont-btn text-center">
+      {/* <div className="cont-btn text-center">
         <Button onClick={handleSubmit}>
           Continue
         </Button>
-      </div> 
-    </div>
+      </div>  */}
+    </div> 
   )
 }
 

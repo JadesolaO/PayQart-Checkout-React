@@ -11,7 +11,8 @@ const SignInScreen = (props) => {
   const [remember, setRemember] = useState('')
   const [agree, setAgree] = useState('')
 
-  const loginUser = () => {
+  const loginUser = (e) => {
+    e.preventDefault()
     // const user = { email: email, pin: password };
     // doLogin(user)
     //     .then(res => {
@@ -43,7 +44,7 @@ const SignInScreen = (props) => {
             </h3>
 
             <Container fluid>
-              <Form className='form_'>
+              <Form className='form_' onSubmit={loginUser}>
                 <Form.Group>
                   <Form.Control
                     type="text"
@@ -132,7 +133,7 @@ const SignInScreen = (props) => {
                   <Button
                     id='btmbtn'
                     // onClick={() => props.history.push('/creditscreen')}
-                    onClick={() => loginUser()}
+                    type='submit'
                   >
                     Sign In
                     </Button>
