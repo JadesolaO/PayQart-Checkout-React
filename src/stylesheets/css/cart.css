@@ -71,3 +71,9 @@
         word-wrap: break-word; }
     .cart .cart-section .item-row {
       margin-bottom: 5% !important; }
+
+@media only screen and (max-width: 600px) {
+  .sidescreen {
+    display: none; }
+  .cart {
+    display: none; } }

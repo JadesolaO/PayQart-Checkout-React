@@ -62,7 +62,7 @@ export const setStatus = (cartValue, monthlyIncome, monthlyExpenses, loan, inter
     repay = monthsArray[passedMonth - 1]?.monthlyRepayment
   }
 
-  // console.log(monthlyRepay)
+  // console.log(repay)
   return {
     monthsArray,
     data,

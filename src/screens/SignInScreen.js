@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Col, Form, Row, Container, Button, InputGroup, Image } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
+import ProgressSteps from '../components/ProgressSteps';
 import eye from '../images/Path 38.png'
 import { successToast, doLogin } from '../services/authService';
 import { inititiateCredit } from '../services/creditFormService';
@@ -30,6 +31,9 @@ const SignInScreen = (props) => {
     <div className='signup'>
       <div className="top-section">
         <Link to="/planscreen"><i style={{ color: "#FF005E" }} className="fas fa-arrow-left"></i> Back</Link>
+      </div>
+      <div className="steps s-checks">
+      <ProgressSteps step1 step2 complete/>
       </div>
 
       <Row className='justify-content-md-center text-center'>

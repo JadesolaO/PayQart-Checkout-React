@@ -106,7 +106,7 @@ const PersonalInformation = ({ setPage }) => {
           {
             label: 'Education Level',
             type: 'select',
-            options: ['Select', 'Primary', 'Secondary', 'Tetiary'],
+            options: ['Select', 'Primary', 'Secondary', 'Tertiary'],
             value: personalInfo.educationlevel,
             name: 'educationlevel',
             handleChange: handleChange

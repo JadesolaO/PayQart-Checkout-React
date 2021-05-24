@@ -26,7 +26,7 @@ const SuccessScreen = (props) => {
               {/* <FileUpload name='Bank Statement' /> */}
               <div className="fileUpload text-center">
                 <p><strong>Bank Statement</strong></p>
-                <label onClick={routeToMono} className='lablef'><Image fluid src={upload} />  Generate</label>
+                <label onClick={routeToMono} className='lablef'>Generate</label>
               </div>
               <FileUpload name='Govt Issued ID' />
               <FileUpload name='Work ID' />

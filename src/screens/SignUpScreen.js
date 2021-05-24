@@ -35,7 +35,7 @@ const SignUpScreen = (props) => {
         <Link to="/planscreen"><i style={{ color: "#FF005E" }} className="fas fa-arrow-left"></i> Back</Link>
       </div>
       <div className="steps s-checks">
-      <ProgressSteps step1 step2 complete/>
+        <ProgressSteps step1 step2 complete />
       </div>
       <Row className='justify-content-md-center text-center'>
         <Col md={8}>
@@ -70,21 +70,21 @@ const SignUpScreen = (props) => {
                       onChange={(e) => setPassword(e.target.value)}
                       required
                     />
-                    <span style={{top: '15px'}}><Image src={eye} fluid /></span>
+                    <span style={{ top: '15px' }}><Image src={eye} fluid /></span>
                   </InputGroup>
                 </Form.Group>
 
                 <Form.Group>
                   <InputGroup className='inputgroup_'>
-                  <Form.Control
-                    type="text"
-                    placeholder="Bank Verification Number"
-                    className='form-control_'
-                    value={bvn}
-                    onChange={(e) => setBvn(e.target.value)}
-                    required
-                  />
-                  <span><Image src={lock} fluid /></span>
+                    <Form.Control
+                      type="text"
+                      placeholder="Bank Verification Number"
+                      className='form-control_'
+                      value={bvn}
+                      onChange={(e) => setBvn(e.target.value)}
+                      required
+                    />
+                    <span><Image src={lock} fluid /></span>
                   </InputGroup>
                 </Form.Group>
 
@@ -94,7 +94,7 @@ const SignUpScreen = (props) => {
                 <div className="check">
                   <Form.Group>
                     <Form.Label>
-                    <Form.Check
+                      <Form.Check
                         type='checkbox'
                         label=""
                         className='form-check-inline checker'
@@ -103,7 +103,7 @@ const SignUpScreen = (props) => {
                         onChange={(e) => setAgree(e.target.value)}
                         required
                       />
-                      
+
                       <span
                         style={{
                           color: '#720056',
@@ -116,7 +116,7 @@ const SignUpScreen = (props) => {
                       >
                         I am over 22years and I have read and agree to PayQart's Terms and Condtions. I agree that the information are accurate and can be verified by PayQart.
                       </span>
-                      
+
 
                     </Form.Label>
                   </Form.Group>

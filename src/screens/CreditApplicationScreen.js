@@ -23,7 +23,7 @@ const CreditApplicationScreen = (props) => {
   }
 
   const startPayment = () => {
-    var obj = { id : '6700', email: localStorage.getItem('userEmail') }
+    var obj = { id: '6700', email: localStorage.getItem('userEmail') }
     makeFeePayment(obj)
       .then(res => {
         console.log(res.data);
@@ -46,41 +46,47 @@ const CreditApplicationScreen = (props) => {
             <Col className='side-bar text-center' md={4}>
               <h3 className='my-4'>Credit Application Form</h3>
               <div className="side-buttons text-center">
-                <div className="side-btn text-center">
+                <div className="side-div text-center">
                   <Button
-                    id='side-btn'
+                    id={`${form === `personalInfo` && `highlighted`}`}
+                    // style={form === 'personalInfo' && myStyles}
+                    className='side-btn'
                     onClick={() => setForm('personalInfo')}
                   >
                     <Image height='14' src={contact} /> <span>Personal Information</span>
                   </Button>
                 </div>
-                <div className="side-btn">
+                <div className="side-div">
                   <Button
-                    id='side-btn'
+                    id={`${form === `contactInfo` && `highlighted`}`}
+                    className='side-btn'
                     onClick={() => setForm('contactInfo')}
                   >
                     <Image height='14' src={mail} /> <span>Contact Information</span>
                   </Button>
                 </div>
-                <div className="side-btn">
+                <div className="side-div">
                   <Button
-                    id='side-btn'
+                    id={`${form === `employmentInfo` && `highlighted`}`}
+                    className='side-btn'
                     onClick={() => setForm('employmentInfo')}
                   >
                     <Image height='14' src={Union} /> <span>Employment Information</span>
                   </Button>
                 </div>
-                <div className="side-btn">
+                <div className="side-div">
                   <Button
-                    id='side-btn'
+                    id={`${form === `bankInfo` && `highlighted`}`}
+                    className='side-btn'
                     onClick={() => setForm('bankInfo')}
                   >
                     <Image height='14' src={bank} /> <span>Bank Information</span>
                   </Button>
                 </div>
-                <div className="side-btn">
+                <div className="side-div">
                   <Button
-                    id='side-btn'
+                    id={`${form === `refInfo` && `highlighted`}`}
+                    className='side-btn'
                     onClick={() => setForm('refInfo')}
                   >
                     <Image height='14' src={ref} /> <span>Referee Information</span>
@@ -91,25 +97,25 @@ const CreditApplicationScreen = (props) => {
             <Col className='form-sec' md={8}>
               {
                 form === 'personalInfo' ?
-                <>
-                  <PersonalInformation setPage={setPage} />
-                </>:
-                form === 'contactInfo' ?
-                <>
-                  <ContactDetails setPage={setPage} />
-                </>:
-                form === 'employmentInfo' ?
-                <>
-                  <EmploymentInformation setPage={setPage} />
-                </>:
-                form === 'bankInfo' ?
-                <>
-                  <BankInformation setPage={setPage} />
-                </>:
-                form === 'refInfo' && 
-                <>
-                  <RefereeInformation startPayment={startPayment} />
-                </>
+                  <>
+                    <PersonalInformation setPage={setPage} />
+                  </> :
+                  form === 'contactInfo' ?
+                    <>
+                      <ContactDetails setPage={setPage} />
+                    </> :
+                    form === 'employmentInfo' ?
+                      <>
+                        <EmploymentInformation setPage={setPage} />
+                      </> :
+                      form === 'bankInfo' ?
+                        <>
+                          <BankInformation setPage={setPage} />
+                        </> :
+                        form === 'refInfo' &&
+                        <>
+                          <RefereeInformation startPayment={startPayment} />
+                        </>
               }
             </Col>
           </Row>

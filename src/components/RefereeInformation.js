@@ -49,16 +49,17 @@ const RefereeInformation = ({ startPayment }) => {
   }
 
   const handleSubmit = () => {
-    console.log(referenceInfo);
-    let newReferenceObj = (({ rname, rtelephone, remail, raddress, relationship, rcity, rstate }) => 
-        ({ rname, rtelephone, remail, raddress, relationship, rcity, rstate }))(referenceInfo);
-        newReferenceObj.rname = referenceInfo.rfirstName + ' ' + referenceInfo.rlastName;
-    submitReferenceInfo(newReferenceObj)
-        .then(res => {
-            successToast(res.data);
+    // console.log(referenceInfo);
+    // let newReferenceObj = (({ rname, rtelephone, remail, raddress, relationship, rcity, rstate }) => 
+    //     ({ rname, rtelephone, remail, raddress, relationship, rcity, rstate }))(referenceInfo);
+    //     newReferenceObj.rname = referenceInfo.rfirstName + ' ' + referenceInfo.rlastName;
+    // submitReferenceInfo(newReferenceObj)
+    //     .then(res => {
+    //         successToast(res.data);
+    //         startPayment();
+    //     })
+    //     .catch(() => {})
             startPayment();
-        })
-        .catch(() => {})
   }
 
   return (

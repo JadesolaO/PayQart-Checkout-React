@@ -16,6 +16,7 @@
     }
   }
 }
+
 .app-form {
   margin-bottom: 30px !important;
 
@@ -39,10 +40,14 @@
   .side-buttons {
     position: relative;
     top: 2vh;
-    .side-btn {
+    .side-div {
       margin-bottom: 8px !important;
 
-      #side-btn {
+      #highlighted {
+        border: 1px solid #710157;
+      }
+
+      .side-btn {
         text-align: left !important;
         font-size: 12px;
         font-weight: bold;
@@ -54,10 +59,6 @@
         min-width: 50px;
         padding: 8px 15px !important;
         border-radius: 6px;
-
-        &:focus {
-          border: 1px solid #710157;
-        }
 
         span {
           margin-left: 8px !important;
