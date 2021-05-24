@@ -1,7 +1,12 @@
 import { toast } from 'react-toastify';
 import http from './httpService';
 
-const apiEndpoint = 'http://localhost:2000/user';
+// const apiEndpoint = 'http://localhost:2000/user';
+const apiEndpoint = 'https://cryptic-reef-51266.herokuapp.com/user';
+
+export async function inititiateCredit(creditInfo) {
+  return await http.post(`${apiEndpoint}/initiate-credit`, creditInfo);
+}
 
 export async function submitPersonalInfo(personalInfo) {
   return await http.post(`${apiEndpoint}/save-personal-information`, personalInfo);

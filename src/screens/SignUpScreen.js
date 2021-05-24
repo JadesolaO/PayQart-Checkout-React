@@ -6,6 +6,7 @@ import eye from '../images/Path 38.png'
 import lock from '../images/Path 44.png'
 import '../stylesheets/scss/SignUpScreen.scss'
 import { successToast, doSignUp } from '../services/authService';
+import { inititiateCredit } from '../services/creditFormService';
 
 const SignUpScreen = (props) => {
   const [email, setEmail] = useState('')
@@ -17,8 +18,13 @@ const SignUpScreen = (props) => {
     const user = { email: email, pin: password, bvn: bvn };
     doSignUp(user)
         .then(res => {
-            successToast(res.data);
-            props.history.push('/creditscreen')
+          localStorage.setItem('userObjFromBckEnd', JSON.stringify(res.data.user));
+          inititiateCredit()
+            .then(() => {
+              successToast(res.data.message);
+              props.history.push('/creditscreen');
+            })
+            .catch(() => {});
         })
         .catch(() => {})
   }

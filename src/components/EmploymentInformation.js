@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import CreditForm from './CreditForm';
 import { Button } from 'react-bootstrap';
-import { successToast, submitEmploymentInfo } from '../services/creditFormService';
+import { successToast, submitEmploymentInfo, getLoanDetails } from '../services/creditFormService';
 import '../stylesheets/scss/creditapplicationscreen.scss';
 
 const EmploymentInformation = ({ setPage }) => {
@@ -21,12 +21,32 @@ const EmploymentInformation = ({ setPage }) => {
     setEmploymentInfo({...employmentInfo, [name]: e.target.value });
   }
 
+  useEffect(() => {
+    retrieveLoanDetails();
+  }, []);
+
+  const retrieveLoanDetails = async () => {
+    const user = JSON.parse(localStorage.getItem('userObjFromBckEnd'));
+    if (!user || user.newUser)
+      return;
+
+    await getLoanDetails()
+      .then(res => {
+        if (!res.data)
+          return;
+        const loanInfo = (({ employername, employeraddress, workduration, designation, employmentmode, city, state }) =>
+              ({ employername, employeraddress, workduration, designation, employmentmode, city, state }))(res.data);
+        setEmploymentInfo(loanInfo);
+      })
+      .catch(() => {});
+  }
+
   const handleSubmit = () => {
     console.log(employmentInfo);
     submitEmploymentInfo(employmentInfo)
         .then(res => {
             successToast(res.data);
-            setPage('employmentInfo');
+            setPage('bankInfo');
         })
         .catch(() => {})
   }

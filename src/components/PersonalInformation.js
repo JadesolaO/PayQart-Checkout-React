@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import CreditForm from './CreditForm';
 import { Button } from 'react-bootstrap';
 import { successToast, submitPersonalInfo } from '../services/creditFormService';
@@ -17,6 +17,19 @@ const PersonalInformation = ({ setPage }) => {
     children: ''
   });
 
+  useEffect(() => {
+    getUser();
+  }, []);
+
+  const getUser = () => {
+    const user = JSON.parse(localStorage.getItem('userObjFromBckEnd'));
+    if (!user || user.newUser)
+      return;
+    const userInfo = (({ title, gender, firstname, lastname, middlename, maritalstatus, educationlevel, children }) =>
+          ({ title, gender, firstname, lastname, middlename, maritalstatus, educationlevel, children }))(user);
+    setPersonalInfo(userInfo);
+  }
+
   const handleChange = (name, e) => {
     setPersonalInfo({...personalInfo, [name]: e.target.value });
   }
@@ -26,6 +39,9 @@ const PersonalInformation = ({ setPage }) => {
     submitPersonalInfo(personalInfo)
         .then(res => {
             successToast(res.data);
+            const user = JSON.parse(localStorage.getItem('userObjFromBckEnd'));
+            const updatedUserInfo = { ...user, ...personalInfo };
+            localStorage.setItem('userObjFromBckEnd', JSON.stringify(updatedUserInfo));
             setPage('contactInfo');
         })
         .catch(() => {})
