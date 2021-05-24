@@ -22,7 +22,9 @@ const PlanScreen = (props) => {
   const [monthlyAmount, setMonthlyAmount] = useState(Number)
   const [textString, setTextString] = useState(String)
   const [error, setError] = useState('')
-  console.log(tenure)
+  const [showBreakdown, setShowBreakdown] = useState(Boolean)
+  // console.log(Number(updatedDownPayment.split(',').join('')))
+  // console.log(monthlyAmount.toString())
 
 
   const income = data.income
@@ -30,31 +32,32 @@ const PlanScreen = (props) => {
   const monthlyExpense = data.monthlyExpense
   const interestRate = 0.04
 
-  console.log(plans)
-  console.log(payInfo)
-  // console.log('first', setStatus(80500, 100000, 0, 0, 0.04, 30000,))
 
   useEffect(() => {
-      const info = setStatus(cartValue, income, monthlyExpense, loanAmount, interestRate, downPayment, 4)
-      console.log(info)
-      setInfo(info)
-      setTextString(info.textString)
-      setPlans(info.monthsArray)
-      setPayInfo(info.data)
-      setMonthlyRepay(info.monthlyRepay)
-      setTenure(`4 months`)
-      setTenureNum(4)
-      setMonthlyAmount(info.repay)
+    const info = setStatus(cartValue, income, monthlyExpense, loanAmount, interestRate, downPayment, tenureNum > 0 ? tenureNum : 1)
+    // console.log(info)
+    setInfo(info)
+    setTextString(info.textString)
+    setPlans(info.monthsArray)
+    setPayInfo(info.data)
+    setMonthlyRepay(info.monthlyRepay)
+    // setTenureNum(4)
+    setMonthlyAmount(info.repay)
 
   }, [downPayment])
 
   const formSubmit = (e) => {
     e.preventDefault()
-    if (updatedDownPayment < cartValue * 0.3) {
+    setError('')
+    if (Number(updatedDownPayment.split(',').join('')) < cartValue * 0.3) {
       setError(`Down Payment cannot be lower than 30% of cart value (${cartValue * 0.3})`)
       return
     }
-    setDownPayment(Number(updatedDownPayment))
+    if (Number(updatedDownPayment.split(',').join('')) > cartValue) {
+      setError(`Down Payment cannot be greater than cart value (${cartValue})`)
+      return
+    }
+    setDownPayment(Number(updatedDownPayment.split(',').join('')))
   }
   return (
     <div className="planScreen">
@@ -78,53 +81,60 @@ const PlanScreen = (props) => {
               <Row>
                 {plans.map(item => (
                   <Col key={item.id} className={`boxz ${tenureNum === item.id && `focused`}`} tabIndex={`${item.id}`} md={2} xs={3} onClick={() => {
+                    setShowBreakdown(true)
                     setTenure(`${item.id > 1 ? `${item.id} months` : `${item.id} month`}`)
                     setTenureNum(item.id)
                     setTextString(plans[item.id - 1].description)
                     setMonthlyAmount(plans[item.id - 1].monthlyRepayment)
                   }}>
-                    <h5>
-                      {`${item.id} ${item.id > 1 ? 'months' : 'month'}`}
-                    </h5>
-                    <p>
-                      {item.text}
-                    </p>
+                    <div className={`top top${item.id}`}></div>
+                    <div className="content text-center">
+                      <p>
+                        {showBreakdown === true && item.text}
+                      </p>
+                      <h5>
+                        {`${item.id}`}
+                      </h5>
+                      <p>
+                        {`${item.id > 1 ? 'months' : 'month'}`}
+                      </p>
+                    </div>
                   </Col>
                 ))}
               </Row>
               <Row className='text-center infotext'>
-                <p>{textString}</p>
+                <p>{showBreakdown === true && textString}</p>
               </Row>
             </Container>
             <Row className='justify-content-md-center text-center mt-5'>
-              <h3 style={{
+              {showBreakdown === true && <h3 style={{
                 color: '#720056',
               }}>
                 Payment Breakdown
-              </h3>
-              <div className="paymentbreakdown">
+              </h3>}
+              {showBreakdown === true && <div className="paymentbreakdown">
                 <Container fluid>
-                  {error && <Message>{error} <i style={{ cursor: 'pointer' }} onClick={() => setError('')} className="far fa-times-circle"></i></Message>}
+                  {error && <Message variant="danger">{error} <i style={{ cursor: 'pointer' }} onClick={() => setError('')} className="far fa-times-circle"></i></Message>}
                   <Row className='justify-content-md-center '>
                     <Col className='brkdwn' md={8}>
                       <Row className='bkdn py-2 justify-content-md-center'>
-                        <Row className='sumry'>
-                          <Col md={6} xs={6}>
-                            <p className='bdtxt text-muted'>Shopping Credit</p>
-                          </Col>
-                          <Col className='lbl' md={6} xs={6}><p className='lbo'>{`₦${payInfo.shoppingCredit ? payInfo.shoppingCredit : ''}`}</p></Col>
-                        </Row>
                         <Row className=''>
                           <Col md={6} xs={6}>
                             <p className='bdtxt text-muted'>Down Payment</p>
                           </Col>
-                          <Col className='lbl' md={6} xs={6}><p className='lbo'>{`₦${downPayment}`}</p></Col>
+                          <Col className='lbl' md={6} xs={6}><p className='lbo'>{`₦ ${downPayment.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</p></Col>
                         </Row>
                         <Row className=''>
                           <Col md={6} xs={6}>
                             <p className='bdtxt text-muted'>Monthly Installment</p>
                           </Col>
-                          <Col className='lbl' md={6} xs={6}><p className='lbo'>{`₦${monthlyAmount}`}</p></Col>
+                          <Col className='lbl' md={6} xs={6}><p className='lbo'>{`₦ ${monthlyAmount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</p></Col>
+                        </Row>
+                        <Row className='sumry'>
+                          <Col md={6} xs={6}>
+                            <p className='bdtxt text-muted'>Shopping Credit</p>
+                          </Col>
+                          <Col className='lbl' md={6} xs={6}><p className='lbo'>{`₦ ${payInfo.shoppingCredit ? payInfo.shoppingCredit.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : ''}`}</p></Col>
                         </Row>
                         <Row className=''>
                           <Col md={6} xs={6}>
@@ -150,8 +160,13 @@ const PlanScreen = (props) => {
                                 <Form.Control
                                   type="text"
                                   className="frm"
+                                  placeholder={`${(cartValue * 0.3).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}
                                   value={updatedDownPayment}
-                                  onChange={(e) => setUpdatedDownPayment(e.target.value)}
+                                  onChange={(e) => {
+                                    const { target: { value } } = e
+                                    setUpdatedDownPayment((Number(value.replace(/\D/g, '')) || '').toLocaleString())
+                                    // setUpdatedDownPayment(e.target.value)
+                                  }}
                                   required
                                 />
                               </InputGroup>
@@ -176,11 +191,12 @@ const PlanScreen = (props) => {
                     </Col>
                   </Row>
                 </Container>
-              </div>
+              </div>}
               <div className='btmbtn text-center mx-auto'>
                 <Button
                   id='btmbtn'
                   onClick={() => props.history.push('/signup')}
+                  disabled={!showBreakdown}
                 >
                   Continue
             </Button>

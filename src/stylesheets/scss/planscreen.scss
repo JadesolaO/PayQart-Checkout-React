@@ -61,14 +61,54 @@
     .boxz {
       border: 0.5px solid #bebebe;
       // padding: 20px 0 !important;
-      padding: 10px !important;
-      width: 6em;
-      height: 4em;
-      margin: 10px 0 !important;
-      border-radius: 6px;
+      // padding: 0 10px !important;
+      width: 5em;
+      height: 5em;
+      margin: 10px 3px !important;
+      border-radius: 8px;
       cursor: pointer;
       // margin-right: 3px !important;
 
+
+      .top {
+        width: 100%;
+        height: 1.5vh;
+        background-color: blue;
+        border-top-left-radius: 7px;
+        border-top-right-radius: 7px;
+      }
+
+      .top1 {
+        background-color: #ff5353;
+      }
+
+      .top2 {
+        background-color: #ff51f3;
+      }
+      
+
+      .top3 {
+        background-color: #6751ff;
+      }
+      
+
+      .top4 {
+        background-color: #51ffed;
+      }
+      
+
+      .top5 {
+        background-color: #ffae51;
+      }
+      
+
+      .top6 {
+        background-color: #6dff51;
+      }
+
+      // .content {
+      //   height: auto;
+      // }
       &:focus,
       &:hover {
         background: linear-gradient(223.39deg, #ff005e 0%, #720056 64.05%);
@@ -77,17 +117,23 @@
         h5 {
           color: #fff;
         }
+
+        p {
+          color: #fff;
+        }
       }
 
       h5 {
-        font-size: 15px;
+        font-size: 27px;
         font-weight: bold;
+        color: #720056;
       }
 
       p {
-        font-size: 13px;
-        color: #afafaf;
-        margin-top: 6px !important;
+        font-size: 11px;
+        color: #720056;
+        // color: #afafaf;
+        // margin-top: 6px !important;
       }
     }
   }
@@ -95,8 +141,16 @@
   .focused {
     background: linear-gradient(223.39deg, #ff005e 0%, #720056 64.05%);
 
-    h5 {
-      color: #fff;
+    .content{
+      // padding: 10px !important;
+
+      h5 {
+        color: #fff;
+      }
+  
+      p {
+        color: #fff;
+      }
     }
   }
 }
@@ -114,10 +168,15 @@
     &:hover {
       background: linear-gradient(223.39deg, #852648 0%, #ff005e 70.05%);
     }
+
+    &:disabled{
+      background:#AFAFAF;
+    }
   }
 }
 
 .paymentbreakdown {
+  // transition: all 1s ease;
   .brkdwn {
     border: 1px solid #bebebe;
     border-radius: 10px;
@@ -184,6 +243,7 @@
 
 .frm {
   border-radius: none !important;
+  padding: 0 10px !important;
 }
 
 .subbtn {
@@ -195,6 +255,7 @@
     &:hover {
       background: linear-gradient(223.39deg, #ff005e 0%, #720056 64.05%);
     }
+
   }
 }
 

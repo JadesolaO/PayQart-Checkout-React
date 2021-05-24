@@ -21,11 +21,14 @@ const InputField = (props) => {
             </InputGroup.Text>
           </InputGroup.Prepend>
           <Form.Control
-            type="number"
+            type="text"
             className="formcontrol"
             onFocus={() => props.setShow(false)}
             value={props.value1}
-            onChange={(e) => props.setValue1(e.target.value.toString())}
+            onChange={(e) => {
+              const { target: { value } } = e
+              props.setValue1((Number(value.replace(/\D/g, '')) || '').toLocaleString())
+            }}
             required
           />
         </InputGroup>
@@ -78,10 +81,13 @@ const InputField = (props) => {
               </InputGroup.Text>
             </InputGroup.Prepend>
             <Form.Control
-              type="number"
+              type="text"
               className="formcontrol"
               value={props.value2}
-              onChange={(e) => props.setValue2(e.target.value.toString())}
+              onChange={(e) => {
+                const { target: { value } } = e
+                props.setValue2((Number(value.replace(/\D/g, '')) || '').toLocaleString())
+              }}
               required
             />
           </InputGroup>
@@ -127,10 +133,13 @@ const InputField = (props) => {
               </InputGroup.Text>
             </InputGroup.Prepend>
             <Form.Control
-              type="number"
+              type="text"
               className="formcontrol"
               value={props.value3}
-              onChange={(e) => props.setValue3(e.target.value)}
+              onChange={(e) => {
+                const { target: { value } } = e
+                props.setValue3((Number(value.replace(/\D/g, '')) || '').toLocaleString())
+              }}
             />
           </InputGroup>
         </Form.Group>}

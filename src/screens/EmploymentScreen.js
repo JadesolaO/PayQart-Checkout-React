@@ -14,16 +14,16 @@ const EmploymentScreen = (props) => {
   const [payDate, setPayDate] = useState(new Date())
   const [salary, setSalary] = useState('')
   const [monthlyExpense, setMonthlyExpense] = useState('')
-  const [loanAmount, setLoanAmount] = useState(Number)
+  const [loanAmount, setLoanAmount] = useState('')
 
   const dateValue = payDate.toDateString()
 
   const handleSubmit = (e) => {
     e.preventDefault()
     localStorage.setItem('userInfo', JSON.stringify({
-      income: Number(salary),
-      monthlyExpense: Number(monthlyExpense),
-      loanAmount: Number(loanAmount),
+      income: Number(salary.split(',').join('')),
+      monthlyExpense: Number(monthlyExpense.split(',').join('')),
+      loanAmount: Number(loanAmount.split(',').join('')),
       employmentType
     }))
     props.history.push('/planscreen')
@@ -73,7 +73,7 @@ const EmploymentScreen = (props) => {
 
             </Row>
           </Col>
-          <Col className='formdiv' md={6} xs={12}>
+          <Col className='formdiv' md={8} xs={12}>
             <Form onSubmit={handleSubmit}>
               {employmentType === 'Paid employment' &&
                 <Row>

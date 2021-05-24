@@ -30,9 +30,11 @@
   .app-form .side-buttons {
     position: relative;
     top: 2vh; }
-    .app-form .side-buttons .side-btn {
+    .app-form .side-buttons .side-div {
       margin-bottom: 8px !important; }
-      .app-form .side-buttons .side-btn #side-btn {
+      .app-form .side-buttons .side-div #highlighted {
+        border: 1px solid #710157; }
+      .app-form .side-buttons .side-div .side-btn {
         text-align: left !important;
         font-size: 12px;
         font-weight: bold;
@@ -44,9 +46,7 @@
         min-width: 50px;
         padding: 8px 15px !important;
         border-radius: 6px; }
-        .app-form .side-buttons .side-btn #side-btn:focus {
-          border: 1px solid #710157; }
-        .app-form .side-buttons .side-btn #side-btn span {
+        .app-form .side-buttons .side-div .side-btn span {
           margin-left: 8px !important; }
   .app-form .form-sec {
     max-height: inherit !important;

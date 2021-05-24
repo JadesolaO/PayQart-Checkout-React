@@ -132,3 +132,13 @@ $imagePath: "../../images/image 7.png";
     }
   }
 }
+
+@media only screen and (max-width: 600px) {
+  .sidescreen {
+    display: none;
+  }
+
+  .cart {
+    display: none;
+  }
+}
