@@ -35,7 +35,6 @@ const RefereeInformation = ({ startPayment }) => {
       .then(res => {
         if (!res.data)
           return;
-        console.log('Here');
         let loanInfo = (({ rname, rtelephone, remail, raddress, relationship, rcity, rstate }) => 
               ({ rname, rtelephone, remail, raddress, relationship, rcity, rstate }))(res.data);
         const names = loanInfo.rname.split(" ");
@@ -49,16 +48,16 @@ const RefereeInformation = ({ startPayment }) => {
   }
 
   const handleSubmit = () => {
-    // console.log(referenceInfo);
-    // let newReferenceObj = (({ rname, rtelephone, remail, raddress, relationship, rcity, rstate }) => 
-    //     ({ rname, rtelephone, remail, raddress, relationship, rcity, rstate }))(referenceInfo);
-    //     newReferenceObj.rname = referenceInfo.rfirstName + ' ' + referenceInfo.rlastName;
-    // submitReferenceInfo(newReferenceObj)
-    //     .then(res => {
-    //         successToast(res.data);
-    //         startPayment();
-    //     })
-    //     .catch(() => {})
+    console.log(referenceInfo);
+    let newReferenceObj = (({ rname, rtelephone, remail, raddress, relationship, rcity, rstate }) => 
+        ({ rname, rtelephone, remail, raddress, relationship, rcity, rstate }))(referenceInfo);
+        newReferenceObj.rname = referenceInfo.rfirstName + ' ' + referenceInfo.rlastName;
+    submitReferenceInfo(newReferenceObj)
+        .then(res => {
+            successToast(res.data);
+            startPayment();
+        })
+        .catch(() => {})
             startPayment();
   }
 
