@@ -36,7 +36,7 @@ const SignUpScreen = (props) => {
       </div>
       <Row className='justify-content-md-center text-center'>
         <Col md={8}>
-          <div className="suform">
+          <div className="suform mb-3">
             <h3
               style={{
                 color: '#720056',
@@ -46,7 +46,7 @@ const SignUpScreen = (props) => {
             </h3>
 
             <Container fluid>
-              <Form className='form_ mb-2' onSubmit={signUpUser}>
+              <Form className='form_ mb-3' onSubmit={signUpUser}>
                 <Form.Group>
                   <Form.Control
                     type="email"
