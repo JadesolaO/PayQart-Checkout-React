@@ -15,6 +15,7 @@ const ContactDetails = ({ setPage }) => {
     city: '',
     state: ''
   }); 
+  const [readOnly, setReadOnly] = useState(false);
 
   const handleChange = (name, e) => {
     setContactInfo({...contactInfo, [name]: e.target.value });
@@ -28,6 +29,7 @@ const ContactDetails = ({ setPage }) => {
     const user = JSON.parse(localStorage.getItem('userObjFromBckEnd'));
     if (!user || user.newUser)
       return;
+    setReadOnly(true);
     const userInfo = (({ email, address, residentialtype, livingduration, telephone, city, state }) =>
           ({ email, address, residentialtype, livingduration, telephone, city, state }))(user);
     setContactInfo(userInfo);
@@ -63,6 +65,7 @@ const ContactDetails = ({ setPage }) => {
             type: 'email',
             value: contactInfo.email,
             name: 'email',
+            readOnly: {readOnly},
             handleChange: handleChange
           }
         ]} 

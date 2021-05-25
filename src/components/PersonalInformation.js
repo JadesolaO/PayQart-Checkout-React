@@ -16,6 +16,7 @@ const PersonalInformation = ({ setPage }) => {
     educationlevel: '',
     children: ''
   });
+  const [readOnly, setReadOnly] = useState(false);
 
   useEffect(() => {
     getUser();
@@ -25,6 +26,7 @@ const PersonalInformation = ({ setPage }) => {
     const user = JSON.parse(localStorage.getItem('userObjFromBckEnd'));
     if (!user || user.newUser)
       return;
+    setReadOnly(true);
     const userInfo = (({ title, gender, firstname, lastname, middlename, maritalstatus, educationlevel, children }) =>
           ({ title, gender, firstname, lastname, middlename, maritalstatus, educationlevel, children }))(user);
     setPersonalInfo(userInfo);
@@ -57,6 +59,7 @@ const PersonalInformation = ({ setPage }) => {
             options: ['Select', 'Mr', 'Mrs', 'Dr.', 'Miss'],
             value: personalInfo.title,
             name: 'title',
+            readOnly: {readOnly},
             handleChange: handleChange
           },
           {
@@ -64,6 +67,7 @@ const PersonalInformation = ({ setPage }) => {
             type: 'text',
             value: personalInfo.firstname,
             name: 'firstname',
+            readOnly: {readOnly},
             handleChange: handleChange
           },
           
@@ -74,6 +78,7 @@ const PersonalInformation = ({ setPage }) => {
             type: 'text',
             value: personalInfo.middlename,
             name: 'middlename',
+            readOnly: {readOnly},
             handleChange: handleChange
           },
           {
@@ -81,6 +86,7 @@ const PersonalInformation = ({ setPage }) => {
             type: 'text',
             value: personalInfo.lastname,
             name: 'lastname',
+            readOnly: {readOnly},
             handleChange: handleChange
           }
         ]}
@@ -91,6 +97,7 @@ const PersonalInformation = ({ setPage }) => {
             options: ['Select', 'Female', 'Male'],
             value: personalInfo.gender,
             name: 'gender',
+            readOnly: {readOnly},
             handleChange: handleChange
           },
           {

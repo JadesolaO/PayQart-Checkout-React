@@ -39,7 +39,7 @@ const EligibilityScreen = (props) => {
                         </span>
                     </div>
                     <div>
-                        <Button className='proced-button' onClick={() => props.history.push('/signup')}>
+                        <Button className='proced-button' onClick={() => props.history.push('/employmentscreen')}>
                             Proceed
                         </Button>
                     </div>
