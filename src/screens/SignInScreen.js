@@ -18,7 +18,8 @@ const SignInScreen = (props) => {
         .then(res => {
             localStorage.setItem('userObjFromBckEnd', JSON.stringify(res.data.user));
             inititiateCredit()
-              .then(() => {
+              .then((response) => {
+                localStorage.setItem('loanId', response.data.loanid);
                 successToast(res.data.message);
                 props.history.push('/creditscreen');
               })

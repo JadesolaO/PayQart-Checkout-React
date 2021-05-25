@@ -1,8 +1,8 @@
 import { toast } from 'react-toastify';
 import http from './httpService';
 
-// const apiEndpoint = 'http://localhost:2000/user';
-const apiEndpoint = 'https://cryptic-reef-51266.herokuapp.com/user';
+const apiEndpoint = 'http://localhost:2000/user';
+// const apiEndpoint = 'https://cryptic-reef-51266.herokuapp.com/user';
 
 export async function inititiateCredit(creditInfo) {
   return await http.post(`${apiEndpoint}/initiate-credit`, creditInfo);
@@ -34,6 +34,24 @@ export async function makeFeePayment(id) {
 
 export async function getLoanDetails() {
   return await http.get(`${apiEndpoint}/get-loan-details`);
+}
+
+export async function getDocumentDetails() {
+  let config = {
+    headers: {
+      loanid: localStorage.getItem('loanId')
+    }
+  }
+  return await http.get(`${apiEndpoint}/check-document-status`, config);
+}
+
+export async function uploadDocument(data) {
+  let config = {
+    headers: {
+      loanid: localStorage.getItem('loanId')
+    }
+  }
+  return await http.post(`${apiEndpoint}/upload-document`, data, config);
 }
 
 export function successToast(msg) {
