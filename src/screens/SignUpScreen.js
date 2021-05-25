@@ -6,6 +6,7 @@ import eye from '../images/Path 38.png'
 import lock from '../images/Path 44.png'
 import '../stylesheets/scss/SignUpScreen.scss'
 import { successToast, doSignUp } from '../services/authService';
+import { inititiateCredit } from '../services/creditFormService'
 
 const SignUpScreen = (props) => {
   const [email, setEmail] = useState('')
@@ -14,16 +15,20 @@ const SignUpScreen = (props) => {
   const [agree, setAgree] = useState('')
 
   const signUpUser = (e) => {
-    e.preventDefault()
-    // const user = { email: email, pin: password, bvn: bvn };
-    // doSignUp(user)
-    //     .then(res => {
-    //         successToast(res.data);
-    //         props.history.push('/creditscreen')
-    //     })
-    //     .catch(() => {})
-
-    props.history.push('/creditscreen')
+    e.preventDefault();
+    const user = { email: email, pin: password, bvn: bvn };
+    doSignUp(user)
+        .then(res => {
+          localStorage.setItem('userObjFromBckEnd', JSON.stringify(res.data.user));
+          inititiateCredit()
+            .then((response) => {
+              localStorage.setItem('loanId', response.data.loanid);
+              successToast(res.data.message);
+              props.history.push('/creditscreen');
+            })
+            .catch(() => {});
+        })
+        .catch(() => {})
   }
 
   return (

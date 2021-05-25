@@ -1,12 +1,36 @@
-import React from 'react'
-import { Container, Row, Col, Button } from 'react-bootstrap'
-import FileUpload from '../components/FileUpload'
-import { Image } from 'react-bootstrap'
-import upload from '../images/upload.svg'
-import '../stylesheets/scss/successScreen.scss'
-import { Link } from 'react-router-dom'
+import React, { useState, useEffect } from 'react';
+import { Container, Row, Col, Button } from 'react-bootstrap';
+import FileUpload from '../components/FileUpload';
+import { getDocumentDetails } from '../services/creditFormService';
+import '../stylesheets/scss/successScreen.scss';
 
 const SuccessScreen = (props) => {
+
+  const [documentStatus, setDocumentStatus] = useState({
+    govtIdSubmitted: 0,
+    workIdSubmitted: 0,
+    passportPhotoSubmitted: 0,
+    proofOfAddressSubmitted: 0
+  });
+
+  useEffect(() => {
+    retrieveDocumentStatus();
+  }, []);
+
+  const retrieveDocumentStatus = async () => {
+    await getDocumentDetails()
+      .then(res => {
+        if (!res.data || !res.data.status)
+          return;
+        console.log(res.data);
+        setDocumentStatus({...documentStatus, ...res.data.status});
+      })
+      .catch(() => {});
+  }
+
+  const handleDocStatus = (obj) => {
+    setDocumentStatus(obj);
+  }
 
   const routeToMono = () => {
     window.location.href = 'https://mono.co/statements/3e5AuEa';
@@ -28,10 +52,9 @@ const SuccessScreen = (props) => {
                 <p><strong>Bank Statement</strong></p>
                 <label onClick={routeToMono} className='lablef'>Generate</label>
               </div>
-              <FileUpload name='Govt Issued ID' />
-              <FileUpload name='Work ID' />
-              <FileUpload name='Proof Of Address' />
-              <FileUpload name='Passport Photo' />
+              {documentUploadArray.map((obj) => (
+                <FileUpload uploadObj={obj} documentStatus={documentStatus} handleDocStatus={handleDocStatus} />
+              ))}
             </Col>
           </Row>
           <Row className='justify-content-md-center'>
@@ -51,4 +74,11 @@ const SuccessScreen = (props) => {
   )
 }
 
-export default SuccessScreen
+export default SuccessScreen;
+
+const documentUploadArray = [
+  { label: 'Govt Issued ID', name: 'govtId', statusField: 'govtIdSubmitted' },
+  { label: 'Work ID', name: 'workId', statusField: 'workIdSubmitted' },
+  { label: 'Proof Of Address', name: 'proofOfAddress', statusField: 'proofOfAddressSubmitted' },
+  { label: 'Passport Photo', name: 'passportPhoto', statusField: 'passportPhotoSubmitted' }
+];

@@ -21,7 +21,7 @@ const ForgotPasswordScreen = (props) => {
   return (
     <div className='signup'>
       <div className="top-section">
-        <Link to="/planscreen"><i style={{ color: "#FF005E" }} className="fas fa-arrow-left"></i> Back</Link>
+        <Link to="/signin"><i style={{ color: "#FF005E" }} className="fas fa-arrow-left"></i> Back</Link>
       </div>
       <div className="steps s-checks">
       <ProgressSteps step1 step2 complete/>
