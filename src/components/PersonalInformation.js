@@ -14,7 +14,9 @@ const PersonalInformation = ({ setPage }) => {
     middlename: '',
     maritalstatus: '',
     educationlevel: '',
-    children: ''
+    children: '',
+    bvn: '',
+    dob: ''
   });
 
   const handleChange = (name, e) => {
@@ -101,6 +103,22 @@ const PersonalInformation = ({ setPage }) => {
             type: 'number',
             value: personalInfo.children,
             name: 'children',
+            handleChange: handleChange
+          }
+        ]}
+        formDetails5={[
+          {
+            label: 'Bank Verification Number',
+            type: 'number',
+            value: personalInfo.bvn,
+            name: 'bvn',
+            handleChange: handleChange
+          },
+          {
+            label: 'Date Of Birth',
+            type: 'date',
+            value: personalInfo.dob,
+            name: 'dob',
             handleChange: handleChange
           }
         ]}

@@ -49,6 +49,10 @@ const CreditForm = (props) => {
           <Row className='justify-content-md-center'>
             {formFunction(props.formDetails4)}
           </Row>}
+        {props.formDetails5 &&
+          <Row className='justify-content-md-center'>
+            {formFunction(props.formDetails5)}
+          </Row>}
         <div className="cont-btn text-center">
           <Button type='submit'>
             {props.buttonText}
