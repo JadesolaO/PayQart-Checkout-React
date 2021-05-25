@@ -6,7 +6,7 @@ import eye from '../images/Path 38.png'
 import lock from '../images/Path 44.png'
 import '../stylesheets/scss/SignUpScreen.scss'
 import { successToast, doSignUp } from '../services/authService';
-import { inititiateCredit } from '../services/creditFormService';
+import { inititiateCredit } from '../services/creditFormService'
 
 const SignUpScreen = (props) => {
   const [email, setEmail] = useState('')
@@ -14,7 +14,8 @@ const SignUpScreen = (props) => {
   const [bvn, setBvn] = useState('')
   const [agree, setAgree] = useState('')
 
-  const signUpUser = () => {
+  const signUpUser = (e) => {
+    e.preventDefault();
     const user = { email: email, pin: password, bvn: bvn };
     doSignUp(user)
         .then(res => {
@@ -40,7 +41,7 @@ const SignUpScreen = (props) => {
       </div>
       <Row className='justify-content-md-center text-center'>
         <Col md={8}>
-          <div className="suform">
+          <div className="suform mb-3">
             <h3
               style={{
                 color: '#720056',
@@ -50,7 +51,7 @@ const SignUpScreen = (props) => {
             </h3>
 
             <Container fluid>
-              <Form className='form_ mb-2'>
+              <Form className='form_ mb-3' onSubmit={signUpUser}>
                 <Form.Group>
                   <Form.Control
                     type="email"
@@ -127,7 +128,7 @@ const SignUpScreen = (props) => {
                 <div className="contdbtn">
                   <Button
                     id='btmbtn'
-                    onClick={signUpUser}
+                    type='submit'
                   >
                     Create Account
                     </Button>

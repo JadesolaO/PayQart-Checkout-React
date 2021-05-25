@@ -29,20 +29,17 @@ const ContactDetails = ({ setPage }) => {
     const user = JSON.parse(localStorage.getItem('userObjFromBckEnd'));
     if (!user || user.newUser)
       return;
-    setReadOnly(true);
     const userInfo = (({ email, address, residentialtype, livingduration, telephone, city, state }) =>
           ({ email, address, residentialtype, livingduration, telephone, city, state }))(user);
     setContactInfo(userInfo);
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
     console.log(contactInfo);
     submitContactInfo(contactInfo)
         .then(res => {
             localStorage.setItem('userEmail', contactInfo.email);
-            const user = JSON.parse(localStorage.getItem('userObjFromBckEnd'));
-            const updatedUserInfo = { ...user, ...contactInfo };
-            localStorage.setItem('userObjFromBckEnd', JSON.stringify(updatedUserInfo));
             successToast(res.data);
             setPage('employmentInfo');
         })
@@ -113,12 +110,9 @@ const ContactDetails = ({ setPage }) => {
             handleChange: handleChange
           }
         ]}
+        handleSubmit={handleSubmit}
+        buttonText='Continue'
       />
-      <div className="cont-btn text-center">
-        <Button onClick={handleSubmit}>
-          Continue
-        </Button>
-      </div>
     </div>
   )
 }

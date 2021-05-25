@@ -14,7 +14,9 @@ const PersonalInformation = ({ setPage }) => {
     middlename: '',
     maritalstatus: '',
     educationlevel: '',
-    children: ''
+    children: '',
+    bvn: '',
+    dob: ''
   });
   const [readOnly, setReadOnly] = useState(false);
 
@@ -36,14 +38,12 @@ const PersonalInformation = ({ setPage }) => {
     setPersonalInfo({...personalInfo, [name]: e.target.value });
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
     console.log(personalInfo);
     submitPersonalInfo(personalInfo)
         .then(res => {
             successToast(res.data);
-            const user = JSON.parse(localStorage.getItem('userObjFromBckEnd'));
-            const updatedUserInfo = { ...user, ...personalInfo };
-            localStorage.setItem('userObjFromBckEnd', JSON.stringify(updatedUserInfo));
             setPage('contactInfo');
         })
         .catch(() => {})
@@ -126,12 +126,27 @@ const PersonalInformation = ({ setPage }) => {
             handleChange: handleChange
           }
         ]}
+        formDetails5={[
+          {
+            label: 'Bank Verification Number',
+            type: 'number',
+            value: personalInfo.bvn,
+            name: 'bvn',
+            readOnly: {readOnly},
+            handleChange: handleChange
+          },
+          {
+            label: 'Date Of Birth',
+            type: 'date',
+            value: personalInfo.dob,
+            name: 'dob',
+            readOnly: {readOnly},
+            handleChange: handleChange
+          }
+        ]}
+        handleSubmit={handleSubmit}
+        buttonText='Continue'
       />
-      <div className="cont-btn text-center">
-        <Button onClick={handleSubmit}>
-          Continue
-        </Button>
-      </div>
     </div>
   )
 }

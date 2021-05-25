@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import CreditForm from './CreditForm';
 import { Button } from 'react-bootstrap';
-import { successToast, submitEmploymentInfo, getLoanDetails } from '../services/creditFormService';
+import { successToast, submitEmploymentInfo } from '../services/creditFormService';
 import '../stylesheets/scss/creditapplicationscreen.scss';
 
 const EmploymentInformation = ({ setPage }) => {
@@ -41,12 +41,13 @@ const EmploymentInformation = ({ setPage }) => {
       .catch(() => {});
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
     console.log(employmentInfo);
     submitEmploymentInfo(employmentInfo)
         .then(res => {
             successToast(res.data);
-            setPage('bankInfo');
+            setPage('employmentInfo');
         })
         .catch(() => {})
   }
@@ -121,12 +122,9 @@ const EmploymentInformation = ({ setPage }) => {
               handleChange: handleChange
             }
           ]}
+          handleSubmit={handleSubmit}
+          buttonText='Continue'
       />
-      <div className="cont-btn text-center">
-        <Button onClick={handleSubmit}>
-          Continue
-        </Button>
-      </div> 
     </div>
   )
 }

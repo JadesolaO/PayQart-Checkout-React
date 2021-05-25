@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import CreditForm from './CreditForm';
 import { Button } from 'react-bootstrap';
-import { successToast, submitReferenceInfo, getLoanDetails} from '../services/creditFormService';
+import { successToast, submitReferenceInfo, getLoanDetails } from '../services/creditFormService';
 import '../stylesheets/scss/creditapplicationscreen.scss';
 
 const RefereeInformation = ({ startPayment }) => {
@@ -47,7 +47,8 @@ const RefereeInformation = ({ startPayment }) => {
       .catch(() => {});
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault()
     console.log(referenceInfo);
     let newReferenceObj = (({ rname, rtelephone, remail, raddress, relationship, rcity, rstate }) => 
         ({ rname, rtelephone, remail, raddress, relationship, rcity, rstate }))(referenceInfo);
@@ -129,12 +130,9 @@ const RefereeInformation = ({ startPayment }) => {
             handleChange: handleChange
           }
         ]}
+        handleSubmit={handleSubmit}
+        buttonText='Pay Verification Fee'
       />
-      <div className="cont-btn text-center">
-        <Button className='pay-btn' onClick={handleSubmit}>
-          Pay Verification Fee
-        </Button>
-      </div>
     </div>
   )
 }

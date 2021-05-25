@@ -58,7 +58,7 @@
       cursor: pointer; }
       .plans .row .boxz .top {
         width: 100%;
-        height: 1.5vh;
+        height: .8rem;
         background-color: blue;
         border-top-left-radius: 7px;
         border-top-right-radius: 7px; }

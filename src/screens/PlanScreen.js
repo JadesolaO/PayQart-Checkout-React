@@ -120,9 +120,9 @@ const PlanScreen = (props) => {
                       <Row className='bkdn py-2 justify-content-md-center'>
                         <Row className=''>
                           <Col md={6} xs={6}>
-                            <p className='bdtxt text-muted'>Down Payment</p>
+                            <p className='bdtxt text-muted'><b>Down Payment</b></p>
                           </Col>
-                          <Col className='lbl' md={6} xs={6}><p className='lbo'>{`₦ ${downPayment.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</p></Col>
+                          <Col className='lbl' md={6} xs={6}><p className='lbo'><b>{`₦ ${downPayment.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</b></p></Col>
                         </Row>
                         <Row className=''>
                           <Col md={6} xs={6}>

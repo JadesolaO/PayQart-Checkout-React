@@ -8,7 +8,7 @@ const CreditScreen = (props) => {
   return (
     <div className='creditscreen'>
       <div className="topsection">
-        <Link to="/employmentscreen"><i style={{ color: "#FF005E" }} className="fas fa-arrow-left"></i> Back</Link>
+        <Link to="/creditscreen"><i style={{ color: "#FF005E" }} className="fas fa-arrow-left"></i> Back</Link>
       </div>
       <div className="steps">
       <ProgressSteps step1 step2 step3 complete/>
@@ -18,15 +18,15 @@ const CreditScreen = (props) => {
           <Col className='boxes mx-3 mb-3' xs={12} md={6}>
             <div className="text">
               <p className='mb-2'>Wallet Balance</p>
-              <h5 className='mb-2'>₦45,000</h5>
-              <p className="text-muted">Expires in 29 days</p>
+              <h5 className='mb-2'>₦0.00</h5>
+              {/* <p className="text-muted">Expires in 29 days</p> */}
             </div>
           </Col>
           <Col className='boxes mx-3 mb-3' xs={12} md={6}>
             <div className="text">
               <p className='mb-2'>Available Shopping Credit</p>
-              <h5 className='mb-2'>₦25,000</h5>
-              <p className="text-muted">Approved Tenor: 5 months</p>
+              <h5 className='mb-2'>₦0.00</h5>
+              {/* <p className="text-muted">Approved Tenor: 5 months</p> */}
             </div>
           </Col>
             <div className="apply-button my-3 text-center">

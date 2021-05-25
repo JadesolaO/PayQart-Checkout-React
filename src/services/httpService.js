@@ -6,12 +6,8 @@ import { toast } from 'react-toastify';
 // Add a request interceptor
 axios.interceptors.request.use(function (config) {
 
-  const user = JSON.parse(localStorage.getItem('userObjFromBckEnd'));
   config.headers['Content-Type'] = 'application/json';
-  if (!user)
-    return config;
-
-  config.headers['authid'] = user.authid;
+  config.headers['x-auth-token'] = localStorage.getItem('User');
   return config;
 });
 
