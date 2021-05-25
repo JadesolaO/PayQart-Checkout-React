@@ -108,11 +108,6 @@ const RefereeInformation = ({ startPayment }) => {
         handleSubmit={handleSubmit}
         buttonText='Pay Verification Fee'
       />
-      {/* <div className="cont-btn text-center">
-        <Button className='pay-btn' onClick={handleSubmit}>
-          Pay Verification Fee
-        </Button>
-      </div> */}
     </div>
   )
 }

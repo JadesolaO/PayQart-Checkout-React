@@ -98,11 +98,6 @@ const ContactDetails = ({ setPage }) => {
         handleSubmit={handleSubmit}
         buttonText='Continue'
       />
-      {/* <div className="cont-btn text-center">
-        <Button onClick={handleSubmit}>
-          Continue
-        </Button>
-      </div> */}
     </div>
   )
 }
