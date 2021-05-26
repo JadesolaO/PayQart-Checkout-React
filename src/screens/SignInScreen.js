@@ -75,7 +75,11 @@ const SignInScreen = (props) => {
                   </InputGroup>
                 </Form.Group>
 
-                <p className="text-center sitxt">Don't have an account? <Link to='/'>Proceed to check eligibility.</Link></p>
+                <p className="text-center sitxt">Don't have an account? <Link to='/eligibityscreen'>Proceed to check eligibility.</Link></p>
+
+                <div className="forgotpass">
+                    <Link to='/forgotpassword'>Forgot Password?</Link>
+                  </div>
 
 
                 <div className="check">
@@ -129,10 +133,6 @@ const SignInScreen = (props) => {
 
                     </Form.Label>
                   </Form.Group>
-
-                  <div className="forgotpass">
-                    <Link to='/forgotpassword'>Forgot Password?</Link>
-                  </div>
 
                 </div>
                 <div className="contdbtn">

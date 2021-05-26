@@ -19,7 +19,7 @@ const CreditForm = (props) => {
               <Form.Control
                 className='frm-ctrl'
                 type={type}
-                readOnly={readOnly}
+                // readOnly={readOnly}
                 value={value}
                 onChange={(text) => handleChange(name, text)}
                 required

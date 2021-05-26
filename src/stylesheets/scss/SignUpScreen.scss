@@ -124,7 +124,7 @@
 }
 
 .check {
-  margin-top: 4rem !important;
+  margin: 2rem 0 !important;
 
   // span {
   //   margin-bottom: 3rem !important
@@ -144,19 +144,6 @@
 
     &:checked {
       background-color: #ff005e;
-    }
-  }
-
-  .forgotpass {
-    margin: 3rem 0rem !important;
-    a {
-      color: #720056;
-      font-size: 13px;
-      font-weight: bold;
-
-      &:hover {
-        color: #ff005e;
-      }
     }
   }
 }
@@ -198,4 +185,19 @@
 
 .s-checks {
   top: 7vh;
+}
+
+
+
+.forgotpass {
+  margin-top: 2rem !important;
+  a {
+    color: #720056;
+    font-size: 13px;
+    font-weight: bold;
+
+    &:hover {
+      color: #ff005e;
+    }
+  }
 }

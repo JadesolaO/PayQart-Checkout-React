@@ -34,7 +34,7 @@ const CreditScreen = (props) => {
               size='lg'
               onClick={() => props.history.push('/creditapplication')}
               >
-                Apply To Breakdown
+                Apply For Shopping Credit
             </Button>
             </div>
         </Row>

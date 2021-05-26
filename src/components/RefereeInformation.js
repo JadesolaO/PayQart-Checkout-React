@@ -91,7 +91,7 @@ const RefereeInformation = ({ startPayment }) => {
           },
           {
             label: 'Telephone Number',
-            type: 'text',
+            type: 'number',
             value: referenceInfo.rtelephone,
             name: 'rtelephone',
             handleChange: handleChange

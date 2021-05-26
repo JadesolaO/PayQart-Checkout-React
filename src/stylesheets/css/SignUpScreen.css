@@ -85,7 +85,7 @@
       background: linear-gradient(223.39deg, #852648 0%, #ff005e 70.05%); }
 
 .check {
-  margin-top: 4rem !important; }
+  margin: 2rem 0 !important; }
   .check .checktext {
     display: inline-block;
     position: relative; }
@@ -98,14 +98,6 @@
     margin-right: -5px !important; }
     .check .form-check-input:checked {
       background-color: #ff005e; }
-  .check .forgotpass {
-    margin: 3rem 0rem !important; }
-    .check .forgotpass a {
-      color: #720056;
-      font-size: 13px;
-      font-weight: bold; }
-      .check .forgotpass a:hover {
-        color: #ff005e; }
 
 .inputgroup_ {
   position: relative; }
@@ -132,3 +124,12 @@
 
 .s-checks {
   top: 7vh; }
+
+.forgotpass {
+  margin-top: 2rem !important; }
+  .forgotpass a {
+    color: #720056;
+    font-size: 13px;
+    font-weight: bold; }
+    .forgotpass a:hover {
+      color: #ff005e; }
