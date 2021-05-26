@@ -1,24 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { Image } from 'react-bootstrap';
 import upload from '../images/upload.svg';
-import { uploadDocument, successToast } from '../services/creditFormService';
+// import { uploadDocument, successToast } from '../services/creditFormService';
 import '../stylesheets/scss/fileupload.scss';
 
-const FileUpload = ({ uploadObj, documentStatus, handleDocStatus }) => {
+const FileUpload = ({ uploadObj, documentStatus, saveDocument }) => {
 
-  console.log(documentStatus[uploadObj.statusField]);
   const [inputFile, setInputFile] = useState(null);
  
   useEffect(() => {
-    setInputFile(document.getElementById("actual-btn"));
+    setInputFile(document.getElementById(uploadObj.id));
   }, []);
 
   const handleClick = (event) => {
-    console.log('Clicked!');
-    event = event || window.event;
-    if(event.target.id === 'displayed-btn'){
-        inputFile?.click();
-    }
+    // event = event || window.event;
+    // if(event.target.id === 'displayed-btn'){
+    // }
+    if (documentStatus[uploadObj.statusField] === 1 )
+      return;
+    inputFile.click();
   };
 
   const handleChange = event => {
@@ -36,23 +36,16 @@ const FileUpload = ({ uploadObj, documentStatus, handleDocStatus }) => {
     reader.readAsDataURL(event.target.files[0]);
   };
 
-  const saveDocument = async (file) => {
-
-    const myDoc = { [uploadObj.statusField]: 1, [uploadObj.name]: file };
-    await uploadDocument(myDoc)
-    .then(res => {
-      successToast(res.data);
-      handleDocStatus({...documentStatus, [uploadObj.statusField]: 1 });
-    })
-    .catch(() => {});
-  }
-
   return (
     <form>
       <div className="fileUpload text-center">
         <p><strong>{uploadObj.label}</strong></p>
-        <input type="file" id="actual-btn" hidden onChange={handleChange} />
-        <label className='lablef' for="actual-btn" id="displayed-btn" onClick={handleClick}><Image fluid src={upload} />  Upload</label>
+        <input type="file" id={uploadObj.id} hidden onChange={handleChange} />
+        <label className='lablef' for="actual-" id="displayed-btn" onClick={handleClick}>
+          { documentStatus[uploadObj.statusField] === 1 ? 
+            (<><i className="fa fa-check"></i> Done</>) : (<><Image fluid src={upload} />  Upload</>)
+          }
+        </label>
       </div>
     </form>
   )

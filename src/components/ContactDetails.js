@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import CreditForm from './CreditForm';
 import { Button } from 'react-bootstrap';
 import { successToast, submitContactInfo } from '../services/creditFormService';
@@ -15,9 +15,23 @@ const ContactDetails = ({ setPage }) => {
     city: '',
     state: ''
   }); 
+  const [readOnly, setReadOnly] = useState(false);
 
   const handleChange = (name, e) => {
     setContactInfo({...contactInfo, [name]: e.target.value });
+  }
+
+  useEffect(() => {
+    getUser();
+  }, []);
+
+  const getUser = () => {
+    const user = JSON.parse(localStorage.getItem('userObjFromBckEnd'));
+    if (!user || user.newUser)
+      return;
+    const userInfo = (({ email, address, residentialtype, livingduration, telephone, city, state }) =>
+          ({ email, address, residentialtype, livingduration, telephone, city, state }))(user);
+    setContactInfo(userInfo);
   }
 
   const handleSubmit = (e) => {
@@ -48,6 +62,7 @@ const ContactDetails = ({ setPage }) => {
             type: 'email',
             value: contactInfo.email,
             name: 'email',
+            readOnly: {readOnly},
             handleChange: handleChange
           }
         ]} 

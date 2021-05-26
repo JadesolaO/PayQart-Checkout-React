@@ -7,7 +7,8 @@ import { toast } from 'react-toastify';
 axios.interceptors.request.use(function (config) {
 
   config.headers['Content-Type'] = 'application/json';
-  config.headers['x-auth-token'] = localStorage.getItem('User');
+
+  config.headers['authid'] = JSON.stringify(localStorage.getItem('userObjFromBckEnd')).authid;
   return config;
 });
 

@@ -66,7 +66,7 @@ const WalletStatusScreen = (props) => {
                     <h3>I don't know my PayQart wallet status.</h3>
                     <p>This is the first time I am seeing this.</p>
                     <div className='wallet-button text-center'>
-                      <Button variant="outline-secondary" id='wallet-button-id' onClick={() => setStatus('/employmentscreen')}>
+                      <Button variant="outline-secondary" id='wallet-button-id' onClick={() => setStatus('/eligibityscreen')}>
                         Select
                       </Button>
                     </div>
