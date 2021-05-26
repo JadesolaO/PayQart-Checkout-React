@@ -4,7 +4,7 @@ import { Button } from 'react-bootstrap';
 import { successToast, submitContactInfo } from '../services/creditFormService';
 import '../stylesheets/scss/creditapplicationscreen.scss';
 
-const ContactDetails = ({ setPage }) => {
+const ContactDetails = ({ setPage, setContactdone }) => {
 
   const [contactInfo, setContactInfo] = useState({
     email: '',
@@ -42,6 +42,7 @@ const ContactDetails = ({ setPage }) => {
             localStorage.setItem('userEmail', contactInfo.email);
             successToast(res.data);
             setPage('employmentInfo');
+            setContactdone(true)
         })
         .catch(() => {})
   }

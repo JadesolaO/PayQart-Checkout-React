@@ -4,7 +4,7 @@ import { Button } from 'react-bootstrap';
 import { successToast, submitBankInfo, getLoanDetails } from '../services/creditFormService';
 import '../stylesheets/scss/creditapplicationscreen.scss';
 
-const BankInformation = ({ setPage }) => {
+const BankInformation = ({ setPage, setBankdone }) => {
 
   const [bankInfo, setBankInfo] = useState({
     incomebanktype: '',
@@ -44,6 +44,7 @@ const BankInformation = ({ setPage }) => {
         .then(res => {
             successToast(res.data);
             setPage('refInfo');
+            setBankdone(true)
         })
         .catch(() => {})
   }
