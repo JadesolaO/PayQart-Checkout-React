@@ -49,7 +49,7 @@ const WalletStatusScreen = (props) => {
                     <h3>My PayQart Wallet is not funded</h3>
                     <p>I don't have shopping credit</p>
                     <div className='wallet-button text-center'>
-                      <Button variant="outline-secondary" id='wallet-button-id' onClick={() => setStatus('/signin')}>
+                      <Button variant="outline-secondary" id='wallet-button-id' onClick={() => setStatus('/eligibityscreen')}>
                         Select
                       </Button>
                     </div>
@@ -76,7 +76,9 @@ const WalletStatusScreen = (props) => {
 
             </Row>
 
-            <Button className='proceed-button' disabled={statusSelected === ''} onClick={() => props.history.push(statusSelected)}>
+            <Button className='proceed-button' disabled={statusSelected === ''} onClick={() => {
+              
+              props.history.push(statusSelected)}}>
                 Proceed
             </Button>
           </Col>

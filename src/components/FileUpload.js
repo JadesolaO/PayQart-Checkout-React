@@ -43,7 +43,7 @@ const FileUpload = ({ uploadObj, documentStatus, saveDocument }) => {
         <input type="file" id={uploadObj.id} hidden onChange={handleChange} />
         <label className='lablef' for="actual-" id="displayed-btn" onClick={handleClick}>
           { documentStatus[uploadObj.statusField] === 1 ? 
-            (<><i className="fa fa-check"></i> Done</>) : (<><Image fluid src={upload} />  Upload</>)
+            (<><i style={{fontSize: '20px'}} className="fa fa-check"></i> Done</>) : (<><Image fluid src={upload} />  Upload</>)
           }
         </label>
       </div>

@@ -124,17 +124,17 @@ const PlanScreen = (props) => {
                           </Col>
                           <Col className='lbl' md={6} xs={6}><p className='lbo'><b>{`₦ ${downPayment.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</b></p></Col>
                         </Row>
-                        <Row className=''>
-                          <Col md={6} xs={6}>
-                            <p className='bdtxt text-muted'>Monthly Installment</p>
-                          </Col>
-                          <Col className='lbl' md={6} xs={6}><p className='lbo'>{`₦ ${monthlyAmount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</p></Col>
-                        </Row>
                         <Row className='sumry'>
                           <Col md={6} xs={6}>
                             <p className='bdtxt text-muted'>Shopping Credit</p>
                           </Col>
                           <Col className='lbl' md={6} xs={6}><p className='lbo'>{`₦ ${payInfo.shoppingCredit ? payInfo.shoppingCredit.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : ''}`}</p></Col>
+                        </Row>
+                        <Row className=''>
+                          <Col md={6} xs={6}>
+                            <p className='bdtxt text-muted'>Monthly Installment</p>
+                          </Col>
+                          <Col className='lbl' md={6} xs={6}><p className='lbo'>{`₦ ${monthlyAmount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</p></Col>
                         </Row>
                         <Row className=''>
                           <Col md={6} xs={6}>
@@ -199,7 +199,7 @@ const PlanScreen = (props) => {
                   disabled={!showBreakdown}
                 >
                   Continue
-            </Button>
+               </Button>
               </div>
             </Row>
           </div>

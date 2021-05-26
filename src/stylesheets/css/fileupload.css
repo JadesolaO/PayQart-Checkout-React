@@ -10,6 +10,8 @@
   text-align: justify;
   display: flex;
   justify-content: space-around; }
+  .lablef i {
+    margin-right: 10px !important; }
   .lablef img {
     margin-right: 10px !important; }
   .lablef:hover {
