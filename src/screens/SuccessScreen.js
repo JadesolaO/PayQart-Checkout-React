@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import FileUpload from '../components/FileUpload';
-import { getDocumentDetails } from '../services/creditFormService';
+import { getDocumentDetails, uploadDocument, successToast } from '../services/creditFormService';
 import '../stylesheets/scss/successScreen.scss';
 
 const SuccessScreen = (props) => {
@@ -28,6 +28,20 @@ const SuccessScreen = (props) => {
       .catch(() => {});
   }
 
+  const saveDocument = async (file, name, statusField) => {
+
+    // handleDocStatus({...documentStatus, [statusField]: 1 });
+    console.log(statusField);
+    const myDoc = { [statusField]: 1, [name]: file };
+    await uploadDocument(myDoc)
+    .then(res => {
+      successToast(res.data);
+      console.log([statusField]);
+      handleDocStatus({...documentStatus, [statusField]: 1 });
+    })
+    .catch(() => {});
+  }
+
   const handleDocStatus = (obj) => {
     setDocumentStatus(obj);
   }
@@ -52,9 +66,38 @@ const SuccessScreen = (props) => {
                 <p><strong>Bank Statement</strong></p>
                 <label onClick={routeToMono} className='lablef'>Generate</label>
               </div>
-              {documentUploadArray.map((obj) => (
-                <FileUpload uploadObj={obj} documentStatus={documentStatus} handleDocStatus={handleDocStatus} />
-              ))}
+              {/* {documentUploadArray.map((obj) => (
+                <FileUpload
+                  uploadObj={obj}
+                  documentStatus={documentStatus}
+                  handleDocStatus={handleDocStatus}
+                  saveDocument={(file) => saveDocument(file, [obj.name], [obj.statusField])}
+                />
+              ))} */}
+              <FileUpload
+                  uploadObj={govtID}
+                  documentStatus={documentStatus}
+                  handleDocStatus={handleDocStatus}
+                  saveDocument={(file) => saveDocument(file, [govtID.name], [govtID.statusField])}
+                />
+              <FileUpload
+                  uploadObj={workID}
+                  documentStatus={documentStatus}
+                  handleDocStatus={handleDocStatus}
+                  saveDocument={(file) => saveDocument(file, [workID.name], [workID.statusField])}
+                />
+              <FileUpload
+                  uploadObj={proofOfAddress}
+                  documentStatus={documentStatus}
+                  handleDocStatus={handleDocStatus}
+                  saveDocument={(file) => saveDocument(file, [proofOfAddress.name], [proofOfAddress.statusField])}
+                />
+              <FileUpload
+                  uploadObj={passportPhoto}
+                  documentStatus={documentStatus}
+                  handleDocStatus={handleDocStatus}
+                  saveDocument={(file) => saveDocument(file, [passportPhoto.name], [passportPhoto.statusField])}
+                />
             </Col>
           </Row>
           <Row className='justify-content-md-center'>
@@ -76,9 +119,14 @@ const SuccessScreen = (props) => {
 
 export default SuccessScreen;
 
-const documentUploadArray = [
-  { label: 'Govt Issued ID', name: 'govtId', statusField: 'govtIdSubmitted' },
-  { label: 'Work ID', name: 'workId', statusField: 'workIdSubmitted' },
-  { label: 'Proof Of Address', name: 'proofOfAddress', statusField: 'proofOfAddressSubmitted' },
-  { label: 'Passport Photo', name: 'passportPhoto', statusField: 'passportPhotoSubmitted' }
-];
+// const documentUploadArray = [
+//   { label: 'Govt Issued ID', name: 'govtId', statusField: 'govtIdSubmitted' },
+//   { label: 'Work ID', name: 'workId', statusField: 'workIdSubmitted' },
+//   { label: 'Proof Of Address', name: 'proofOfAddress', statusField: 'proofOfAddressSubmitted' },
+//   { label: 'Passport Photo', name: 'passportPhoto', statusField: 'passportPhotoSubmitted' }
+// ];
+
+const govtID = { id: 'actual-btn-1', label: 'Govt Issued ID', name: 'govtId', statusField: 'govtIdSubmitted' };
+const workID = { id: 'actual-btn-2', label: 'Work ID', name: 'workId', statusField: 'workIdSubmitted' };
+const proofOfAddress = { id: 'actual-btn-3', label: 'Proof Of Address', name: 'proofOfAddress', statusField: 'proofOfAddressSubmitted' };
+const passportPhoto = { id: 'actual-btn-4', label: 'Passport Photo', name: 'passportPhoto', statusField: 'passportPhotoSubmitted' };

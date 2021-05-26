@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import CreditForm from './CreditForm';
 import { Button } from 'react-bootstrap';
-import { successToast, submitBankInfo } from '../services/creditFormService';
+import { successToast, submitBankInfo, getLoanDetails } from '../services/creditFormService';
 import '../stylesheets/scss/creditapplicationscreen.scss';
 
 const BankInformation = ({ setPage }) => {

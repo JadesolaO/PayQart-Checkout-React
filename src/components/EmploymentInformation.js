@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import CreditForm from './CreditForm';
 import { Button } from 'react-bootstrap';
-import { successToast, submitEmploymentInfo } from '../services/creditFormService';
+import { successToast, submitEmploymentInfo, getLoanDetails } from '../services/creditFormService';
 import '../stylesheets/scss/creditapplicationscreen.scss';
 
 const EmploymentInformation = ({ setPage }) => {
@@ -37,6 +37,7 @@ const EmploymentInformation = ({ setPage }) => {
         const loanInfo = (({ employername, employeraddress, workduration, designation, employmentmode, city, state }) =>
               ({ employername, employeraddress, workduration, designation, employmentmode, city, state }))(res.data);
         setEmploymentInfo(loanInfo);
+        console.log(employmentInfo);
       })
       .catch(() => {});
   }
@@ -47,7 +48,7 @@ const EmploymentInformation = ({ setPage }) => {
     submitEmploymentInfo(employmentInfo)
         .then(res => {
             successToast(res.data);
-            setPage('employmentInfo');
+            setPage('bankInfo');
         })
         .catch(() => {})
   }
