@@ -199,7 +199,7 @@ const PlanScreen = (props) => {
                   disabled={!showBreakdown}
                 >
                   Continue
-            </Button>
+               </Button>
               </div>
             </Row>
           </div>
