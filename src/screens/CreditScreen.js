@@ -1,10 +1,42 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Container, Row, Col, Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import ProgressSteps from '../components/ProgressSteps';
 import '../stylesheets/scss/creditscreen.scss';
+import { getLoanStat } from '../services/creditFormService';
 
 const CreditScreen = (props) => {
+  const [loanStatus, setLoanStatus] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    getLoanStatus();
+  }, []);
+
+  const getLoanStatus = () => {
+    const loanid = localStorage.getItem('loanId');
+    if (!loanid) {
+      localStorage.setItem('nextRoute', '/creditapplication');
+      return setLoading(false);
+    }
+    getLoanStat(loanid)
+      .then(res => {
+        setLoading(false);
+        if (!res.data || res.data.incomedetails !== 'submitted')
+          return localStorage.setItem('nextRoute', '/creditapplication');
+        setLoanStatus(true);
+      })
+      .catch(() => {
+        setLoading(false);
+      })
+  }
+
+  const proceed = () => {
+    if (loanStatus)
+      return props.history.push('/creditapplication');
+    props.history.push('/employmentscreen');
+  }
+
   return (
     <div className='creditscreen'>
       <div className="topsection">
@@ -32,7 +64,8 @@ const CreditScreen = (props) => {
             <div className="apply-button my-3 text-center">
               <Button 
               size='lg'
-              onClick={() => props.history.push('/creditapplication')}
+              disabled={loading}
+              onClick={proceed}
               >
                 Apply For Shopping Credit
             </Button>

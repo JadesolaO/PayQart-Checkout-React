@@ -31,6 +31,9 @@ const CreditApplicationScreen = (props) => {
         // let reference = data["data"]["data"]["reference"]
         // window.localStorage.setItem("current_reference",reference)
         window.location.href = url;
+        localStorage.removeItem('nextRoute');
+        localStorage.removeItem('loanId');
+        localStorage.removeItem('unserInfo');
       })
       .catch(() => { });
   }

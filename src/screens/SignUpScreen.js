@@ -1,18 +1,18 @@
 import React, { useState } from 'react'
 import { Col, Form, Row, Container, Button, InputGroup, Image } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import ProgressSteps from '../components/ProgressSteps'
 import eye from '../images/Path 38.png'
 import lock from '../images/Path 44.png'
 import '../stylesheets/scss/SignUpScreen.scss'
 import { successToast, doSignUp } from '../services/authService';
-import { inititiateCredit } from '../services/creditFormService'
 
 const SignUpScreen = (props) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [bvn, setBvn] = useState('')
   const [agree, setAgree] = useState('')
+  const { status } = useParams();
 
   const signUpUser = (e) => {
     e.preventDefault();
@@ -20,13 +20,8 @@ const SignUpScreen = (props) => {
     doSignUp(user)
         .then(res => {
           localStorage.setItem('userObjFromBckEnd', JSON.stringify(res.data.user));
-          inititiateCredit()
-            .then((response) => {
-              localStorage.setItem('loanId', response.data.loanid);
-              successToast(res.data.message);
-              props.history.push('/creditscreen');
-            })
-            .catch(() => {});
+          successToast(res.data.message);
+          props.history.push('/creditscreen');
         })
         .catch(() => {})
   }
@@ -90,7 +85,7 @@ const SignUpScreen = (props) => {
                   </InputGroup>
                 </Form.Group>
 
-                <p className="text-center sitxt">Got an account? <Link to='/signin'>Sign In.</Link></p>
+                <p className="text-center sitxt">Got an account? <Link to={{ pathname: `/signin/${status}` }}>Sign In.</Link></p>
 
 
                 <div className="check">

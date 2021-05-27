@@ -5,6 +5,7 @@ import ProgressSteps from '../components/ProgressSteps'
 import '../stylesheets/scss/planscreen.scss'
 import { employeeDti, setStatus } from '../services/Formulae'
 import Message from '../components/Message'
+import { inititiateCredit } from '../services/creditFormService'
 
 const PlanScreen = (props) => {
   const data = localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo')) : {}
@@ -59,6 +60,24 @@ const PlanScreen = (props) => {
     }
     setDownPayment(Number(updatedDownPayment.split(',').join('')))
   }
+
+  const initiateCreditApplication = () => {
+    const existingLoan = loanAmount ? 'Yes' : 'No';
+    const loanObj = { 
+      ramount: payInfo.shoppingCredit, rsalary: income, expenses: data.monthlyExpense, existingloan: existingLoan, typeofbusiness: data.employmentType,
+      currentrepayment: loanAmount, rduration: tenureNum, downpayment: downPayment, debtincomeratio: payInfo.dti, rpaydate: '23'
+    }
+    inititiateCredit(loanObj)
+      .then((response) => {
+        localStorage.setItem('loanId', response.data.loanid);
+        const nextRoute = localStorage.getItem('nextRoute');
+        if (nextRoute)
+          return props.history.push(nextRoute);
+        props.history.push('/signup/1');
+      })
+      .catch(() => {});
+  }
+
   return (
     <div className="planScreen">
       <div className="topsection">
@@ -195,7 +214,7 @@ const PlanScreen = (props) => {
               <div className='btmbtn text-center mx-auto'>
                 <Button
                   id='btmbtn'
-                  onClick={() => props.history.push('/signup')}
+                  onClick={initiateCreditApplication}
                   disabled={!showBreakdown}
                 >
                   Continue

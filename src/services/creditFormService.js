@@ -1,11 +1,15 @@
 import { toast } from 'react-toastify';
 import http from './httpService';
 
-// const apiEndpoint = 'http://localhost:2000/user';
-const apiEndpoint = 'https://cryptic-reef-51266.herokuapp.com/user';
+const apiEndpoint = 'http://localhost:2000/user';
+// const apiEndpoint = 'https://cryptic-reef-51266.herokuapp.com/user';
 
 export async function inititiateCredit(creditInfo) {
   return await http.post(`${apiEndpoint}/initiate-credit`, creditInfo, );
+}
+
+export async function getLoanStat(loanid) {
+  return await http.post(`${apiEndpoint}/get-loan-status`, { loanid });
 }
 
 export async function submitPersonalInfo(personalInfo) {
@@ -66,6 +70,7 @@ export default {
   submitContactInfo,
   submitEmploymentInfo,
   submitBankInfo,
+  getLoanStat,
   submitReferenceInfo,
   successToast
 };

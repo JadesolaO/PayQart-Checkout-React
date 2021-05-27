@@ -9,6 +9,11 @@ const WalletStatusScreen = (props) => {
 
   const [statusSelected, setStatus] = useState('');
 
+  const signIn = () => {
+    setStatus('/signin/1');
+    localStorage.removeItem('loanId');
+  }
+
   return (
     <div className='wallet-root-class'>
       <div fluid className="container">
@@ -32,7 +37,7 @@ const WalletStatusScreen = (props) => {
                     <h3>My PayQart Wallet is funded</h3>
                     <p>I have shopping credit</p>
                     <div className='wallet-button text-center'>
-                      <Button variant="outline-secondary" id='wallet-button-id' onClick={() => setStatus('/signin')}>
+                      <Button variant="outline-secondary" id='wallet-button-id' onClick={signIn}>
                         Select
                       </Button>
                     </div>

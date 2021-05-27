@@ -1,16 +1,16 @@
 import React, { useState } from 'react'
 import { Col, Form, Row, Container, Button, InputGroup, Image } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import ProgressSteps from '../components/ProgressSteps';
 import eye from '../images/Path 38.png'
 import { successToast, doLogin } from '../services/authService';
-import { inititiateCredit } from '../services/creditFormService';
 
 const SignInScreen = (props) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [remember, setRemember] = useState('')
   const [agree, setAgree] = useState('')
+  const { status } = useParams();
 
   const loginUser = (e) => {
     e.preventDefault()
@@ -18,13 +18,8 @@ const SignInScreen = (props) => {
     doLogin(user)
         .then(res => {
             localStorage.setItem('userObjFromBckEnd', JSON.stringify(res.data.user));
-            inititiateCredit()
-              .then((response) => {
-                localStorage.setItem('loanId', response.data.loanid);
-                successToast(res.data.message);
-                props.history.push('/creditscreen');
-              })
-              .catch(() => {});
+            successToast(res.data.message);
+            props.history.push('/creditscreen');
         })
         .catch(() => {});
   }
@@ -75,7 +70,10 @@ const SignInScreen = (props) => {
                   </InputGroup>
                 </Form.Group>
 
-                <p className="text-center sitxt">Don't have an account? <Link to='/eligibityscreen'>Proceed to check eligibility.</Link></p>
+                {status === '2' ?
+                  (<p className="text-center sitxt">Don't have an account? <Link to='/eligibityscreen'>Sign Up.</Link></p>) :
+                  (<p className="text-center sitxt">Don't have an account? <Link to='/eligibityscreen'>Proceed to check eligibility.</Link></p>)
+                }
 
                 <div className="forgotpass">
                     <Link to='/forgotpassword'>Forgot Password?</Link>

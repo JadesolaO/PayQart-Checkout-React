@@ -47,21 +47,21 @@ function App() {
             </Col>
           </Route>
 
-          <Route exact path='/signup'>
+          <Route exact path='/signup/:status'>
             <Col md={7}>
               <Cart />
             </Col>
             <Col md={5}>
-              <Route exact path='/signup' component={SignUpScreen} />
+              <Route exact path='/signup/:status' component={SignUpScreen} />
             </Col>
           </Route>
 
-          <Route exact path='/signin'>
+          <Route exact path='/signin/:status'>
             <Col md={7}>
               <Cart />
             </Col>
             <Col md={5}>
-              <Route exact path='/signin' component={SignInScreen} />
+              <Route exact path='/signin/:status' component={SignInScreen} />
             </Col>
           </Route>
 
