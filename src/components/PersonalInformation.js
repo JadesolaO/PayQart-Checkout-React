@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import CreditForm from './CreditForm';
-import { Button } from 'react-bootstrap';
 import { successToast, submitPersonalInfo } from '../services/creditFormService';
 import '../stylesheets/scss/creditapplicationscreen.scss';
 
@@ -57,7 +56,7 @@ const PersonalInformation = ({ setPage, setPersonaldone }) => {
           {
             label: 'Title',
             type: 'select',
-            options: ['Select', 'Mr', 'Mrs', 'Dr.', 'Miss'],
+            options: ['Select', 'Dr', 'Mrs', 'Mr', 'Miss', 'Prof'],
             value: personalInfo.title,
             name: 'title',
             readOnly: { readOnly },
@@ -104,7 +103,7 @@ const PersonalInformation = ({ setPage, setPersonaldone }) => {
           {
             label: 'Marital Status',
             type: 'select',
-            options: ['Select', 'Single', 'Married'],
+            options: ['Select', 'Single', 'Married', 'Widowed', 'Divorced'],
             value: personalInfo.maritalstatus,
             name: 'maritalstatus',
             handleChange: handleChange
@@ -114,7 +113,7 @@ const PersonalInformation = ({ setPage, setPersonaldone }) => {
           {
             label: 'Education Level',
             type: 'select',
-            options: ['Select', 'Primary', 'Secondary', 'Tertiary'],
+            options: ['Select', 'WAEC', 'BSc', 'Msc', 'PHD', 'OND', 'HND', 'Others'],
             value: personalInfo.educationlevel,
             name: 'educationlevel',
             handleChange: handleChange

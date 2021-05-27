@@ -12,7 +12,7 @@ const EligibilityScreen = (props) => {
             </div>
 
             <Row className='justify-content-md-center'>
-                <Col md={8} xs={12} className="text-center cardd">
+                <Col md={8} xs={11} className="text-center cardd mx-auto">
                     <Container>
                         <div className="logo">
                             <Image fluid src={logo} />

@@ -114,7 +114,7 @@ const PlanScreen = (props) => {
               </h3>}
               {showBreakdown === true && <div className="paymentbreakdown">
                 <Container fluid>
-                  {error && <Message variant="danger">{error} <i style={{ cursor: 'pointer' }} onClick={() => setError('')} className="far fa-times-circle"></i></Message>}
+                  {error && <Message variant="info">{error} <i style={{ cursor: 'pointer' }} onClick={() => setError('')} className="far fa-times-circle"></i></Message>}
                   <Row className='justify-content-md-center '>
                     <Col className='brkdwn' md={8}>
                       <Row className='bkdn py-2 justify-content-md-center'>
@@ -181,6 +181,7 @@ const PlanScreen = (props) => {
                                 type="submit"
                                 variant='outline-success'
                                 id='sub-btn'
+                                disabled={!updatedDownPayment}
                               >
                                 <span className='uptbtn'>Update</span>
                               </Button>

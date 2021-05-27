@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import CreditForm from './CreditForm';
-import { Button } from 'react-bootstrap';
 import { successToast, submitReferenceInfo, getLoanDetails } from '../services/creditFormService';
 import '../stylesheets/scss/creditapplicationscreen.scss';
 
