@@ -7,7 +7,7 @@ const CreditForm = (props) => {
   const formFunction = (props) => {
     return (
       <>
-        {props.map(({ label, type, options, className, value, name, handleChange, readOnly=false }) => (
+        {props.map(({ label, type, options, className, value, name, handleChange, }) => (
           <Form.Group key={label} className={`frm-grp mb-3 ${className}`} as={Col}>
             <Form.Label className='frm-lbl'>{label}</Form.Label>
             {type === 'select' ?
@@ -23,8 +23,7 @@ const CreditForm = (props) => {
                 value={value}
                 onChange={(text) => handleChange(name, text)}
                 required
-              />
-            }
+              />}
           </Form.Group>
         ))}
       </>

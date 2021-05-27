@@ -1,53 +1,61 @@
-.container {
-  margin-top: 0px !important;
-  width: 100% !important;
+.eliscreen {
   height: 100vh;
+  overflow: scroll;
+  overflow-y: auto;
+  overflow-x: auto;
+  position: relative;
 
   .backtostore {
-    margin-bottom: 1rem !important;
     position: absolute;
-    top: 5vh;
+    top: 6vh;
+    left: 5%;
 
     a {
       text-decoration: none;
       color: #720056;
-      position: relative;
-      
 
-    } 
-  }
-
-  .b-btn {
-      a {
-        &:hover {
-            text-decoration: underline;
-          }
+      &:hover {
+        text-decoration: underline;
       }
+    }
   }
 
-  .card {
-    margin: auto !important;
+  .cardd {
+    // margin: auto !important;
     background: #ffffff;
     box-shadow: 0px 0px 11px 9px rgba(125, 125, 125, 0.09);
     border-radius: 15px;
-    padding: 1rem 13% !important;
+    // padding: 2rem 6rem !important;
+    // display: flex;
+    // justify-content: center;
+    // align-items: center;
+    position: relative;
+    top: 10vh;
+    margin-bottom: 6rem !important;
 
-    .logo {
-      margin: 1rem;
-      color: white;
+    .payltr {
+      margin: 1.5rem 0 !important;
+      h5 {
+        color: #720056;
+        font-weight: 500;
+      }
     }
 
     .text-p {
-      font-size: 16px;
-      margin: 1rem 0rem !important;
+      font-size: 14px;
+      font-weight: bold;
+      // margin: 1rem 0rem !important;
     }
 
     .list-section {
       background-color: #720056;
       color: #fff;
-      margin: auto !important;
-      padding: 1rem 3rem !important;
-      width: 100%;
+      // margin: auto !important;
+      margin-top: 0.4rem !important;
+      padding: 1rem 7rem !important;
+      width: fit-content;
+      // display: flex;
+      // justify-content: center;
 
       ul,
       p,
@@ -59,8 +67,9 @@
     }
 
     .proced-button {
+      margin: 2rem 0rem 2rem 0 !important;
       padding: 8px 50px !important;
-      border-radius: 5px;
+      border-radius: 10px;
       border: 3px solid #710157;
       background-color: #ffffff;
       color: #710157;
@@ -70,15 +79,27 @@
         background-color: #710157;
       }
     }
+
+    .content {
+      width: fit-content;
+      padding: 0 7rem !important;
+      text-align: justify;
+    }
   }
 }
 
-.content {
-  text-align: justify;
-}
+@media only screen and (max-width: 800px) {
+  .eliscreen {
+    .cardd {
+      margin-bottom: 8rem !important;
+      .list-section {
+        padding: 0.5rem 2rem !important;
+        // width: 100vw;
+      }
 
-.content:after {
-  content: "";
-  display: inline-block;
-  width: 100%;
+      .content {
+        padding: 0 !important;
+      }
+    }
+  }
 }

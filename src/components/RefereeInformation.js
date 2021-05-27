@@ -4,7 +4,7 @@ import { Button } from 'react-bootstrap';
 import { successToast, submitReferenceInfo, getLoanDetails } from '../services/creditFormService';
 import '../stylesheets/scss/creditapplicationscreen.scss';
 
-const RefereeInformation = ({ startPayment }) => {
+const RefereeInformation = ({ startPayment, setRefdone }) => {
 
   const [referenceInfo, setReferenceInfo] = useState({
     rname: '',
@@ -56,6 +56,7 @@ const RefereeInformation = ({ startPayment }) => {
     submitReferenceInfo(newReferenceObj)
         .then(res => {
             successToast(res.data);
+            setRefdone(true)
             startPayment();
         })
         .catch(() => {})

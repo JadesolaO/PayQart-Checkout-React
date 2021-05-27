@@ -4,7 +4,7 @@ import { Button } from 'react-bootstrap';
 import { successToast, submitPersonalInfo } from '../services/creditFormService';
 import '../stylesheets/scss/creditapplicationscreen.scss';
 
-const PersonalInformation = ({ setPage }) => {
+const PersonalInformation = ({ setPage, setPersonaldone }) => {
 
   const [personalInfo, setPersonalInfo] = useState({
     title: '',
@@ -30,28 +30,29 @@ const PersonalInformation = ({ setPage }) => {
       return;
     setReadOnly(true);
     const userInfo = (({ title, gender, firstname, lastname, middlename, maritalstatus, educationlevel, children }) =>
-          ({ title, gender, firstname, lastname, middlename, maritalstatus, educationlevel, children }))(user);
+      ({ title, gender, firstname, lastname, middlename, maritalstatus, educationlevel, children }))(user);
     setPersonalInfo(userInfo);
   }
 
   const handleChange = (name, e) => {
-    setPersonalInfo({...personalInfo, [name]: e.target.value });
+    setPersonalInfo({ ...personalInfo, [name]: e.target.value });
   }
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(personalInfo);
     submitPersonalInfo(personalInfo)
-        .then(res => {
-            successToast(res.data);
-            setPage('contactInfo');
-        })
-        .catch(() => {})
+      .then(res => {
+        successToast(res.data);
+        setPage('contactInfo');
+        setPersonaldone(true)
+      })
+      .catch(() => { });
   }
 
   return (
     <div>
-      <CreditForm 
+      <CreditForm
         formDetails={[
           {
             label: 'Title',
@@ -59,7 +60,7 @@ const PersonalInformation = ({ setPage }) => {
             options: ['Select', 'Mr', 'Mrs', 'Dr.', 'Miss'],
             value: personalInfo.title,
             name: 'title',
-            readOnly: {readOnly},
+            readOnly: { readOnly },
             handleChange: handleChange
           },
           {
@@ -67,10 +68,10 @@ const PersonalInformation = ({ setPage }) => {
             type: 'text',
             value: personalInfo.firstname,
             name: 'firstname',
-            readOnly: {readOnly},
+            readOnly: { readOnly },
             handleChange: handleChange
           },
-          
+
         ]}
         formDetails2={[
           {
@@ -78,7 +79,7 @@ const PersonalInformation = ({ setPage }) => {
             type: 'text',
             value: personalInfo.middlename,
             name: 'middlename',
-            readOnly: {readOnly},
+            readOnly: { readOnly },
             handleChange: handleChange
           },
           {
@@ -86,7 +87,7 @@ const PersonalInformation = ({ setPage }) => {
             type: 'text',
             value: personalInfo.lastname,
             name: 'lastname',
-            readOnly: {readOnly},
+            readOnly: { readOnly },
             handleChange: handleChange
           }
         ]}
@@ -97,7 +98,7 @@ const PersonalInformation = ({ setPage }) => {
             options: ['Select', 'Female', 'Male'],
             value: personalInfo.gender,
             name: 'gender',
-            readOnly: {readOnly},
+            readOnly: { readOnly },
             handleChange: handleChange
           },
           {
@@ -132,7 +133,7 @@ const PersonalInformation = ({ setPage }) => {
             type: 'number',
             value: personalInfo.bvn,
             name: 'bvn',
-            readOnly: {readOnly},
+            readOnly: { readOnly },
             handleChange: handleChange
           },
           {
@@ -140,7 +141,7 @@ const PersonalInformation = ({ setPage }) => {
             type: 'date',
             value: personalInfo.dob,
             name: 'dob',
-            readOnly: {readOnly},
+            readOnly: { readOnly },
             handleChange: handleChange
           }
         ]}

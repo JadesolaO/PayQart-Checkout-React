@@ -54,6 +54,14 @@
       .creditscreen .container-xxl .row .boxes .text p {
         font-size: 13px;
         font-weight: bold; }
+    .creditscreen .container .p-box,
+    .creditscreen .container-fluid .p-box,
+    .creditscreen .container-lg .p-box,
+    .creditscreen .container-md .p-box,
+    .creditscreen .container-sm .p-box,
+    .creditscreen .container-xl .p-box,
+    .creditscreen .container-xxl .p-box {
+      width: 28rem; }
   @media only screen and (max-width: 600px) {
     .creditscreen .row .boxes,
     .creditscreen .row .col {

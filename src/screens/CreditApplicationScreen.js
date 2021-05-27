@@ -17,6 +17,11 @@ import { makeFeePayment } from '../services/creditFormService';
 
 const CreditApplicationScreen = (props) => {
   const [form, setForm] = useState('personalInfo');
+  const [personaldone, setPersonaldone] = useState(Boolean)
+  const [contactdone, setContactdone] = useState(Boolean)
+  const [employmentdone, setEmploymentdone] = useState(Boolean)
+  const [bankdone, setBankdone] = useState(Boolean)
+  const [refdone, setRefdone] = useState(Boolean)
 
   const setPage = (page) => {
     setForm(page);
@@ -57,6 +62,10 @@ const CreditApplicationScreen = (props) => {
                     onClick={() => setForm('personalInfo')}
                   >
                     <Image height='14' src={contact} /> <span>Personal Information</span>
+                    {personaldone &&
+                      <span>
+                        <i style={{ color: '#710157' }} className="fa fa-check"></i>
+                      </span>}
                   </Button>
                 </div>
                 <div className="side-div">
@@ -66,6 +75,10 @@ const CreditApplicationScreen = (props) => {
                     onClick={() => setForm('contactInfo')}
                   >
                     <Image height='14' src={mail} /> <span>Contact Information</span>
+                    {contactdone &&
+                      <span>
+                        <i style={{ color: '#710157' }} className="fa fa-check"></i>
+                      </span>}
                   </Button>
                 </div>
                 <div className="side-div">
@@ -75,6 +88,10 @@ const CreditApplicationScreen = (props) => {
                     onClick={() => setForm('employmentInfo')}
                   >
                     <Image height='14' src={Union} /> <span>Employment Information</span>
+                    {employmentdone &&
+                      <span>
+                        <i style={{ color: '#710157' }} className="fa fa-check"></i>
+                      </span>}
                   </Button>
                 </div>
                 <div className="side-div">
@@ -84,6 +101,10 @@ const CreditApplicationScreen = (props) => {
                     onClick={() => setForm('bankInfo')}
                   >
                     <Image height='14' src={bank} /> <span>Bank Information</span>
+                    {bankdone &&
+                      <span>
+                        <i style={{ color: '#710157' }} className="fa fa-check"></i>
+                      </span>}
                   </Button>
                 </div>
                 <div className="side-div">
@@ -93,6 +114,10 @@ const CreditApplicationScreen = (props) => {
                     onClick={() => setForm('refInfo')}
                   >
                     <Image height='14' src={ref} /> <span>Referee Information</span>
+                    {refdone &&
+                      <span>
+                        <i style={{ color: '#710157' }} className="fa fa-check"></i>
+                      </span>}
                   </Button>
                 </div>
               </div>
@@ -101,23 +126,23 @@ const CreditApplicationScreen = (props) => {
               {
                 form === 'personalInfo' ?
                   <>
-                    <PersonalInformation setPage={setPage} />
+                    <PersonalInformation setPage={setPage} setPersonaldone={setPersonaldone} />
                   </> :
                   form === 'contactInfo' ?
                     <>
-                      <ContactDetails setPage={setPage} />
+                      <ContactDetails setPage={setPage} setContactdone={setContactdone} />
                     </> :
                     form === 'employmentInfo' ?
                       <>
-                        <EmploymentInformation setPage={setPage} />
+                        <EmploymentInformation setPage={setPage} setEmploymentdone={setEmploymentdone} />
                       </> :
                       form === 'bankInfo' ?
                         <>
-                          <BankInformation setPage={setPage} />
+                          <BankInformation setPage={setPage} setBankdone={setBankdone} />
                         </> :
                         form === 'refInfo' &&
                         <>
-                          <RefereeInformation startPayment={startPayment} />
+                          <RefereeInformation startPayment={startPayment} setRefdone={setRefdone} />
                         </>
               }
             </Col>

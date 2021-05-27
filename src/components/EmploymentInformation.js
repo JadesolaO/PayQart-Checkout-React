@@ -4,7 +4,7 @@ import { Button } from 'react-bootstrap';
 import { successToast, submitEmploymentInfo, getLoanDetails } from '../services/creditFormService';
 import '../stylesheets/scss/creditapplicationscreen.scss';
 
-const EmploymentInformation = ({ setPage }) => {
+const EmploymentInformation = ({ setPage, setEmploymentdone }) => {
 
   const [employmentInfo, setEmploymentInfo] = useState({
     employername: '',
@@ -49,6 +49,7 @@ const EmploymentInformation = ({ setPage }) => {
         .then(res => {
             successToast(res.data);
             setPage('bankInfo');
+            setEmploymentdone(true)
         })
         .catch(() => {})
   }

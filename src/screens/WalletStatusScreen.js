@@ -82,8 +82,8 @@ const WalletStatusScreen = (props) => {
             </Row>
 
             <Button className='proceed-button' disabled={statusSelected === ''} onClick={() => {
-              
-              props.history.push(statusSelected)}}>
+              props.history.push(statusSelected)
+              }}>
                 Proceed
             </Button>
           </Col>
