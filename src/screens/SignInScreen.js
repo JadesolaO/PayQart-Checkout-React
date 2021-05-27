@@ -27,7 +27,7 @@ const SignInScreen = (props) => {
   return (
     <div className='signup'>
       <div className="top-section">
-        <Link to="/signup"><i style={{ color: "#FF005E" }} className="fas fa-arrow-left"></i> Back</Link>
+        <Link to={{ pathname: `/signup/${status}` }}><i style={{ color: "#FF005E" }} className="fas fa-arrow-left"></i> Back</Link>
       </div>
       <div className="steps s-checks">
       <ProgressSteps step1 step2 complete/>
@@ -70,8 +70,8 @@ const SignInScreen = (props) => {
                   </InputGroup>
                 </Form.Group>
 
-                {status === '2' ?
-                  (<p className="text-center sitxt">Don't have an account? <Link to='/eligibityscreen'>Sign Up.</Link></p>) :
+                {status === '1' ?
+                  (<p className="text-center sitxt">Don't have an account? <Link to={{ pathname: `/signup/${status}` }}>Sign Up.</Link></p>) :
                   (<p className="text-center sitxt">Don't have an account? <Link to='/eligibityscreen'>Proceed to check eligibility.</Link></p>)
                 }
 

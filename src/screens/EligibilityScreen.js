@@ -5,6 +5,9 @@ import { Link } from 'react-router-dom'
 import '../stylesheets/scss/eligibility.scss';
 
 const EligibilityScreen = (props) => {
+
+    localStorage.removeItem('nextRoute');
+
     return (
         <div className='eliscreen'>
             <div className="backtostore b-btn">
