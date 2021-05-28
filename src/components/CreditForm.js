@@ -1,5 +1,5 @@
 import React from 'react'
-import { Row, Col, Container, Form, Button } from 'react-bootstrap'
+import { Row, Col, Container, Form, Button, Spinner } from 'react-bootstrap'
 import '../stylesheets/scss/creditapplicationscreen.scss'
 
 const CreditForm = (props) => {
@@ -76,7 +76,14 @@ const CreditForm = (props) => {
           </Row>}
         <div className="cont-btn text-center">
           <Button type='submit'>
-            {props.buttonText}
+            {
+              props.loading ? (
+                <Spinner animation="border" role="status">
+                  <span className="sr-only">Loading...</span>
+                </Spinner>
+              ) :
+            props.buttonText
+            }
           </Button>
         </div>
       </Form>

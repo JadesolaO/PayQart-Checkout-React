@@ -16,6 +16,7 @@ const RefereeInformation = ({ startPayment, setRefdone }) => {
     rcity: '',
     rstate: ''
   });
+  const [loading, setLoading] = useState(Boolean)
 
   const handleChange = (name, e) => {
     setReferenceInfo({...referenceInfo, [name]: e.target.value });
@@ -48,6 +49,7 @@ const RefereeInformation = ({ startPayment, setRefdone }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    setLoading(true)
     console.log(referenceInfo);
     let newReferenceObj = (({ rname, rtelephone, remail, raddress, relationship, rcity, rstate }) => 
         ({ rname, rtelephone, remail, raddress, relationship, rcity, rstate }))(referenceInfo);
@@ -57,6 +59,7 @@ const RefereeInformation = ({ startPayment, setRefdone }) => {
             successToast(res.data);
             setRefdone(true)
             startPayment();
+            setLoading(false)
         })
         .catch(() => {})
             startPayment();
@@ -100,7 +103,8 @@ const RefereeInformation = ({ startPayment, setRefdone }) => {
         formDetails3={[
           {
             label: "Relationship",
-            type: 'text',
+            type: 'select',
+            options: ['Select', 'Colleague', 'Friend', 'Spouse', 'Sibling', 'Parent'],
             value: referenceInfo.relationship,
             name: 'relationship',
             handleChange: handleChange
@@ -132,6 +136,7 @@ const RefereeInformation = ({ startPayment, setRefdone }) => {
         ]}
         handleSubmit={handleSubmit}
         buttonText='Pay Verification Fee'
+        loading={loading}
       />
     </div>
   )

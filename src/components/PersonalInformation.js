@@ -18,6 +18,7 @@ const PersonalInformation = ({ setPage, setPersonaldone }) => {
     dob: ''
   });
   const [readOnly, setReadOnly] = useState(false);
+  const [loading, setLoading] = useState(Boolean)
 
   useEffect(() => {
     getUser();
@@ -43,10 +44,12 @@ const PersonalInformation = ({ setPage, setPersonaldone }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setLoading(true)
     console.log(personalInfo);
     submitPersonalInfo(personalInfo)
       .then(res => {
         successToast(res.data);
+        setLoading(false)
         setPage('contactInfo');
         setPersonaldone(true)
       })
@@ -151,6 +154,7 @@ const PersonalInformation = ({ setPage, setPersonaldone }) => {
         ]}
         handleSubmit={handleSubmit}
         buttonText='Continue'
+        loading={loading}
       />
     </div>
   )
