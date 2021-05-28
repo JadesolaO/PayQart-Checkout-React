@@ -43,8 +43,8 @@
     .plans .container-sm .infotext p,
     .plans .container-xl .infotext p,
     .plans .container-xxl .infotext p {
-      font-size: 15px;
-      color: #ff005e;
+      font-size: 13px;
+      color: #720056;
       margin-top: 10px !important; }
   .plans .row {
     display: flex;

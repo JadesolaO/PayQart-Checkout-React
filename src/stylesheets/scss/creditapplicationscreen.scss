@@ -114,6 +114,11 @@
         font-size: 12px;
         font-weight: bold;
         margin-bottom: 6px !important;
+
+        &:after {
+          content:" *";
+          color: red;
+        }
       }
 
       .slt {
@@ -122,6 +127,7 @@
       .frm-ctrl {
         padding: 8px 7px !important;
         font-size: 13px;
+
       }
     }
 

@@ -68,7 +68,10 @@
       margin-left: 5% !important; }
       .cart .cart-section .item-text span {
         display: block;
-        word-wrap: break-word; }
+        word-wrap: break-word;
+        font-size: 14px;
+        color: #000;
+        margin-bottom: 5px !important; }
     .cart .cart-section .item-row {
       margin-bottom: 5% !important; }
 

@@ -80,6 +80,9 @@
     font-size: 12px;
     font-weight: bold;
     margin-bottom: 6px !important; }
+    .crdfrm .row .col .frm-lbl:after {
+      content: " *";
+      color: red; }
   .crdfrm .row .col .slt {
     background: #fff; }
   .crdfrm .row .col .frm-ctrl {

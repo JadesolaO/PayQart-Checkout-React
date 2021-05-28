@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import CreditForm from './CreditForm';
-import { Button } from 'react-bootstrap';
 import { successToast, submitContactInfo } from '../services/creditFormService';
 import '../stylesheets/scss/creditapplicationscreen.scss';
 
@@ -98,14 +97,15 @@ const ContactDetails = ({ setPage, setContactdone }) => {
           {
             label: 'Residence Type',
             type: 'select',
-            options: ['Select', 'Temporary', 'Permanent'],
+            options: ['Select', 'Owned', 'Rented', 'Employer Provided'],
             value: contactInfo.residentialtype,
             name: 'residentialtype',
             handleChange: handleChange
           },
           {
             label: 'Years Of Residence',
-            type: 'text',
+            type: 'select',
+            options: ['Select', 'Less than 6 months', 'Between 6 months - 1 year', '1-2 years', '2-3 years', '3 years and above'],
             value: contactInfo.livingduration,
             name: 'livingduration',
             handleChange: handleChange
