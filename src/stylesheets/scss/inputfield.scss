@@ -103,6 +103,7 @@
 
 .calendar {
   margin-top: 10px !important;
+  width: 14rem;
 }
 
 .react-calendar__tile {
@@ -114,11 +115,11 @@
 }
 
 .react-calendar__month-view__weekdays__weekday {
-  padding: 0.5em !important;
+  padding: 0.3em !important;
 }
 
 .react-calendar__navigation {
-  margin-bottom: 1em !important;
+  margin-bottom: 0.5em !important;
 }
 
 .react-calendar--doubleView .react-calendar__viewContainer {
@@ -129,4 +130,8 @@
 .react-calendar__decade-view .react-calendar__tile,
 .react-calendar__century-view .react-calendar__tile {
   padding: 2em 0.5em !important;
+}
+
+abbr[title] {
+  text-decoration: none;
 }

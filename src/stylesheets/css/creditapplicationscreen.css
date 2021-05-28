@@ -1,6 +1,6 @@
 .top-sect {
   position: relative;
-  top: 2vh; }
+  top: 1vh; }
   .top-sect a,
   .top-sect i {
     text-decoration: none;
@@ -97,6 +97,6 @@
     border: none;
     margin-bottom: 20px !important; }
   .app-form .form-sec {
-    height: 600px;
+    height: 770px;
     border: 1px solid #707070;
     border-radius: 8px; } }

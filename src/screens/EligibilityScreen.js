@@ -1,10 +1,11 @@
-import React from 'react';
-import { Row, Col, Image, Button, Container } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Row, Col, Image, Button, Container, Spinner } from 'react-bootstrap';
 import logo from '../images/pink-logo.svg';
 import { Link } from 'react-router-dom'
 import '../stylesheets/scss/eligibility.scss';
 
 const EligibilityScreen = (props) => {
+    const [loading, setLoading] = useState(Boolean)
     return (
         <div className='eliscreen'>
             <div className="backtostore b-btn">
@@ -44,8 +45,18 @@ const EligibilityScreen = (props) => {
                          </span>
                         </div>
                         <div>
-                            <Button className='proced-button' onClick={() => props.history.push('/employmentscreen')}>
-                                Proceed
+                            <Button className='proced-button' onClick={() => {
+                                setLoading(true)
+                                props.history.push('/employmentscreen')
+                                setLoading(false)
+                                }}>
+                                {loading ?
+                                (
+                                    <Spinner animation="border" role="status">
+                                      <span className="sr-only">Loading...</span>
+                                    </Spinner>
+                                  ) : 
+                                'Proceed'}
                          </Button>
                         </div>
                     </Container>

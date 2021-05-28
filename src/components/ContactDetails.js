@@ -15,6 +15,7 @@ const ContactDetails = ({ setPage, setContactdone }) => {
     state: ''
   }); 
   const [readOnly, setReadOnly] = useState(false);
+  const [loading, setLoading] = useState(Boolean)
 
   const handleChange = (name, e) => {
     setContactInfo({...contactInfo, [name]: e.target.value });
@@ -35,11 +36,13 @@ const ContactDetails = ({ setPage, setContactdone }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setLoading(true)
     console.log(contactInfo);
     submitContactInfo(contactInfo)
         .then(res => {
             localStorage.setItem('userEmail', contactInfo.email);
             successToast(res.data);
+            setLoading(false)
             setPage('employmentInfo');
             setContactdone(true)
         })
@@ -113,6 +116,7 @@ const ContactDetails = ({ setPage, setContactdone }) => {
         ]}
         handleSubmit={handleSubmit}
         buttonText='Continue'
+        loading={loading}
       />
     </div>
   )

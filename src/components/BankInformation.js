@@ -11,6 +11,7 @@ const BankInformation = ({ setPage, setBankdone }) => {
     bankname: '',
     accountnumber: ''
   });
+  const [loading, setLoading] = useState(Boolean)
 
   useEffect(() => {
     retrieveLoanDetails();
@@ -38,10 +39,12 @@ const BankInformation = ({ setPage, setBankdone }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setLoading(true)
     console.log(bankInfo);
     submitBankInfo(bankInfo)
         .then(res => {
             successToast(res.data);
+            setLoading(false)
             setPage('refInfo');
             setBankdone(true)
         })
@@ -55,7 +58,7 @@ const BankInformation = ({ setPage, setBankdone }) => {
           {
             label: 'Income Account Type',
             type: 'select',
-            options: ['Select', 'Savings', 'Current'],
+            options: ['Select', 'Salary Account', 'Business Account', 'Personal Savings Account'],
             value: bankInfo.incomeaccounttype,
             name: 'incomeaccounttype',
             handleChange: handleChange
@@ -63,7 +66,7 @@ const BankInformation = ({ setPage, setBankdone }) => {
           {
             label: 'Income Bank Type',
             type: 'select',
-            options: ['Select', 'Commercial Bank', 'Microfinance Bank'],
+            options: ['Select', 'Commercial Bank', 'Microfinance Bank', 'Mobile Money/E-Wallet'],
             value: bankInfo.incomebanktype,
             name: 'incomebanktype',
             handleChange: handleChange
@@ -87,6 +90,7 @@ const BankInformation = ({ setPage, setBankdone }) => {
         ]}
         handleSubmit={handleSubmit}
         buttonText='Continue'
+        loading={loading}
       />
     </div> 
   )
