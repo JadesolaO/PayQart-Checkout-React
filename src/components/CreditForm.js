@@ -4,26 +4,47 @@ import '../stylesheets/scss/creditapplicationscreen.scss'
 
 const CreditForm = (props) => {
 
+  let maxDate = new Date();
+  maxDate.setFullYear(new Date().getFullYear() - 22);
+
   const formFunction = (props) => {
     return (
       <>
-        {props.map(({ label, type, options, className, value, name, handleChange, }) => (
+        {props.map(({ label, type, options, className, value, name, handleChange, extraOptions = false, disabled = false }) => (
           <Form.Group key={label} className={`frm-grp mb-3 ${className}`} as={Col}>
             <Form.Label className='frm-lbl'>{label}</Form.Label>
             {type === 'select' ?
-              <Form.Control className='frm-ctrl slt' as='select' value={value} onChange={(text) => handleChange(name, text)}>
+              (extraOptions ?
+                <Form.Control className='frm-ctrl slt' as='select' value={value} onChange={(text) => handleChange(name, text)}>
+                  {options.map((option, ind) => (
+                    <option key={ind} value={option.id}>{option.desc}</option>
+                  ))}
+                </Form.Control> : 
+                <Form.Control className='frm-ctrl slt' as='select' value={value} onChange={(text) => handleChange(name, text)}>
                 {options.map((option, ind) => (
                   <option key={ind} value={option}>{option}</option>
                 ))}
-              </Form.Control> :
-              <Form.Control
-                className='frm-ctrl'
-                type={type}
-                // readOnly={readOnly}
-                value={value}
-                onChange={(text) => handleChange(name, text)}
-                required
-              />}
+              </Form.Control>
+              ) :
+              (type === 'date' ?
+                <Form.Control
+                  className='frm-ctrl'
+                  type={type}
+                  value={value}
+                  // max="2019-12-25"
+                  max={maxDate.toISOString().split('T')[0]}
+                  onChange={(text) => handleChange(name, text)}
+                  required
+                /> :
+                <Form.Control
+                  className='frm-ctrl'
+                  type={type}
+                  readOnly={disabled}
+                  value={value}
+                  onChange={(text) => handleChange(name, text)}
+                  required
+                />
+              )}
           </Form.Group>
         ))}
       </>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import FileUpload from '../components/FileUpload';
-import { getDocumentDetails, uploadDocument, successToast } from '../services/creditFormService';
+import { getDocumentDetails, uploadDocument, successToast, verifyFeePayment } from '../services/creditFormService';
 import '../stylesheets/scss/successScreen.scss';
 
 const SuccessScreen = (props) => {
@@ -14,6 +14,7 @@ const SuccessScreen = (props) => {
   });
 
   useEffect(() => {
+    checkReference();
     retrieveDocumentStatus();
   }, []);
 
@@ -24,6 +25,20 @@ const SuccessScreen = (props) => {
           return;
         console.log(res.data);
         setDocumentStatus({...documentStatus, ...res.data.status});
+      })
+      .catch(() => {});
+  }
+
+  const checkReference = async () => {
+
+    const user = JSON.parse(localStorage.getItem('userObjFromBckEnd'));
+    const reference = localStorage.getItem('current_reference');
+    if (!reference)
+      return;
+    const data = { reference, email: user.email };
+    await verifyFeePayment(data)
+      .then(res => {
+        localStorage.removeItem('current_reference');
       })
       .catch(() => {});
   }

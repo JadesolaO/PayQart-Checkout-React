@@ -25,11 +25,15 @@ const PersonalInformation = ({ setPage, setPersonaldone }) => {
 
   const getUser = () => {
     const user = JSON.parse(localStorage.getItem('userObjFromBckEnd'));
-    if (!user || user.newUser)
+    if (!user)
       return;
+
+    if(user.newUser)
+      return setPersonalInfo({ ...personalInfo, bvn: user.bvn });
+
     setReadOnly(true);
-    const userInfo = (({ title, gender, firstname, lastname, middlename, maritalstatus, educationlevel, children }) =>
-      ({ title, gender, firstname, lastname, middlename, maritalstatus, educationlevel, children }))(user);
+    const userInfo = (({ title, gender, firstname, lastname, middlename, maritalstatus, educationlevel, children, dob, bvn }) =>
+      ({ title, gender, firstname, lastname, middlename, maritalstatus, educationlevel, children, dob, bvn }))(user);
     setPersonalInfo(userInfo);
   }
 
@@ -133,6 +137,7 @@ const PersonalInformation = ({ setPage, setPersonaldone }) => {
             value: personalInfo.bvn,
             name: 'bvn',
             readOnly: { readOnly },
+            disabled: true,
             handleChange: handleChange
           },
           {

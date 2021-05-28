@@ -22,11 +22,11 @@ axios.interceptors.response.use(null, error => {
     console.log(error.response);
 
   if (!expectedError && !error.response.data) {
-    toast.error('An unexpected error occurrred.');
+    errorToast('An unexpected error occurrred.');
   } else if (expectedError && !error.response.data) {
-    toast.error('An unexpected error occurrred.');
+    errorToast('An unexpected error occurrred.');
   } else {
-    toast.error(error.response.data);
+    errorToast(error.response.data);
   }
 
   return Promise.reject(error);
@@ -35,6 +35,18 @@ axios.interceptors.response.use(null, error => {
 function setJwt(jwt) {
   axios.defaults.headers.common["Content-Type"] = 'application/json';
   axios.defaults.headers.common["x-auth-token"] = jwt;
+}
+
+export function errorToast(msg) {
+  toast.error(msg, {
+    position: "bottom-center",
+    autoClose: 3000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined
+  });
 }
 
 export default {

@@ -26,8 +26,13 @@ const ContactDetails = ({ setPage, setContactdone }) => {
 
   const getUser = () => {
     const user = JSON.parse(localStorage.getItem('userObjFromBckEnd'));
-    if (!user || user.newUser)
+    
+    if (!user)
       return;
+
+    if(user.newUser)
+      return setContactInfo(...contactInfo, user.email);
+
     const userInfo = (({ email, address, residentialtype, livingduration, telephone, city, state }) =>
           ({ email, address, residentialtype, livingduration, telephone, city, state }))(user);
     setContactInfo(userInfo);
@@ -63,6 +68,7 @@ const ContactDetails = ({ setPage, setContactdone }) => {
             value: contactInfo.email,
             name: 'email',
             readOnly: {readOnly},
+            disabled: true,
             handleChange: handleChange
           }
         ]} 

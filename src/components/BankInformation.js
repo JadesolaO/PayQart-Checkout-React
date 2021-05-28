@@ -32,13 +32,13 @@ const BankInformation = ({ setPage, setBankdone }) => {
         const loanInfo = (({ incomebanktype, incomeaccounttype, bankname, accountnumber }) =>
               ({ incomebanktype, incomeaccounttype, bankname, accountnumber }))(res.data);
         setBankInfo(loanInfo);
+        console.log(loanInfo);
       })
       .catch(() => {});
   }
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(bankInfo);
     submitBankInfo(bankInfo)
         .then(res => {
             successToast(res.data);
@@ -72,14 +72,16 @@ const BankInformation = ({ setPage, setBankdone }) => {
         formDetails2={[
           {
             label: 'Bank Name',
-            type: 'text',
+            type: 'select',
+            options: listOfBanks,
+            extraOptions: true,
             value: bankInfo.bankname,
             name: 'bankname',
             handleChange: handleChange
           },
           {
             label: 'Account Number',
-            type: 'text',
+            type: 'number',
             value: bankInfo.accountnumber,
             name: 'accountnumber',
             handleChange: handleChange
@@ -93,3 +95,26 @@ const BankInformation = ({ setPage, setBankdone }) => {
 }
 
 export default BankInformation
+
+
+const listOfBanks = [
+  { id: '044', desc: 'Access Bank Nigeria Plc' },
+  { id: '050', desc: 'Ecobank Nigeria' },
+  { id: '084', desc: '	Enterprise Bank Plc' },
+  { id: '070', desc: 'Fidelity Bank Plc' },
+  { id: '011', desc: 'First Bank of Nigeria Plc' },
+  { id: '214', desc: 'First City Monument Bank' },
+  { id: '058', desc: 'Guaranty Trust Bank Plc' },
+  { id: '030', desc: 'Heritaage Banking Company Ltd' },
+  { id: '301', desc: 'Jaiz Bank' },
+  { id: '082', desc: 'Keystone Bank Ltd' },
+  { id: '014', desc: 'Mainstreet Bank Plc' },
+  { id: '076', desc: 'Skye Bank Plc' },
+  { id: '039', desc: 'Stanbic IBTC Plc' },
+  { id: '232', desc: 'Sterling Bank Plc' },
+  { id: '032', desc: 'Union Bank Nigeria Plc' },
+  { id: '033', desc: 'United Bank for Africa Plc' },
+  { id: '215', desc: 'Unity Bank Plc' },
+  { id: '035', desc: 'WEMA Bank Plc' },
+  { id: '057', desc: 'Zenith Bank International' }
+]

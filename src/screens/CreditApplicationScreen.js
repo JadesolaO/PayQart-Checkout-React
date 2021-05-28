@@ -31,10 +31,9 @@ const CreditApplicationScreen = (props) => {
     var obj = { id: '6700', email: localStorage.getItem('userEmail') }
     makeFeePayment(obj)
       .then(res => {
-        console.log(res.data);
-        const url = res.data['data']['data']['authorization_url']
-        // let reference = data["data"]["data"]["reference"]
-        // window.localStorage.setItem("current_reference",reference)
+        const url = res.data['data']['data']['authorization_url'];
+        let reference = res.data["data"]["data"]["reference"];
+        localStorage.setItem('current_reference', reference);
         window.location.href = url;
         localStorage.removeItem('nextRoute');
         localStorage.removeItem('loanId');
