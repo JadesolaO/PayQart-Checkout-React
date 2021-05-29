@@ -18,6 +18,7 @@ const ContactDetails = ({ setPage, setContactdone }) => {
   const [loading, setLoading] = useState(Boolean)
 
   const handleChange = (name, e) => {
+    console.log(contactInfo)
     setContactInfo({...contactInfo, [name]: e.target.value });
   }
 
@@ -32,7 +33,7 @@ const ContactDetails = ({ setPage, setContactdone }) => {
       return;
 
     if(user.newUser)
-      return setContactInfo(...contactInfo, user.email);
+      return setContactInfo({...contactInfo, email: user.email});
 
     const userInfo = (({ email, address, residentialtype, livingduration, telephone, city, state }) =>
           ({ email, address, residentialtype, livingduration, telephone, city, state }))(user);

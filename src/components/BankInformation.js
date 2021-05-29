@@ -73,7 +73,13 @@ const BankInformation = ({ setPage, setBankdone }) => {
           }
         ]}
         formDetails2={[
-          {
+          bankInfo.incomebanktype === 'Mobile Money/E-Wallet' ? {
+            label: 'Wallet Name',
+            type: 'text',
+            value: bankInfo.bankname,
+            name: 'bankname',
+            handleChange: handleChange
+          } : {
             label: 'Bank Name',
             type: 'select',
             options: listOfBanks,
@@ -82,7 +88,13 @@ const BankInformation = ({ setPage, setBankdone }) => {
             name: 'bankname',
             handleChange: handleChange
           },
-          {
+          bankInfo.incomebanktype === 'Mobile Money/E-Wallet' ? {
+            label: 'Wallet Number',
+            type: 'number',
+            value: bankInfo.accountnumber,
+            name: 'accountnumber',
+            handleChange: handleChange
+          } : {
             label: 'Account Number',
             type: 'number',
             value: bankInfo.accountnumber,
@@ -102,6 +114,7 @@ export default BankInformation
 
 
 const listOfBanks = [
+  {id: '0', desc: 'Select'},
   { id: '044', desc: 'Access Bank Nigeria Plc' },
   { id: '050', desc: 'Ecobank Nigeria' },
   { id: '084', desc: '	Enterprise Bank Plc' },
