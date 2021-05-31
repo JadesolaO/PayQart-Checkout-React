@@ -114,7 +114,7 @@ export default BankInformation
 
 
 const listOfBanks = [
-  {id: '0', desc: 'Select'},
+  {id: 'Select', desc: 'Select'},
   { id: '044', desc: 'Access Bank Nigeria Plc' },
   { id: '050', desc: 'Ecobank Nigeria' },
   { id: '084', desc: '	Enterprise Bank Plc' },

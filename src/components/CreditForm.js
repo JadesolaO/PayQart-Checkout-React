@@ -15,14 +15,14 @@ const CreditForm = (props) => {
             <Form.Label className='frm-lbl'>{label}</Form.Label>
             {type === 'select' ?
               (extraOptions ?
-                <Form.Control className='frm-ctrl slt' as='select' value={value} onChange={(text) => handleChange(name, text)}>
+                <Form.Control required className='frm-ctrl slt' as='select' value={value} onChange={(text) => handleChange(name, text)}>
                   {options.map((option, ind) => (
-                    <option key={ind} value={option.id}>{option.desc}</option>
+                    <option key={ind} selected={option.id === 'Select'} disabled={option.id === 'Select'} value={option.id === 'Select' ? '' : option.id}>{option.desc}</option>
                   ))}
                 </Form.Control> : 
-                <Form.Control className='frm-ctrl slt' as='select' value={value} onChange={(text) => handleChange(name, text)}>
+                <Form.Control required className='frm-ctrl slt' as='select' value={value} onChange={(text) => handleChange(name, text)}>
                 {options.map((option, ind) => (
-                  <option key={ind} value={option}>{option}</option>
+                  <option key={ind} selected={option === 'Select'} disabled={option === 'Select'} value={option === 'Select' ? '' : option}>{option}</option>
                 ))}
               </Form.Control>
               ) :
