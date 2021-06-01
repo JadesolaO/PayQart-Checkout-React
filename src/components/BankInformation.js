@@ -73,13 +73,7 @@ const BankInformation = ({ setPage, setBankdone }) => {
           }
         ]}
         formDetails2={[
-          bankInfo.incomebanktype === 'Mobile Money/E-Wallet' ? {
-            label: 'Wallet Name',
-            type: 'text',
-            value: bankInfo.bankname,
-            name: 'bankname',
-            handleChange: handleChange
-          } : {
+          {
             label: 'Bank Name',
             type: 'select',
             options: listOfBanks,
@@ -88,13 +82,23 @@ const BankInformation = ({ setPage, setBankdone }) => {
             name: 'bankname',
             handleChange: handleChange
           },
-          bankInfo.incomebanktype === 'Mobile Money/E-Wallet' ? {
-            label: 'Wallet Number',
+          {
+            label: 'Account Number',
             type: 'number',
             value: bankInfo.accountnumber,
             name: 'accountnumber',
             handleChange: handleChange
-          } : {
+          }
+        ]}
+        formDetails3={[
+          {
+            label: 'Microfinace Bank Name',
+            type: 'text',
+            value: bankInfo.bankname,
+            name: 'bankname',
+            handleChange: handleChange
+          },
+          {
             label: 'Account Number',
             type: 'number',
             value: bankInfo.accountnumber,

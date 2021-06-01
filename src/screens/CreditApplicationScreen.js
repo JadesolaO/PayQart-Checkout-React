@@ -62,7 +62,7 @@ const CreditApplicationScreen = (props) => {
                   >
                     <Image height='14' src={contact} /> <span>Personal Information</span>
                     {personaldone &&
-                      <span style={{float: 'right'}}>
+                      <span style={{ float: 'right' }}>
                         <i style={{ color: '#710157' }} className="fa fa-check"></i>
                       </span>}
                   </Button>
@@ -75,7 +75,7 @@ const CreditApplicationScreen = (props) => {
                   >
                     <Image height='14' src={mail} /> <span>Contact Information</span>
                     {contactdone &&
-                      <span style={{float: 'right'}}>
+                      <span style={{ float: 'right' }}>
                         <i style={{ color: '#710157' }} className="fa fa-check"></i>
                       </span>}
                   </Button>
@@ -88,7 +88,7 @@ const CreditApplicationScreen = (props) => {
                   >
                     <Image height='14' src={Union} /> <span>Employment Information</span>
                     {employmentdone &&
-                      <span style={{float: 'right'}}>
+                      <span style={{ float: 'right' }}>
                         <i style={{ color: '#710157' }} className="fa fa-check"></i>
                       </span>}
                   </Button>
@@ -101,7 +101,7 @@ const CreditApplicationScreen = (props) => {
                   >
                     <Image height='14' src={bank} /> <span>Bank Information</span>
                     {bankdone &&
-                      <span style={{float: 'right'}}>
+                      <span style={{ float: 'right' }}>
                         <i style={{ color: '#710157' }} className="fa fa-check"></i>
                       </span>}
                   </Button>
@@ -114,7 +114,7 @@ const CreditApplicationScreen = (props) => {
                   >
                     <Image height='14' src={ref} /> <span>Referee Information</span>
                     {refdone &&
-                      <span style={{float: 'right'}}>
+                      <span style={{ float: 'right' }}>
                         <i style={{ color: '#710157' }} className="fa fa-check"></i>
                       </span>}
                   </Button>
