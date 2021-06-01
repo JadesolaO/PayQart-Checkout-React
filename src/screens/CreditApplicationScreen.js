@@ -28,7 +28,10 @@ const CreditApplicationScreen = (props) => {
   }
 
   const startPayment = () => {
-    var obj = { id: '6700', email: localStorage.getItem('userEmail') }
+    var obj = {
+      email: localStorage.getItem('userEmail'), 
+      loandid: localStorage.getItem('loanId')
+    };
     makeFeePayment(obj)
       .then(res => {
         const url = res.data['data']['data']['authorization_url'];
@@ -36,8 +39,7 @@ const CreditApplicationScreen = (props) => {
         localStorage.setItem('current_reference', reference);
         window.location.href = url;
         localStorage.removeItem('nextRoute');
-        localStorage.removeItem('loanId');
-        localStorage.removeItem('unserInfo');
+        localStorage.removeItem('userInfo');
       })
       .catch(() => { });
   }

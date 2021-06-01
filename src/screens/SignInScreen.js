@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
-import { Col, Form, Row, Container, Button, InputGroup, Image } from 'react-bootstrap'
-import { Link, useParams } from 'react-router-dom'
+import React, { useState } from 'react';
+import { Col, Form, Row, Container, Button, InputGroup, Image } from 'react-bootstrap';
+import { Link, useParams } from 'react-router-dom';
 import ProgressSteps from '../components/ProgressSteps';
-import eye from '../images/Path 38.png'
+import eye from '../images/Path 38.png';
 import { successToast, doLogin } from '../services/authService';
 
 const SignInScreen = (props) => {
