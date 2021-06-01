@@ -90,7 +90,6 @@ const SignInScreen = (props) => {
                         name='Details'
                         value='Yes'
                         onChange={(e) => setRemember(e.target.value)}
-                        required
                       />
                       <span
                         style={{

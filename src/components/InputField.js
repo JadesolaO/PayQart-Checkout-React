@@ -10,6 +10,7 @@ const InputField = (props) => {
   const [no, setNo] = useState(false)
   const [dValue, setDValue] = useState(false)
 
+  // dValue && props.setShow(false) 
   return (
     <>
       <Form.Group className='mb-2'>
@@ -67,7 +68,12 @@ const InputField = (props) => {
                 onChange={props.setValue2}
                 next2Label={null}
                 prev2Label={null}
-                onClickDay={() => setDValue(true)}
+                onClickDay={() => {
+                  setDValue(true)
+                  setTimeout(function () {
+                   props.setShow(false)
+                  }, 1000/5);
+                }}
               />
             </Form.Group>}
         </Form.Group> :
