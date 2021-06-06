@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import CreditForm from './CreditForm';
-import { successToast, submitReferenceInfo, getLoanDetails } from '../services/creditFormService';
+import { SuccessToast, submitReferenceInfo, getLoanDetails } from '../services/creditFormService';
 import '../stylesheets/scss/creditapplicationscreen.scss';
 
 const RefereeInformation = ({ startPayment, setRefdone }) => {
@@ -56,13 +56,12 @@ const RefereeInformation = ({ startPayment, setRefdone }) => {
         newReferenceObj.rname = referenceInfo.rfirstName + ' ' + referenceInfo.rlastName;
     submitReferenceInfo(newReferenceObj)
         .then(res => {
-            successToast(res.data);
+            SuccessToast(res.data);
             setRefdone(true)
             startPayment();
             setLoading(false)
         })
         .catch(() => {})
-            startPayment();
   }
 
   return (

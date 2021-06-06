@@ -30,7 +30,7 @@ const CreditApplicationScreen = (props) => {
   const startPayment = () => {
     var obj = {
       email: localStorage.getItem('userEmail'), 
-      loandid: localStorage.getItem('loanId')
+      loanid: localStorage.getItem('loanId')
     };
     makeFeePayment(obj)
       .then(res => {

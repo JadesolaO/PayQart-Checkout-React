@@ -1,5 +1,6 @@
 import { Col, Row } from "react-bootstrap";
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { ToastProvider } from 'react-toast-notifications';
 import Cart from "./components/Cart";
 import PlanScreen from "./screens/PlanScreen";
 import SignUpScreen from "./screens/SignUpScreen";
@@ -11,14 +12,15 @@ import EmploymentScreen from "./screens/EmploymentScreen";
 import WalletStatusScreen from "./screens/WalletStatusScreen";
 import EligibilityScreen from "./screens/EligibilityScreen";
 import SuccessScreen from "./screens/SuccessScreen";
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 function App() { 
   return (
     <Router>
       <>
-        <ToastContainer />
+      <ToastProvider
+          autoDismiss
+          autoDismissTimeout={5000}
+        >
         <Row className='app'>
           <Route exact path='/'>
             <Col className='eligibityscreen' md={12}>
@@ -91,6 +93,7 @@ function App() {
             <Route exact path='/success/:loanid' component={SuccessScreen} />
           </Col>
         </Row>
+        </ToastProvider>
       </>
     </Router>
   );

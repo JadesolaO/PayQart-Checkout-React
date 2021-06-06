@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import CreditForm from './CreditForm';
-import { successToast, submitContactInfo } from '../services/creditFormService';
+import { SuccessToast, submitContactInfo } from '../services/creditFormService';
 import '../stylesheets/scss/creditapplicationscreen.scss';
 
 const ContactDetails = ({ setPage, setContactdone }) => {
@@ -18,7 +18,6 @@ const ContactDetails = ({ setPage, setContactdone }) => {
   const [loading, setLoading] = useState(Boolean)
 
   const handleChange = (name, e) => {
-    console.log(contactInfo)
     setContactInfo({...contactInfo, [name]: e.target.value });
   }
 
@@ -43,11 +42,10 @@ const ContactDetails = ({ setPage, setContactdone }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true)
-    console.log(contactInfo);
     submitContactInfo(contactInfo)
         .then(res => {
             localStorage.setItem('userEmail', contactInfo.email);
-            successToast(res.data);
+            SuccessToast(res.data);
             setLoading(false)
             setPage('employmentInfo');
             setContactdone(true)

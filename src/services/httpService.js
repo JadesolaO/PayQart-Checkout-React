@@ -1,6 +1,6 @@
   
 import axios from 'axios';
-import { toast } from 'react-toastify';
+import { useToasts } from 'react-toast-notifications';
 
 
 // Add a request interceptor
@@ -8,7 +8,7 @@ axios.interceptors.request.use(function (config) {
 
   config.headers['Content-Type'] = 'application/json';
 
-  config.headers['authid'] = JSON.stringify(localStorage.getItem('userObjFromBckEnd')).authid;
+  config.headers['authid'] = JSON.parse(localStorage.getItem('userObjFromBckEnd')).authid;
   return config;
 });
 
@@ -22,11 +22,11 @@ axios.interceptors.response.use(null, error => {
     console.log(error.response);
 
   if (!expectedError && !error.response.data) {
-    errorToast('An unexpected error occurrred.');
+    ErrorToast('An unexpected error occurrred.');
   } else if (expectedError && !error.response.data) {
-    errorToast('An unexpected error occurrred.');
+    ErrorToast('An unexpected error occurrred.');
   } else {
-    errorToast(error.response.data);
+    ErrorToast(error.response.data);
   }
 
   return Promise.reject(error);
@@ -37,16 +37,9 @@ function setJwt(jwt) {
   axios.defaults.headers.common["x-auth-token"] = jwt;
 }
 
-export function errorToast(msg) {
-  toast.error(msg, {
-    position: "bottom-center",
-    autoClose: 3000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined
-  });
+export function ErrorToast(msg) {
+  const { addToast } = useToasts();
+  addToast(msg, { appearance: 'error' });
 }
 
 export default {

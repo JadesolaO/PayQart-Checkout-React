@@ -1,4 +1,4 @@
-import { toast } from 'react-toastify';
+import { useToasts } from 'react-toast-notifications';
 import http from './httpService';
 
 // const apiEndpoint = 'http://localhost:2000/user';
@@ -24,7 +24,8 @@ export async function submitPersonalInfo(personalInfo) {
 export async function submitContactInfo(contactInfo) {
   let config = {
     headers: {
-      loanid: localStorage.getItem('loanId')
+      loanid: localStorage.getItem('loanId'),
+
     }
   }
   return await http.post(`${apiEndpoint}/save-contact-information`, contactInfo, config);
@@ -76,6 +77,11 @@ export async function verifyFeePayment(data) {
 }
 
 export async function getLoanDetails() {
+  let config = {
+    headers: {
+      loanid: localStorage.getItem('loanId')
+    }
+  }
   return await http.get(`${apiEndpoint}/get-loan-details`);
 }
 
@@ -97,17 +103,9 @@ export async function uploadDocument(data) {
   return await http.post(`${apiEndpoint}/upload-document`, data, config);
 }
 
-export function successToast(msg) {
-  console.log(msg);
-  toast.success(msg, {
-    position: "bottom-center",
-    autoClose: 3000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined
-  });
+export function SuccessToast(msg) {
+  // const { addToast } = useToasts();
+  // addToast(msg, { appearance: "success" });
 }
 
 export default {
@@ -119,5 +117,5 @@ export default {
   submitBankInfo,
   getLoanStat,
   submitReferenceInfo,
-  successToast
+  SuccessToast
 };

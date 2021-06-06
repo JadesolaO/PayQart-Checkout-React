@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import CreditForm from './CreditForm';
-import { successToast, submitPersonalInfo } from '../services/creditFormService';
+import { SuccessToast, submitPersonalInfo } from '../services/creditFormService';
 import '../stylesheets/scss/creditapplicationscreen.scss';
 
 const PersonalInformation = ({ setPage, setPersonaldone }) => {
@@ -45,10 +45,9 @@ const PersonalInformation = ({ setPage, setPersonaldone }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true)
-    console.log(personalInfo);
     submitPersonalInfo(personalInfo)
       .then(res => {
-        successToast(res.data);
+        SuccessToast(res.data);
         setLoading(false)
         setPage('contactInfo');
         setPersonaldone(true)

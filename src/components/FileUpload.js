@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Image } from 'react-bootstrap';
 import upload from '../images/upload.svg';
-// import { uploadDocument, successToast } from '../services/creditFormService';
+// import { uploadDocument, SuccessToast } from '../services/creditFormService';
 import '../stylesheets/scss/fileupload.scss';
 
 const FileUpload = ({ uploadObj, documentStatus, saveDocument }) => {

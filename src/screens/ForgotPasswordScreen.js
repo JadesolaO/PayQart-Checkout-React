@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Col, Form, Row, Container, Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import ProgressSteps from '../components/ProgressSteps'
-import { successToast, doPasswordReset } from '../services/authService';
+import { SuccessToast, doPasswordReset } from '../services/authService';
 
 const ForgotPasswordScreen = (props) => {
   const [email, setEmail] = useState('')
@@ -12,8 +12,8 @@ const ForgotPasswordScreen = (props) => {
     const user = { email: email };
     doPasswordReset(user)
         .then(res => {
-            successToast(res.data);
-            props.history.push('/signin')
+            SuccessToast(res.data);
+            props.history.push('/signin/1');
         })
         .catch(() => {})
   }

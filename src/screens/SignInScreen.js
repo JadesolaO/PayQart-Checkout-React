@@ -3,7 +3,7 @@ import { Col, Form, Row, Container, Button, InputGroup, Image } from 'react-boot
 import { Link, useParams } from 'react-router-dom';
 import ProgressSteps from '../components/ProgressSteps';
 import eye from '../images/Path 38.png';
-import { successToast, doLogin } from '../services/authService';
+import { SuccessToast, doLogin } from '../services/authService';
 
 const SignInScreen = (props) => {
   const [email, setEmail] = useState('')
@@ -18,7 +18,7 @@ const SignInScreen = (props) => {
     doLogin(user)
         .then(res => {
             localStorage.setItem('userObjFromBckEnd', JSON.stringify(res.data.user));
-            successToast(res.data.message);
+            SuccessToast(res.data.message);
             props.history.push('/creditscreen');
         })
         .catch(() => {});

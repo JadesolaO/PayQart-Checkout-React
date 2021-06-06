@@ -1,4 +1,4 @@
-import { toast } from 'react-toastify';
+import { useToasts } from 'react-toast-notifications';
 import http from './httpService';
 
 // const apiEndpoint = 'http://localhost:2000/user';
@@ -16,17 +16,9 @@ export async function doSignUp(user) {
   return await http.post(`${apiEndpoint}/signUp`, user);
 }
 
-export function successToast(msg) {
-  console.log(msg);
-  toast.success(msg, {
-    position: "bottom-center",
-    autoClose: 3000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined
-  });
+export function SuccessToast(msg) {
+  // const { addToast } = useToasts();
+  // addToast(msg, { appearance: "success" });
 }
 
 export default {

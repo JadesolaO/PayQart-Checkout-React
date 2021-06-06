@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import CreditForm from './CreditForm';
-import { successToast, submitBankInfo, getLoanDetails } from '../services/creditFormService';
+import { SuccessToast, submitBankInfo, getLoanDetails } from '../services/creditFormService';
 import '../stylesheets/scss/creditapplicationscreen.scss';
 
 const BankInformation = ({ setPage, setBankdone }) => {
@@ -43,7 +43,7 @@ const BankInformation = ({ setPage, setBankdone }) => {
     setLoading(true)
     submitBankInfo(bankInfo)
         .then(res => {
-            successToast(res.data);
+            SuccessToast(res.data);
             setLoading(false)
             setPage('refInfo');
             setBankdone(true)

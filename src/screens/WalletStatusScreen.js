@@ -4,10 +4,21 @@ import logo from '../images/pink-logo.svg';
 import emptyWalletIcon from '../images/empty-wallet.svg';
 import fundedWalletIcon from '../images/funded-wallet.svg';
 import '../stylesheets/scss/walletStatusScreen.scss';
+import { useToasts } from 'react-toast-notifications';
 
 const WalletStatusScreen = (props) => {
 
   const [statusSelected, setStatus] = useState('');
+
+  const { addToast } = useToasts();
+
+  const showToast = (msg) => {
+    addToast(msg, { appearance: "success" });
+  }
+
+  React.useEffect(() => {
+    showToast('Hellow');
+  }, []);
 
   const signIn = () => {
     setStatus('/signin/1');

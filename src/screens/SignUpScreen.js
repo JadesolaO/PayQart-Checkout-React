@@ -5,7 +5,7 @@ import ProgressSteps from '../components/ProgressSteps'
 import eye from '../images/Path 38.png'
 import lock from '../images/Path 44.png'
 import '../stylesheets/scss/SignUpScreen.scss'
-import { successToast, doSignUp } from '../services/authService';
+import { SuccessToast, doSignUp } from '../services/authService';
 
 const SignUpScreen = (props) => {
   const [email, setEmail] = useState('')
@@ -20,7 +20,7 @@ const SignUpScreen = (props) => {
     doSignUp(user)
         .then(res => {
           localStorage.setItem('userObjFromBckEnd', JSON.stringify(res.data.user));
-          successToast(res.data.message);
+          SuccessToast(res.data.message);
           props.history.push('/creditscreen');
         })
         .catch(() => {})

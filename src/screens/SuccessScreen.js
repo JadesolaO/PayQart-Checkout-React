@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap';
+import { useParams } from 'react-router-dom'
 import FileUpload from '../components/FileUpload';
-import { getDocumentDetails, uploadDocument, successToast, verifyFeePayment } from '../services/creditFormService';
+import { getDocumentDetails, uploadDocument, SuccessToast, verifyFeePayment } from '../services/creditFormService';
 import '../stylesheets/scss/successScreen.scss';
 
 const SuccessScreen = (props) => {
 
+  const { loanid } = useParams();
   const [documentStatus, setDocumentStatus] = useState({
     govtIdSubmitted: 0,
     workIdSubmitted: 0,
@@ -50,7 +52,7 @@ const SuccessScreen = (props) => {
     const myDoc = { [statusField]: 1, [name]: file };
     await uploadDocument(myDoc)
     .then(res => {
-      successToast(res.data);
+      SuccessToast(res.data);
       console.log([statusField]);
       handleDocStatus({...documentStatus, [statusField]: 1 });
     })
