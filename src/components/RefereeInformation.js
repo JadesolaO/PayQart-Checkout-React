@@ -1,68 +1,100 @@
-import React, { useEffect, useState } from 'react';
-import CreditForm from './CreditForm';
-import { successToast, submitReferenceInfo, getLoanDetails } from '../services/creditFormService';
-import '../stylesheets/scss/creditapplicationscreen.scss';
+import React, { useEffect, useState } from "react"
+import CreditForm from "./CreditForm"
+import {
+  successToast,
+  submitReferenceInfo,
+  getLoanDetails
+} from "../services/creditFormService"
+import "../stylesheets/css/creditapplicationscreen.css"
 
 const RefereeInformation = ({ startPayment, setRefdone }) => {
-
   const [referenceInfo, setReferenceInfo] = useState({
-    rname: '',
-    rfirstName: '',
-    rlastName: '',
-    rtelephone: '',
-    remail: '',
-    raddress: '',
-    relationship: '',
-    rcity: '',
-    rstate: ''
-  });
+    rname: "",
+    rfirstName: "",
+    rlastName: "",
+    rtelephone: "",
+    remail: "",
+    raddress: "",
+    relationship: "",
+    rcity: "",
+    rstate: ""
+  })
   const [loading, setLoading] = useState(Boolean)
 
   const handleChange = (name, e) => {
-    setReferenceInfo({...referenceInfo, [name]: e.target.value });
+    setReferenceInfo({ ...referenceInfo, [name]: e.target.value })
   }
 
   useEffect(() => {
-    retrieveLoanDetails();
-  }, []);
+    retrieveLoanDetails()
+  }, [])
 
   const retrieveLoanDetails = async () => {
-    const user = JSON.parse(localStorage.getItem('userObjFromBckEnd'));
-    if (!user || user.newUser)
-      return;
+    const user = JSON.parse(localStorage.getItem("userObjFromBckEnd"))
+    if (!user || user.newUser) return
 
     await getLoanDetails()
-      .then(res => {
-        if (!res.data)
-          return;
-        let loanInfo = (({ rname, rtelephone, remail, raddress, relationship, rcity, rstate }) => 
-              ({ rname, rtelephone, remail, raddress, relationship, rcity, rstate }))(res.data);
-        const names = loanInfo.rname.split(" ");
-        delete loanInfo.rname;
-        console.log(names);
-        loanInfo.rfirstName = names[0];
-        loanInfo.rlastName = names[1];
-        setReferenceInfo(loanInfo);
+      .then((res) => {
+        if (!res.data) return
+        let loanInfo = (({
+          rname,
+          rtelephone,
+          remail,
+          raddress,
+          relationship,
+          rcity,
+          rstate
+        }) => ({
+          rname,
+          rtelephone,
+          remail,
+          raddress,
+          relationship,
+          rcity,
+          rstate
+        }))(res.data)
+        const names = loanInfo.rname.split(" ")
+        delete loanInfo.rname
+        console.log(names)
+        loanInfo.rfirstName = names[0]
+        loanInfo.rlastName = names[1]
+        setReferenceInfo(loanInfo)
       })
-      .catch(() => {});
+      .catch(() => {})
   }
 
   const handleSubmit = (e) => {
     e.preventDefault()
     setLoading(true)
-    console.log(referenceInfo);
-    let newReferenceObj = (({ rname, rtelephone, remail, raddress, relationship, rcity, rstate }) => 
-        ({ rname, rtelephone, remail, raddress, relationship, rcity, rstate }))(referenceInfo);
-        newReferenceObj.rname = referenceInfo.rfirstName + ' ' + referenceInfo.rlastName;
+    console.log(referenceInfo)
+    let newReferenceObj = (({
+      rname,
+      rtelephone,
+      remail,
+      raddress,
+      relationship,
+      rcity,
+      rstate
+    }) => ({
+      rname,
+      rtelephone,
+      remail,
+      raddress,
+      relationship,
+      rcity,
+      rstate
+    }))(referenceInfo)
+    newReferenceObj.rname =
+      referenceInfo.rfirstName + " " + referenceInfo.rlastName
     submitReferenceInfo(newReferenceObj)
-        .then(res => {
-            successToast(res.data);
-            setRefdone(true)
-            startPayment();
-            setLoading(false)
-        })
-        .catch(() => {})
-            startPayment();
+      .then((res) => {
+        successToast(res.data)
+        setRefdone(true)
+        startPayment()
+        setLoading(false)
+      })
+      .catch(() => {})
+    startPayment()
   }
 
   return (
@@ -70,72 +102,79 @@ const RefereeInformation = ({ startPayment, setRefdone }) => {
       <CreditForm
         formDetails={[
           {
-            label: 'First Name',
-            type: 'text',
+            label: "First Name",
+            type: "text",
             value: referenceInfo.rfirstName,
-            name: 'rfirstName',
+            name: "rfirstName",
             handleChange: handleChange
           },
           {
-            label: 'Last Name',
-            type: 'text',
+            label: "Last Name",
+            type: "text",
             value: referenceInfo.rlastName,
-            name: 'rlastName',
+            name: "rlastName",
             handleChange: handleChange
           }
         ]}
         formDetails2={[
           {
-            label: 'Email Address',
-            type: 'email',
+            label: "Email Address",
+            type: "email",
             value: referenceInfo.remail,
-            name: 'remail',
+            name: "remail",
             handleChange: handleChange
           },
           {
-            label: 'Telephone Number',
-            type: 'number',
+            label: "Telephone Number",
+            type: "number",
             value: referenceInfo.rtelephone,
-            name: 'rtelephone',
+            name: "rtelephone",
             handleChange: handleChange
           }
         ]}
         formDetails3={[
           {
             label: "Relationship",
-            type: 'select',
-            options: ['Select', 'Colleague', 'Friend', 'Spouse', 'Sibling', 'Parent'],
+            type: "select",
+            options: [
+              "Select",
+              "Colleague",
+              "Friend",
+              "Spouse",
+              "Sibling",
+              "Parent"
+            ],
             value: referenceInfo.relationship,
-            name: 'relationship',
+            name: "relationship",
             handleChange: handleChange
           },
           {
             label: "Residential Address",
-            type: 'text',
+            type: "text",
             value: referenceInfo.raddress,
-            name: 'raddress',
+            name: "raddress",
             handleChange: handleChange
           }
         ]}
         formDetails4={[
           {
-            label: 'City',
-            type: 'text',
+            label: "City",
+            type: "text",
             value: referenceInfo.rcity,
-            name: 'rcity',
+            name: "rcity",
             handleChange: handleChange
           },
           {
-            label: 'State',
-            type: 'select',
-            options: ['Select', 'Lagos', 'Abuja', 'Ondo', 'Ogun', 'Rivers'],
+            label: "State",
+            type: "select",
+            options: ["Select", "Lagos", "Abuja", "Ondo", "Ogun", "Rivers"],
             value: referenceInfo.rstate,
-            name: 'rstate',
+            name: "rstate",
             handleChange: handleChange
           }
         ]}
         handleSubmit={handleSubmit}
-        buttonText='Pay Verification Fee'
+        buttonText="Pay Verification Fee"
         loading={loading}
       />
     </div>
