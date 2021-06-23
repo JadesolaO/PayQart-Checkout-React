@@ -7,7 +7,8 @@ import {
 } from "../services/creditFormService"
 import "../stylesheets/css/creditapplicationscreen.css"
 
-const RefereeInformation = ({ startPayment, setRefdone }) => {
+const RefereeInformation = (props) => {
+  const { startPayment, setRefdone, history } = props
   const [referenceInfo, setReferenceInfo] = useState({
     rname: "",
     rfirstName: "",
@@ -55,7 +56,6 @@ const RefereeInformation = ({ startPayment, setRefdone }) => {
         }))(res.data)
         const names = loanInfo.rname.split(" ")
         delete loanInfo.rname
-        console.log(names)
         loanInfo.rfirstName = names[0]
         loanInfo.rlastName = names[1]
         setReferenceInfo(loanInfo)
@@ -94,7 +94,7 @@ const RefereeInformation = ({ startPayment, setRefdone }) => {
         setLoading(false)
       })
       .catch(() => {})
-    startPayment()
+    return history.push("/success")
   }
 
   return (
