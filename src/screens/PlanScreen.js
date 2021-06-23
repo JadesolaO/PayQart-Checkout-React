@@ -89,10 +89,7 @@ const PlanScreen = (props) => {
     }
 
     try {
-      const response = await axios.post(
-        "https://cryptic-reef-51266.herokuapp.com/user/initiate-credit",
-        loanObj
-      )
+      const response = await inititiateCredit(loanObj)
 
       const { data: loanid } = response
 

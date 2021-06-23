@@ -26,6 +26,7 @@ const EmploymentInformation = ({ setPage, setEmploymentdone }) => {
 
   useEffect(() => {
     retrieveLoanDetails()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const retrieveLoanDetails = async () => {

@@ -14,7 +14,6 @@ import eye from "../images/Path 38.png"
 import lock from "../images/Path 44.png"
 import "../stylesheets/css/SignUpScreen.css"
 import { successToast, doSignUp } from "../services/authService"
-import axios from "axios"
 
 const SignUpScreen = (props) => {
   const [email, setEmail] = useState("")
@@ -28,15 +27,12 @@ const SignUpScreen = (props) => {
     const userInfo = { email, pin: password, bvn }
 
     try {
-      const response = await axios.post(
-        "https://cryptic-reef-51266.herokuapp.com/user/signUp",
-        userInfo
-      )
+      const response = await doSignUp(userInfo)
 
       const { data: user } = response
 
       if (user) {
-        localStorage.setItem("userObjFromBckEnd", JSON.stringify(user))
+        localStorage.setItem("userObjFromBckEnd", JSON.stringify(user.user))
         successToast(response.data.message)
         props.history.push("/creditscreen")
       }

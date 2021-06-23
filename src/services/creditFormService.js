@@ -16,10 +16,13 @@ export async function getLoanStat(loanid) {
 }
 
 export async function submitPersonalInfo(personalInfo) {
-  return await http.post(
+  const response = await http.post(
     `${apiEndpoint}/save-personal-information`,
     personalInfo
   )
+
+  console.log(response)
+  return response
 }
 
 export async function submitContactInfo(contactInfo) {
@@ -38,14 +41,20 @@ export async function submitBankInfo(bankInfo) {
 }
 
 export async function submitReferenceInfo(referenceInfo) {
+  let config = {
+    headers: {
+      loanid: localStorage.getItem("loanId")
+    }
+  }
   return await http.post(
     `${apiEndpoint}/save-referee-information`,
-    referenceInfo
+    referenceInfo,
+    config
   )
 }
 
-export async function makeFeePayment(id) {
-  return await http.post(`${apiEndpoint}/make-fee-payment`, id)
+export async function makeFeePayment(obj) {
+  return await http.post(`${apiEndpoint}/make-fee-payment`, obj)
 }
 
 export async function verifyFeePayment(data) {
@@ -53,7 +62,12 @@ export async function verifyFeePayment(data) {
 }
 
 export async function getLoanDetails() {
-  return await http.get(`${apiEndpoint}/get-loan-details`)
+  let config = {
+    headers: {
+      loanid: localStorage.getItem("loanId")
+    }
+  }
+  return await http.get(`${apiEndpoint}/get-loan-details`, config)
 }
 
 export async function getDocumentDetails() {

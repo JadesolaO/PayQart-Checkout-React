@@ -23,6 +23,7 @@ const ContactDetails = ({ setPage, setContactdone }) => {
 
   useEffect(() => {
     getUser()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const getUser = () => {
@@ -31,7 +32,11 @@ const ContactDetails = ({ setPage, setContactdone }) => {
     if (!user) return
 
     if (user.newUser)
-      return setContactInfo({ ...contactInfo, email: user.email })
+      return setContactInfo({
+        ...contactInfo,
+        email: user.email,
+        authid: user.authid
+      })
 
     const userInfo = (({
       email,
@@ -40,7 +45,8 @@ const ContactDetails = ({ setPage, setContactdone }) => {
       livingduration,
       telephone,
       city,
-      state
+      state,
+      authid
     }) => ({
       email,
       address,
@@ -48,7 +54,8 @@ const ContactDetails = ({ setPage, setContactdone }) => {
       livingduration,
       telephone,
       city,
-      state
+      state,
+      authid
     }))(user)
     setContactInfo(userInfo)
   }

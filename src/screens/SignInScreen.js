@@ -26,14 +26,12 @@ const SignInScreen = (props) => {
     const userInfo = { email: email, pin: password }
 
     try {
-      const response = await axios.post(
-        "https://cryptic-reef-51266.herokuapp.com/user/login",
-        userInfo
-      )
+      const response = await doLogin(userInfo)
+
       const { data: user } = response
 
       if (user) {
-        localStorage.setItem("userObjFromBckEnd", JSON.stringify(user))
+        localStorage.setItem("userObjFromBckEnd", JSON.stringify(user.user))
         successToast(response.data.message)
         props.history.push("/creditscreen")
       }

@@ -19,26 +19,24 @@ const PersonalInformation = ({ setPage, setPersonaldone }) => {
   const [readOnly, setReadOnly] = useState(false)
   const [loading, setLoading] = useState(Boolean)
 
-  useEffect(() => {
-    getUser()
-  }, [])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => getUser(), [])
 
   const getUser = () => {
-    const user = JSON.parse(localStorage.getItem("userObjFromBckEnd")).user
+    const user = JSON.parse(localStorage.getItem("userObjFromBckEnd"))
+
+    console.log(user)
 
     if (!user) return
 
-    if (user.newUser) return setPersonalInfo({ ...personalInfo, bvn: user.bvn })
+    if (user.newUser)
+      return setPersonalInfo({
+        ...personalInfo,
+        authid: user.authid,
+        bvn: user.bvn
+      })
 
     setReadOnly(true)
-
-    // const userInfo = {
-    //   title: user.title,
-    //   gender: user.gender,
-    //   firstname: user.firstName
-    // }
-
-    console.log(personalInfo)
 
     const userInfo = (({
       title,
@@ -50,7 +48,8 @@ const PersonalInformation = ({ setPage, setPersonaldone }) => {
       educationlevel,
       children,
       dob,
-      bvn
+      bvn,
+      authid
     }) => ({
       title,
       gender,
@@ -61,7 +60,8 @@ const PersonalInformation = ({ setPage, setPersonaldone }) => {
       educationlevel,
       children,
       dob,
-      bvn
+      bvn,
+      authid
     }))(user)
 
     setPersonalInfo(userInfo)
@@ -82,7 +82,7 @@ const PersonalInformation = ({ setPage, setPersonaldone }) => {
         setPage("contactInfo")
         setPersonaldone(true)
       })
-      .catch(() => {})
+      .catch((err) => console.error(err))
   }
 
   return (

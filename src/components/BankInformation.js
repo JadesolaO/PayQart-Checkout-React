@@ -81,48 +81,52 @@ const BankInformation = ({ setPage, setBankdone }) => {
             options: [
               "Select",
               "Commercial Bank",
-              "Microfinance Bank",
-              "Mobile Money/E-Wallet"
+              "Microfinance Bank"
+              // "Mobile Money/E-Wallet"
             ],
             value: bankInfo.incomebanktype,
             name: "incomebanktype",
             handleChange: handleChange
           }
         ]}
-        formDetails2={[
-          {
-            label: "Bank Name",
-            type: "select",
-            options: listOfBanks,
-            extraOptions: true,
-            value: bankInfo.bankname,
-            name: "bankname",
-            handleChange: handleChange
-          },
-          {
-            label: "Account Number",
-            type: "number",
-            value: bankInfo.accountnumber,
-            name: "accountnumber",
-            handleChange: handleChange
-          }
-        ]}
-        formDetails3={[
-          {
-            label: "Microfinace Bank Name",
-            type: "text",
-            value: bankInfo.bankname,
-            name: "bankname",
-            handleChange: handleChange
-          },
-          {
-            label: "Account Number",
-            type: "number",
-            value: bankInfo.accountnumber,
-            name: "accountnumber",
-            handleChange: handleChange
-          }
-        ]}
+        formDetails2={
+          bankInfo.incomebanktype === "Commercial Bank" && [
+            {
+              label: "Bank Name",
+              type: "select",
+              options: listOfBanks,
+              extraOptions: true,
+              value: bankInfo.bankname,
+              name: "bankname",
+              handleChange: handleChange
+            },
+            {
+              label: "Account Number",
+              type: "number",
+              value: bankInfo.accountnumber,
+              name: "accountnumber",
+              handleChange: handleChange
+            }
+          ]
+        }
+        formDetails3={
+          bankInfo.incomebanktype === "Microfinance Bank" && [
+            {
+              label: "Microfinace Bank Name",
+              type: "text",
+              value: bankInfo.bankname,
+              name: "bankname",
+              handleChange: handleChange
+            },
+            {
+              label: "Account Number",
+              type: "number",
+              value: bankInfo.accountnumber,
+              name: "accountnumber",
+              handleChange: handleChange
+            }
+          ]
+        }
         handleSubmit={handleSubmit}
         buttonText="Continue"
         loading={loading}

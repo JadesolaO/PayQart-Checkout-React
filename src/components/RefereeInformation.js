@@ -15,7 +15,7 @@ const RefereeInformation = ({ startPayment, setRefdone }) => {
     rtelephone: "",
     remail: "",
     raddress: "",
-    relationship: "",
+    rrelationship: "",
     rcity: "",
     rstate: ""
   })
@@ -41,7 +41,7 @@ const RefereeInformation = ({ startPayment, setRefdone }) => {
           rtelephone,
           remail,
           raddress,
-          relationship,
+          rrelationship,
           rcity,
           rstate
         }) => ({
@@ -49,7 +49,7 @@ const RefereeInformation = ({ startPayment, setRefdone }) => {
           rtelephone,
           remail,
           raddress,
-          relationship,
+          rrelationship,
           rcity,
           rstate
         }))(res.data)
@@ -72,7 +72,7 @@ const RefereeInformation = ({ startPayment, setRefdone }) => {
       rtelephone,
       remail,
       raddress,
-      relationship,
+      rrelationship,
       rcity,
       rstate
     }) => ({
@@ -80,7 +80,7 @@ const RefereeInformation = ({ startPayment, setRefdone }) => {
       rtelephone,
       remail,
       raddress,
-      relationship,
+      rrelationship,
       rcity,
       rstate
     }))(referenceInfo)
@@ -144,8 +144,8 @@ const RefereeInformation = ({ startPayment, setRefdone }) => {
               "Sibling",
               "Parent"
             ],
-            value: referenceInfo.relationship,
-            name: "relationship",
+            value: referenceInfo.rrelationship,
+            name: "rrelationship",
             handleChange: handleChange
           },
           {
