@@ -1,11 +1,9 @@
 import { toast } from "react-toastify"
 import http from "./httpService"
 
-const isDevelopment = () => process.env.NODE_ENV !== "production"
+// const isDevelopment = () => process.env.NODE_ENV !== "production"
 
-const apiEndpoint = isDevelopment
-  ? "http://localhost:2000/user"
-  : "https://cryptic-reef-51266.herokuapp.com/user"
+const apiEndpoint = "https://cryptic-reef-51266.herokuapp.com/user"
 
 export async function doLogin(user) {
   return await http.post(`${apiEndpoint}/login`, user)
