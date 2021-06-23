@@ -20,6 +20,7 @@ const SuccessScreen = (props) => {
   useEffect(() => {
     checkReference()
     retrieveDocumentStatus()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const retrieveDocumentStatus = async () => {

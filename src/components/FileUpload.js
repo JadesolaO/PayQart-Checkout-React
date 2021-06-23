@@ -9,7 +9,7 @@ const FileUpload = ({ uploadObj, documentStatus, saveDocument }) => {
 
   useEffect(() => {
     setInputFile(document.getElementById(uploadObj.id))
-  }, [])
+  }, [uploadObj.id])
 
   const handleClick = (event) => {
     // event = event || window.event;

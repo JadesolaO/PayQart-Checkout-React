@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from "react"
 import {
   Col,
@@ -12,7 +13,6 @@ import { Link, useParams } from "react-router-dom"
 import ProgressSteps from "../components/ProgressSteps"
 import eye from "../images/Path 38.png"
 import { successToast, doLogin } from "../services/authService"
-import axios from "axios"
 
 const SignInScreen = (props) => {
   const [email, setEmail] = useState("")

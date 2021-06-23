@@ -13,6 +13,7 @@ const ContactDetails = ({ setPage, setContactdone }) => {
     city: "",
     state: ""
   })
+  // eslint-disable-next-line no-unused-vars
   const [readOnly, setReadOnly] = useState(false)
   const [loading, setLoading] = useState(Boolean)
 
