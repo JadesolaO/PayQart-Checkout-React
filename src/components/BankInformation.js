@@ -31,7 +31,9 @@ const BankInformation = ({ setPage, setBankdone }) => {
 
   async function getBanks() {
     try {
-      const response = await axios.get("http://localhost:2000/user/get-banks")
+      const response = await axios.get(
+        "https://cryptic-reef-51266.herokuapp.com/user/get-banks"
+      )
 
       const responseData = response.data.data
 
