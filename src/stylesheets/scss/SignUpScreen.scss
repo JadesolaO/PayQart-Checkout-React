@@ -124,28 +124,30 @@
 }
 
 .check {
-  margin: 2rem 0 !important;
+  text-align: left;
 
-  // span {
-  //   margin-bottom: 3rem !important
+  // margin: 2rem 0 !important;
+
+  // // span {
+  // //   margin-bottom: 3rem !important
+  // // }
+  // .checktext{
+  //   display: inline-block;
+  //   position: relative;
   // }
-  .checktext{
-    display: inline-block;
-    position: relative;
-  }
 
-  .form-check-input {
-    width: 1.3em;
-    height: 1.3em;
-    position: absolute;
-    left: 0;
-    border: 2px solid #ff005e;
-    margin-right: -5px !important;
+  // .form-check-input {
+  //   width: 1.3em;
+  //   height: 1.3em;
+  //   position: absolute;
+  //   left: 0;
+  //   border: 2px solid #ff005e;
+  //   margin-right: -5px !important;
 
-    &:checked {
-      background-color: #ff005e;
-    }
-  }
+  //   &:checked {
+  //     background-color: #ff005e;
+  //   }
+  // }
 }
 
 .inputgroup_ {
@@ -174,7 +176,7 @@
   left: 5%;
 
   a {
-    color: #FF005E;
+    color: #ff005e;
     text-decoration: none;
 
     &:hover {
@@ -186,8 +188,6 @@
 .s-checks {
   top: 7vh;
 }
-
-
 
 .forgotpass {
   margin-top: 2rem !important;

@@ -148,7 +148,7 @@ const InputField = (props) => {
       {props.existingLoan && (
         <Form.Group>
           <Form.Label className="mb-2">
-            <span className="formlabel">Monthly payback on loans:</span>
+            <span className="formlabel">Current monthly loan repayment:</span>
           </Form.Label>
           <InputGroup>
             <InputGroup.Prepend>

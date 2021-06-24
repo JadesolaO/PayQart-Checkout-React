@@ -13,6 +13,18 @@
   -webkit-appearance: none;
 }
 
+.custom-alert {
+  position: fixed;
+  z-index: 100000000000;
+  width: 15rem;
+  color: #fff;
+  height: 3rem;
+  top: 0;
+  right: 0;
+  font-size: 0.85rem;
+  padding: 10px !important;
+}
+
 .container,
 .container-fluid,
 .container-lg,

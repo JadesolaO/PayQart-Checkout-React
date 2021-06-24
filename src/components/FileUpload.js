@@ -23,8 +23,6 @@ const FileUpload = ({ uploadObj, documentStatus, saveDocument }) => {
     console.log("On Change Activated!")
     if (!event.target.files && !event.target.files[0]) return
 
-    console.log(event.target.files)
-
     // HTML5 FileReader API
     let reader = new FileReader()
     reader.onload = (e) => {

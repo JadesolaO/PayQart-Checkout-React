@@ -19,12 +19,10 @@ export async function doSignUp(user) {
 
 export function successToast(msg) {
   toast.success(msg, {
-    position: "bottom-center",
+    position: "top-right",
     autoClose: 3000,
-    hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: true,
-    draggable: true,
     progress: undefined
   })
 }

@@ -7,6 +7,8 @@ import {
 } from "../services/creditFormService"
 import "../stylesheets/css/creditapplicationscreen.css"
 
+import axios from "axios"
+
 const BankInformation = ({ setPage, setBankdone }) => {
   const [bankInfo, setBankInfo] = useState({
     incomebanktype: "",
@@ -15,13 +17,32 @@ const BankInformation = ({ setPage, setBankdone }) => {
     accountnumber: ""
   })
   const [loading, setLoading] = useState(Boolean)
+  const [bankList, setBankList] = useState([])
 
   useEffect(() => {
     retrieveLoanDetails()
+    getBanks()
   }, [])
 
   const handleChange = (name, e) => {
+    console.log(name, e.target.value)
     setBankInfo({ ...bankInfo, [name]: e.target.value })
+  }
+
+  async function getBanks() {
+    try {
+      const response = await axios.get("http://localhost:2000/user/get-banks")
+
+      const responseData = response.data.data
+
+      const data = responseData.map((bank) => {
+        return { id: bank.code, desc: bank.name }
+      })
+
+      setBankList(data)
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   const retrieveLoanDetails = async () => {
@@ -57,6 +78,10 @@ const BankInformation = ({ setPage, setBankdone }) => {
       })
       .catch(() => {})
   }
+
+  // function bankSelectHandler(e) {
+  //   console.log(e.target.value)
+  // }
 
   return (
     <div>
@@ -94,7 +119,7 @@ const BankInformation = ({ setPage, setBankdone }) => {
             {
               label: "Bank Name",
               type: "select",
-              options: listOfBanks,
+              options: bankList,
               extraOptions: true,
               value: bankInfo.bankname,
               name: "bankname",
@@ -137,25 +162,25 @@ const BankInformation = ({ setPage, setBankdone }) => {
 
 export default BankInformation
 
-const listOfBanks = [
-  { id: "Select", desc: "Select" },
-  { id: "044", desc: "Access Bank Nigeria Plc" },
-  { id: "050", desc: "Ecobank Nigeria" },
-  { id: "084", desc: "	Enterprise Bank Plc" },
-  { id: "070", desc: "Fidelity Bank Plc" },
-  { id: "011", desc: "First Bank of Nigeria Plc" },
-  { id: "214", desc: "First City Monument Bank" },
-  { id: "058", desc: "Guaranty Trust Bank Plc" },
-  { id: "030", desc: "Heritaage Banking Company Ltd" },
-  { id: "301", desc: "Jaiz Bank" },
-  { id: "082", desc: "Keystone Bank Ltd" },
-  { id: "014", desc: "Mainstreet Bank Plc" },
-  { id: "076", desc: "Skye Bank Plc" },
-  { id: "039", desc: "Stanbic IBTC Plc" },
-  { id: "232", desc: "Sterling Bank Plc" },
-  { id: "032", desc: "Union Bank Nigeria Plc" },
-  { id: "033", desc: "United Bank for Africa Plc" },
-  { id: "215", desc: "Unity Bank Plc" },
-  { id: "035", desc: "WEMA Bank Plc" },
-  { id: "057", desc: "Zenith Bank International" }
-]
+// const listOfBanks = [
+//   { id: "Select", desc: "Select" },
+//   { id: "044", desc: "Access Bank Nigeria Plc" },
+//   { id: "050", desc: "Ecobank Nigeria" },
+//   { id: "084", desc: "	Enterprise Bank Plc" },
+//   { id: "070", desc: "Fidelity Bank Plc" },
+//   { id: "011", desc: "First Bank of Nigeria Plc" },
+//   { id: "214", desc: "First City Monument Bank" },
+//   { id: "058", desc: "Guaranty Trust Bank Plc" },
+//   { id: "030", desc: "Heritaage Banking Company Ltd" },
+//   { id: "301", desc: "Jaiz Bank" },
+//   { id: "082", desc: "Keystone Bank Ltd" },
+//   { id: "014", desc: "Mainstreet Bank Plc" },
+//   { id: "076", desc: "Skye Bank Plc" },
+//   { id: "039", desc: "Stanbic IBTC Plc" },
+//   { id: "232", desc: "Sterling Bank Plc" },
+//   { id: "032", desc: "Union Bank Nigeria Plc" },
+//   { id: "033", desc: "United Bank for Africa Plc" },
+//   { id: "215", desc: "Unity Bank Plc" },
+//   { id: "035", desc: "WEMA Bank Plc" },
+//   { id: "057", desc: "Zenith Bank International" }
+// ]

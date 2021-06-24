@@ -47,7 +47,7 @@ const SuccessScreen = (props) => {
 
   const saveDocument = async (file, name, statusField) => {
     // handleDocStatus({...documentStatus, [statusField]: 1 });
-    console.log(statusField)
+    // console.log(statusField)
     const myDoc = { [statusField]: 1, [name]: file }
     await uploadDocument(myDoc)
       .then((res) => {

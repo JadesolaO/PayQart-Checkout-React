@@ -13,7 +13,7 @@ import { Link, useParams } from "react-router-dom"
 import ProgressSteps from "../components/ProgressSteps"
 import eye from "../images/Path 38.png"
 import lock from "../images/Path 44.png"
-import "../stylesheets/css/SignUpScreen.css"
+import "../stylesheets/scss/SignUpScreen.css"
 import { successToast, doSignUp } from "../services/authService"
 
 const SignUpScreen = (props) => {
@@ -66,7 +66,7 @@ const SignUpScreen = (props) => {
             </h3>
 
             <Container fluid>
-              <Form className="form_ mb-3" onSubmit={signUpUser}>
+              <Form className="form_" onSubmit={signUpUser}>
                 <Form.Group>
                   <Form.Control
                     type="email"
@@ -109,39 +109,36 @@ const SignUpScreen = (props) => {
                   </InputGroup>
                 </Form.Group>
 
-                <p className="text-center sitxt">
+                <p className="text-center sitxt mb-3">
                   Got an account?{" "}
                   <Link to={{ pathname: `/signin/${status}` }}>Sign In.</Link>
                 </p>
 
                 <div className="check">
-                  <Form.Group>
-                    <Form.Label>
-                      <Form.Check
-                        type="checkbox"
-                        label=""
-                        className="form-check-inline checker"
-                        name="Terms"
-                        value="agree"
-                        onChange={(e) => setAgree(e.target.value)}
-                        required
-                      />
+                  <Form.Group className="d-flex justify-content-center">
+                    <Form.Check
+                      type="checkbox"
+                      label=""
+                      className="mt-1"
+                      name="Terms"
+                      value="agree"
+                      onChange={(e) => setAgree(e.target.value)}
+                      required
+                    />
 
-                      <span
-                        style={{
-                          color: "#720056",
-                          fontSize: "13px",
-                          fontWeight: "bold",
-                          // position: "absolute",
-                          left: "23px",
-                          top: "-10px"
-                        }}
-                      >
-                        I am over 22years and I have read and agree to PayQart's
-                        Terms and Condtions. I agree that the information are
-                        accurate and can be verified by PayQart.
-                      </span>
-                    </Form.Label>
+                    <span
+                      style={{
+                        color: "#720056",
+                        fontSize: "13px",
+                        fontWeight: "500",
+                        textAlign: "left"
+                      }}
+                      className="mx-2"
+                    >
+                      I am over 22years and I have read and agree to PayQart's
+                      Terms and Condtions. I agree that the information are
+                      accurate and can be verified by PayQart.
+                    </span>
                   </Form.Group>
                 </div>
 

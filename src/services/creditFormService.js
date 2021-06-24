@@ -3,6 +3,8 @@ import http from "./httpService"
 
 // const isDevelopment = () => process.env.NODE_ENV !== "production"
 
+// const apiEndpoint = "http://localhost:2000/user"
+
 const apiEndpoint = "https://cryptic-reef-51266.herokuapp.com/user"
 
 export async function inititiateCredit(creditInfo) {
@@ -19,7 +21,6 @@ export async function submitPersonalInfo(personalInfo) {
     personalInfo
   )
 
-  console.log(response)
   return response
 }
 
@@ -52,7 +53,9 @@ export async function submitReferenceInfo(referenceInfo) {
 }
 
 export async function makeFeePayment(obj) {
-  return await http.post(`${apiEndpoint}/make-fee-payment`, obj)
+  const response = await http.post(`${apiEndpoint}/make-fee-payment`, obj)
+  console.log(response)
+  return response
 }
 
 export async function verifyFeePayment(data) {
@@ -86,15 +89,23 @@ export async function uploadDocument(data) {
   return await http.post(`${apiEndpoint}/upload-document`, data, config)
 }
 
+// export function successToast(msg) {
+//   console.log(msg)
+//   toast.success(msg, {
+//     position: "bottom-center",
+//     autoClose: 3000,
+//     hideProgressBar: false,
+//     closeOnClick: true,
+//     pauseOnHover: true,
+//     draggable: true,
+//     progress: undefined
+//   })
+// }
+
 export function successToast(msg) {
-  console.log(msg)
   toast.success(msg, {
-    position: "bottom-center",
+    position: "top-right",
     autoClose: 3000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined
+    closeOnClick: true
   })
 }

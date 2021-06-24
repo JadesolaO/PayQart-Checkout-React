@@ -110,7 +110,7 @@ const SignInScreen = (props) => {
                   <Link to="/forgotpassword">Forgot Password?</Link>
                 </div>
 
-                <div className="check">
+                <div className="check my-3">
                   <Form.Group>
                     <Form.Label>
                       <Form.Check
@@ -129,12 +129,13 @@ const SignInScreen = (props) => {
                           position: "absolute",
                           left: "30px"
                         }}
+                        className="mx-3"
                       >
                         Remember Sign In Details.
                       </span>
                     </Form.Label>
                   </Form.Group>
-                  <Form.Group>
+                  {/* <Form.Group>
                     <Form.Label>
                       <Form.Check
                         type="checkbox"
@@ -159,7 +160,7 @@ const SignInScreen = (props) => {
                         accurate and can be verified by PayQart.
                       </span>
                     </Form.Label>
-                  </Form.Group>
+                  </Form.Group> */}
                 </div>
                 <div className="contdbtn">
                   <Button

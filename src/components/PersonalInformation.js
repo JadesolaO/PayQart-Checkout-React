@@ -25,8 +25,6 @@ const PersonalInformation = ({ setPage, setPersonaldone }) => {
   const getUser = () => {
     const user = JSON.parse(localStorage.getItem("userObjFromBckEnd"))
 
-    console.log(user)
-
     if (!user) return
 
     if (user.newUser)

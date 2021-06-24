@@ -7,8 +7,7 @@ import {
 } from "../services/creditFormService"
 import "../stylesheets/css/creditapplicationscreen.css"
 
-const RefereeInformation = (props) => {
-  const { startPayment, setRefdone, history } = props
+const RefereeInformation = ({ startPayment, setRefdone }) => {
   const [referenceInfo, setReferenceInfo] = useState({
     rname: "",
     rfirstName: "",
@@ -66,7 +65,7 @@ const RefereeInformation = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault()
     setLoading(true)
-    console.log(referenceInfo)
+
     let newReferenceObj = (({
       rname,
       rtelephone,
@@ -94,7 +93,7 @@ const RefereeInformation = (props) => {
         setLoading(false)
       })
       .catch(() => {})
-    return history.push("/success")
+    // return history.push("/success")
   }
 
   return (
@@ -167,7 +166,46 @@ const RefereeInformation = (props) => {
           {
             label: "State",
             type: "select",
-            options: ["Select", "Lagos", "Abuja", "Ondo", "Ogun", "Rivers"],
+            options: [
+              "Select",
+              "Abia",
+              "Adamawa",
+              "Akwa Ibom",
+              "Anambra",
+              "Bauchi",
+              "Bayelsa",
+              "Benue",
+              "Borno",
+              "Cross River",
+              "Delta",
+              "Ebonyi",
+              "Edo",
+              "Ekiti",
+              "Enugu",
+              "FCT - Abuja",
+              "Gombe",
+              "Imo",
+              "Jigawa",
+              "Kaduna",
+              "Kano",
+              "Katsina",
+              "Kebbi",
+              "Kogi",
+              "Kwara",
+              "Lagos",
+              "Nasarawa",
+              "Niger",
+              "Ogun",
+              "Ondo",
+              "Osun",
+              "Oyo",
+              "Plateau",
+              "Rivers",
+              "Sokoto",
+              "Taraba",
+              "Yobe",
+              "Zamfara"
+            ],
             value: referenceInfo.rstate,
             name: "rstate",
             handleChange: handleChange

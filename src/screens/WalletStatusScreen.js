@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React from "react"
 import { Row, Col, Image, Button } from "react-bootstrap"
 import logo from "../images/pink-logo.svg"
 import emptyWalletIcon from "../images/empty-wallet.svg"
@@ -6,10 +6,8 @@ import fundedWalletIcon from "../images/funded-wallet.svg"
 import "../stylesheets/css/walletStatusScreen.css"
 
 const WalletStatusScreen = (props) => {
-  const [statusSelected, setStatus] = useState("")
-
   const signIn = () => {
-    setStatus("/signin/1")
+    props.history.push("/signin/1")
     localStorage.removeItem("loanId")
   }
 
@@ -27,6 +25,26 @@ const WalletStatusScreen = (props) => {
             </p>
 
             <Row className="justify-content-md-center mb-4">
+              <Col md={4}>
+                <div className="wallet-card" tabIndex="1">
+                  <div className="shared-card-div">
+                    <div className="logo mt-10">
+                      <Image fluid src={emptyWalletIcon} />
+                    </div>
+                    <h3>My PayQart Wallet is not funded</h3>
+                    <p>I don't have shopping credit</p>
+                    <div className="wallet-button text-center">
+                      <Button
+                        variant="outline-secondary"
+                        id="wallet-button-id"
+                        onClick={() => props.history.push("/eligibityscreen")}
+                      >
+                        Select
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </Col>
               <Col md={4}>
                 <div className="wallet-card" tabIndex="1">
                   <div className="shared-card-div">
@@ -54,34 +72,13 @@ const WalletStatusScreen = (props) => {
                     <div className="logo mt-10">
                       <Image fluid src={emptyWalletIcon} />
                     </div>
-                    <h3>My PayQart Wallet is not funded</h3>
-                    <p>I don't have shopping credit</p>
-                    <div className="wallet-button text-center">
-                      <Button
-                        variant="outline-secondary"
-                        id="wallet-button-id"
-                        onClick={() => setStatus("/eligibityscreen")}
-                      >
-                        Select
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-              </Col>
-
-              <Col md={4}>
-                <div className="wallet-card" tabIndex="1">
-                  <div className="shared-card-div">
-                    <div className="logo mt-10">
-                      <Image fluid src={emptyWalletIcon} />
-                    </div>
                     <h3>I don't know my PayQart wallet status.</h3>
                     <p>This is the first time I am seeing this.</p>
                     <div className="wallet-button text-center">
                       <Button
                         variant="outline-secondary"
                         id="wallet-button-id"
-                        onClick={() => setStatus("/eligibityscreen")}
+                        onClick={() => props.history.push("/eligibityscreen")}
                       >
                         Select
                       </Button>
@@ -91,7 +88,7 @@ const WalletStatusScreen = (props) => {
               </Col>
             </Row>
 
-            <Button
+            {/* <Button
               className="proceed-button"
               disabled={statusSelected === ""}
               onClick={() => {
@@ -99,7 +96,7 @@ const WalletStatusScreen = (props) => {
               }}
             >
               Proceed
-            </Button>
+            </Button> */}
           </Col>
         </Row>
       </div>

@@ -34,7 +34,7 @@ const CreditApplicationScreen = (props) => {
     makeFeePayment(obj)
       .then((res) => {
         const url = res.data["data"]["data"]["authorization_url"]
-        console.log(url)
+        console.log("Payment made")
         let reference = res.data["data"]["data"]["reference"]
         localStorage.setItem("current_reference", reference)
         window.location.href = url
