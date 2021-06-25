@@ -137,7 +137,8 @@ const BankInformation = ({ setPage, setBankdone }) => {
           ]
         }
         formDetails3={
-          bankInfo.incomebanktype === "Microfinance Bank" && [
+          bankInfo.incomebanktype === "Microfinance Bank" &&
+          [
             {
               label: "Microfinace Bank Name",
               type: "text",
@@ -152,6 +153,23 @@ const BankInformation = ({ setPage, setBankdone }) => {
               name: "accountnumber",
               handleChange: handleChange
             }
+          ][
+            ({
+              label: "Bank Name",
+              type: "select",
+              options: bankList,
+              extraOptions: true,
+              value: bankInfo.bankname,
+              name: "bankname",
+              handleChange: handleChange
+            },
+            {
+              label: "Account Number",
+              type: "number",
+              value: bankInfo.accountnumber,
+              name: "accountnumber",
+              handleChange: handleChange
+            })
           ]
         }
         handleSubmit={handleSubmit}

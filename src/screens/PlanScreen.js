@@ -184,7 +184,7 @@ const PlanScreen = (props) => {
               {showBreakdown === true && (
                 <div className="paymentbreakdown">
                   <Container fluid>
-                    {/* {error && (
+                    {error && (
                       <Message variant="info">
                         {error}{" "}
                         <i
@@ -193,7 +193,7 @@ const PlanScreen = (props) => {
                           className="far fa-times-circle"
                         ></i>
                       </Message>
-                    )} */}
+                    )}
                     <Row className="justify-content-md-center">
                       <Col className="brkdwn" md={8}>
                         <Row className="bkdn py-2 justify-content-md-center">
