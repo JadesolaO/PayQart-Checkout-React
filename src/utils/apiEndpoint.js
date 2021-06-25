@@ -8,6 +8,6 @@ function isDevelopment() {
 
 const apiEndpoint = isDevelopment()
   ? "http://localhost:2000/user"
-  : "https://payqart-demo.netlify.app"
+  : "https://cryptic-reef-51266.herokuapp.com/user"
 
 export default apiEndpoint
