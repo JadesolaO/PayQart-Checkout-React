@@ -5,7 +5,7 @@ import http from "./httpService"
 
 // const apiEndpoint = "http://localhost:2000/user"
 
-const apiEndpoint = "https://cryptic-reef-51266.herokuapp.com/user"
+import apiEndpoint from "../utils/apiEndpoint"
 
 export async function inititiateCredit(creditInfo) {
   return await http.post(`${apiEndpoint}/initiate-credit`, creditInfo)

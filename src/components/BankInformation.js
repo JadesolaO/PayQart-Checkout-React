@@ -8,6 +8,7 @@ import {
 import "../stylesheets/css/creditapplicationscreen.css"
 
 import axios from "axios"
+import apiEndpoint from "../utils/apiEndpoint"
 
 const BankInformation = ({ setPage, setBankdone }) => {
   const [bankInfo, setBankInfo] = useState({
@@ -31,9 +32,7 @@ const BankInformation = ({ setPage, setBankdone }) => {
 
   async function getBanks() {
     try {
-      const response = await axios.get(
-        "https://cryptic-reef-51266.herokuapp.com/user/get-banks"
-      )
+      const response = await axios.get(`${apiEndpoint}/get-banks`)
 
       const responseData = response.data.data
 
@@ -137,8 +136,7 @@ const BankInformation = ({ setPage, setBankdone }) => {
           ]
         }
         formDetails3={
-          bankInfo.incomebanktype === "Microfinance Bank" &&
-          [
+          bankInfo.incomebanktype === "Microfinance Bank" && [
             {
               label: "Microfinace Bank Name",
               type: "text",
@@ -153,8 +151,11 @@ const BankInformation = ({ setPage, setBankdone }) => {
               name: "accountnumber",
               handleChange: handleChange
             }
-          ][
-            ({
+          ]
+        }
+        formDetails4={
+          bankInfo.incomebanktype === "Microfinance Bank" && [
+            {
               label: "Bank Name",
               type: "select",
               options: bankList,
@@ -169,7 +170,7 @@ const BankInformation = ({ setPage, setBankdone }) => {
               value: bankInfo.accountnumber,
               name: "accountnumber",
               handleChange: handleChange
-            })
+            }
           ]
         }
         handleSubmit={handleSubmit}
