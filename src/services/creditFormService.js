@@ -72,18 +72,22 @@ export async function getLoanDetails() {
 }
 
 export async function getDocumentDetails() {
+  const loanid = localStorage.getItem("loanId")
+  console.log(loanid)
   let config = {
     headers: {
-      loanid: localStorage.getItem("loanId")
+      loanid
     }
   }
   return await http.get(`${apiEndpoint}/check-document-status`, config)
 }
 
 export async function uploadDocument(data) {
+  const loanid = localStorage.getItem("loanId")
+  console.log(loanid)
   let config = {
     headers: {
-      loanid: localStorage.getItem("loanId")
+      loanid
     }
   }
   return await http.post(`${apiEndpoint}/upload-document`, data, config)

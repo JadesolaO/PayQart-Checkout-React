@@ -38,9 +38,9 @@ const CreditApplicationScreen = (props) => {
         let reference = res.data["data"]["data"]["reference"]
         localStorage.setItem("current_reference", reference)
         window.location.href = url
-        localStorage.removeItem("nextRoute")
-        localStorage.removeItem("loanId")
-        localStorage.removeItem("userInfo")
+        // localStorage.removeItem("nextRoute")
+        // localStorage.removeItem("loanId")
+        // localStorage.removeItem("userInfo")
       })
       .catch(() => {})
   }

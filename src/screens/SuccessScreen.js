@@ -27,7 +27,7 @@ const SuccessScreen = (props) => {
     await getDocumentDetails()
       .then((res) => {
         if (!res.data || !res.data.status) return
-        console.log(res.data)
+        // console.log(res.data)
         setDocumentStatus({ ...documentStatus, ...res.data.status })
       })
       .catch(() => {})
