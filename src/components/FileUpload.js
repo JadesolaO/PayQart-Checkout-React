@@ -4,7 +4,7 @@ import upload from "../images/upload.svg"
 // import { uploadDocument, successToast } from '../services/creditFormService';
 import "../stylesheets/css/fileupload.css"
 
-const FileUpload = ({ uploadObj, documentStatus, saveDocument }) => {
+const FileUpload = ({ uploadObj, documentStatus, saveDocument, accept }) => {
   const [inputFile, setInputFile] = useState(null)
 
   useEffect(() => {
@@ -37,7 +37,13 @@ const FileUpload = ({ uploadObj, documentStatus, saveDocument }) => {
         <p>
           <strong>{uploadObj.label}</strong>
         </p>
-        <input type="file" id={uploadObj.id} hidden onChange={handleChange} />
+        <input
+          type="file"
+          id={uploadObj.id}
+          hidden
+          onChange={handleChange}
+          accept={accept}
+        />
         <label
           className="lablef"
           for="actual-"

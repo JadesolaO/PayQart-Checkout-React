@@ -106,6 +106,7 @@ const SuccessScreen = (props) => {
                 saveDocument={(file) =>
                   saveDocument(file, [govtID.name], [govtID.statusField])
                 }
+                accept="image/*,.pdf"
               />
               <FileUpload
                 uploadObj={workID}
@@ -114,6 +115,7 @@ const SuccessScreen = (props) => {
                 saveDocument={(file) =>
                   saveDocument(file, [workID.name], [workID.statusField])
                 }
+                accept="image/*,.pdf"
               />
               <FileUpload
                 uploadObj={proofOfAddress}
@@ -126,6 +128,7 @@ const SuccessScreen = (props) => {
                     [proofOfAddress.statusField]
                   )
                 }
+                accept=".pdf,.doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
               />
               <FileUpload
                 uploadObj={passportPhoto}
@@ -138,6 +141,7 @@ const SuccessScreen = (props) => {
                     [passportPhoto.statusField]
                   )
                 }
+                accept="image/*,.pdf"
               />
             </Col>
           </Row>
