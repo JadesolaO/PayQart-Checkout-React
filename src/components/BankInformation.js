@@ -1,10 +1,6 @@
 import React, { useState, useEffect } from "react"
 import CreditForm from "./CreditForm"
-import {
-  successToast,
-  submitBankInfo,
-  getLoanDetails
-} from "../services/creditFormService"
+
 import "../stylesheets/css/creditapplicationscreen.css"
 
 import axios from "axios"
@@ -21,7 +17,6 @@ const BankInformation = ({ setPage, setBankdone }) => {
   const [bankList, setBankList] = useState([])
 
   useEffect(() => {
-    retrieveLoanDetails()
     getBanks()
   }, [])
 
@@ -32,52 +27,73 @@ const BankInformation = ({ setPage, setBankdone }) => {
 
   async function getBanks() {
     try {
-      const response = await axios.get(`${apiEndpoint}/get-banks`)
+      const response = await axios.get(`${apiEndpoint}/utilities/getBanks`)
 
-      const responseData = response.data.data
+      const { data } = response
 
-      const data = responseData.map((bank) => {
-        return { id: bank.code, desc: bank.name }
-      })
+      if (data.status === "success") {
+        const responseData = data.data.map((bank) => {
+          return { id: bank.code, desc: bank.name }
+        })
 
-      setBankList(data)
+        setBankList(responseData)
+      }
     } catch (error) {
-      console.log(error)
+      console.log(error.response)
     }
   }
 
-  const retrieveLoanDetails = async () => {
-    const user = JSON.parse(localStorage.getItem("userObjFromBckEnd"))
-    if (!user || user.newUser) return
+  // const retrieveLoanDetails = async () => {
+  //   const user = JSON.parse(localStorage.getItem("userObjFromBckEnd"))
+  //   if (!user || user.newUser) return
 
-    await getLoanDetails()
-      .then((res) => {
-        if (!res.data) return
-        const loanInfo = (({
-          incomebanktype,
-          incomeaccounttype,
-          bankname,
-          accountnumber
-        }) => ({ incomebanktype, incomeaccounttype, bankname, accountnumber }))(
-          res.data
-        )
-        setBankInfo(loanInfo)
-        console.log(loanInfo)
-      })
-      .catch(() => {})
-  }
+  //   await getLoanDetails()
+  //     .then((res) => {
+  //       if (!res.data) return
+  //       const loanInfo = (({
+  //         incomebanktype,
+  //         incomeaccounttype,
+  //         bankname,
+  //         accountnumber
+  //       }) => ({ incomebanktype, incomeaccounttype, bankname, accountnumber }))(
+  //         res.data
+  //       )
+  //       setBankInfo(loanInfo)
+  //       console.log(loanInfo)
+  //     })
+  //     .catch(() => {})
+  // }
 
-  const handleSubmit = (e) => {
+  async function handleSubmit(e) {
     e.preventDefault()
     setLoading(true)
-    submitBankInfo(bankInfo)
-      .then((res) => {
-        successToast(res.data)
-        setLoading(false)
+
+    console.log(bankInfo)
+
+    try {
+      const response = await axios.post(
+        `${apiEndpoint}/utilities/verifyAccountNumber`,
+        { bankCode: bankInfo.bankname, accountNumber: bankInfo.accountnumber }
+      )
+
+      const { data } = response
+
+      if (data.status === "success") {
+        localStorage.setItem("bankInfo", JSON.stringify(bankInfo))
         setPage("refInfo")
         setBankdone(true)
-      })
-      .catch(() => {})
+      }
+    } catch (error) {
+      console.log(error)
+    }
+
+    // submitBankInfo(bankInfo)
+    //   .then((res) => {
+    //     successToast(res.data)
+    //     setLoading(false)
+
+    //   })
+    //   .catch(() => {})
   }
 
   // function bankSelectHandler(e) {

@@ -14,31 +14,51 @@ import ProgressSteps from "../components/ProgressSteps"
 import eye from "../images/Path 38.png"
 import lock from "../images/Path 44.png"
 import "../stylesheets/scss/SignUpScreen.css"
-import { successToast, doSignUp } from "../services/authService"
+import { successToast } from "../services/authService"
+import axios from "axios"
+import apiEndpoint from "../utils/apiEndpoint"
+import { useAppContext } from "../utils/contexts/AppContext"
 
 const SignUpScreen = (props) => {
+  const [firstname, setFirstname] = useState("")
+  const [lastname, setLastname] = useState("")
+  const [telephone, setTelephone] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const [retypedPassword, setRetypedPassword] = useState("")
   const [bvn, setBvn] = useState("")
   const [agree, setAgree] = useState("")
   const { status } = useParams()
 
+  const { setUserDetails } = useAppContext()
+
   async function signUpUser(e) {
     e.preventDefault()
-    const userInfo = { email, pin: password, bvn }
+
+    if (password !== retypedPassword) return
+
+    const userInfo = {
+      email,
+      bvn,
+      telephone,
+      firstname,
+      lastname,
+      pin: password
+    }
 
     try {
-      const response = await doSignUp(userInfo)
+      const response = await axios.post(`${apiEndpoint}/user/signup`, userInfo)
 
-      const { data: user } = response
+      const { data } = response
 
-      if (user) {
-        localStorage.setItem("userObjFromBckEnd", JSON.stringify(user.user))
-        successToast(response.data.message)
+      if (data.status === "success") {
+        setUserDetails(data.user)
+        localStorage.setItem("token", data.access_token)
+        successToast(data.message)
         props.history.push("/creditscreen")
       }
     } catch (error) {
-      console.log(error)
+      console.log(error.response)
     }
   }
 
@@ -69,6 +89,44 @@ const SignUpScreen = (props) => {
               <Form className="form_" onSubmit={signUpUser}>
                 <Form.Group>
                   <Form.Control
+                    type="text"
+                    placeholder="First Name"
+                    className="form-control_"
+                    value={firstname}
+                    onChange={(e) => setFirstname(e.target.value)}
+                    required
+                  />
+                </Form.Group>
+                <Form.Group>
+                  <Form.Control
+                    type="text"
+                    placeholder="Last Name"
+                    className="form-control_"
+                    value={lastname}
+                    onChange={(e) => setLastname(e.target.value)}
+                    required
+                  />
+                </Form.Group>
+
+                <Form.Group>
+                  <InputGroup className="flex">
+                    <span className="py-1 mt-2">+234</span>
+                    <Form.Control
+                      type="text"
+                      placeholder="Phone Number"
+                      className="form-control_"
+                      value={telephone}
+                      onChange={(e) => {
+                        const value = e.target.value
+                        setTelephone(Number(value.replace(/\D/g, "")) || "")
+                      }}
+                      required
+                    />
+                  </InputGroup>
+                </Form.Group>
+
+                <Form.Group>
+                  <Form.Control
                     type="email"
                     placeholder="Email Address"
                     className="form-control_"
@@ -96,11 +154,30 @@ const SignUpScreen = (props) => {
                 <Form.Group>
                   <InputGroup className="inputgroup_">
                     <Form.Control
+                      type="password"
+                      placeholder="Retype Password"
+                      className="form-control_"
+                      value={retypedPassword}
+                      onChange={(e) => setRetypedPassword(e.target.value)}
+                      required
+                    />
+                    <span style={{ top: "15px" }}>
+                      <Image src={eye} fluid />
+                    </span>
+                  </InputGroup>
+                </Form.Group>
+
+                <Form.Group>
+                  <InputGroup className="inputgroup_">
+                    <Form.Control
                       type="text"
                       placeholder="Bank Verification Number"
                       className="form-control_"
                       value={bvn}
-                      onChange={(e) => setBvn(e.target.value)}
+                      onChange={(e) => {
+                        const value = e.target.value
+                        setBvn(Number(value.replace(/\D/g, "")) || "")
+                      }}
                       required
                     />
                     <span>

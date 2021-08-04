@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
 import CreditForm from "./CreditForm"
-import { successToast, submitContactInfo } from "../services/creditFormService"
+
 import "../stylesheets/css/creditapplicationscreen.css"
+import { useAppContext } from "../utils/contexts/AppContext"
 
 const ContactDetails = ({ setPage, setContactdone }) => {
   const [contactInfo, setContactInfo] = useState({
@@ -17,63 +18,34 @@ const ContactDetails = ({ setPage, setContactdone }) => {
   const [readOnly, setReadOnly] = useState(false)
   const [loading, setLoading] = useState(Boolean)
 
+  const { userDetails } = useAppContext()
+
   const handleChange = (name, e) => {
-    console.log(contactInfo)
-    setContactInfo({ ...contactInfo, [name]: e.target.value })
-  }
+    const value = e.target.value
 
-  useEffect(() => {
-    getUser()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+    let newValue
 
-  const getUser = () => {
-    const user = JSON.parse(localStorage.getItem("userObjFromBckEnd"))
+    if (name === "telephone") {
+      newValue = Number(e.target.value.replace(/\D/g, "")) || ""
+    } else {
+      newValue = value
+    }
 
-    if (!user) return
-
-    if (user.newUser)
-      return setContactInfo({
-        ...contactInfo,
-        email: user.email,
-        authid: user.authid
-      })
-
-    const userInfo = (({
-      email,
-      address,
-      residentialtype,
-      livingduration,
-      telephone,
-      city,
-      state,
-      authid
-    }) => ({
-      email,
-      address,
-      residentialtype,
-      livingduration,
-      telephone,
-      city,
-      state,
-      authid
-    }))(user)
-    setContactInfo(userInfo)
+    setContactInfo({
+      ...contactInfo,
+      email: userDetails.email,
+      [name]: newValue
+    })
   }
 
   const handleSubmit = (e) => {
     e.preventDefault()
     setLoading(true)
     console.log(contactInfo)
-    submitContactInfo(contactInfo)
-      .then((res) => {
-        localStorage.setItem("userEmail", contactInfo.email)
-        successToast(res.data)
-        setLoading(false)
-        setPage("employmentInfo")
-        setContactdone(true)
-      })
-      .catch(() => {})
+
+    localStorage.setItem("contactInfo", JSON.stringify(contactInfo))
+    setPage("employmentInfo")
+    setContactdone(true)
   }
 
   return (
@@ -90,7 +62,7 @@ const ContactDetails = ({ setPage, setContactdone }) => {
           {
             label: "Email Address",
             type: "email",
-            value: contactInfo.email,
+            value: userDetails.email,
             name: "email",
             readOnly: { readOnly },
             disabled: true,

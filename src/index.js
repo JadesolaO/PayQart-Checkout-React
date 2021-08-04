@@ -5,10 +5,16 @@ import ReactDOM from "react-dom"
 import "./stylesheets/css/index.css"
 import "bootstrap/dist/css/bootstrap.min.css"
 import App from "./App"
+import { AppContextProvider } from "./utils/contexts/AppContext"
+import { BrowserRouter, Switch } from "react-router-dom"
 
 ReactDOM.render(
-  <>
-    <App />
-  </>,
+  <BrowserRouter>
+    <Switch>
+      <AppContextProvider>
+        <App />
+      </AppContextProvider>
+    </Switch>
+  </BrowserRouter>,
   document.getElementById("root")
 )

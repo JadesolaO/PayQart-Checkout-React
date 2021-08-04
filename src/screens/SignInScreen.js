@@ -12,7 +12,10 @@ import {
 import { Link, useParams } from "react-router-dom"
 import ProgressSteps from "../components/ProgressSteps"
 import eye from "../images/Path 38.png"
-import { successToast, doLogin } from "../services/authService"
+import { successToast } from "../services/authService"
+import axios from "axios"
+import apiEndpoint from "../utils/apiEndpoint"
+import { useAppContext } from "../utils/contexts/AppContext"
 
 const SignInScreen = (props) => {
   const [email, setEmail] = useState("")
@@ -21,17 +24,20 @@ const SignInScreen = (props) => {
   const [agree, setAgree] = useState("")
   const { status } = useParams()
 
+  const { setUserDetails } = useAppContext()
+
   async function loginUser(e) {
     e.preventDefault()
-    const userInfo = { email: email, pin: password }
+    const userInfo = { email, pin: password }
 
     try {
-      const response = await doLogin(userInfo)
+      const response = await axios.post(`${apiEndpoint}/user/login`, userInfo)
 
-      const { data: user } = response
+      const { data } = response
 
-      if (user) {
-        localStorage.setItem("userObjFromBckEnd", JSON.stringify(user.user))
+      if (data.status === "success") {
+        setUserDetails(data.user)
+        localStorage.setItem("token", data.access_token)
         successToast(response.data.message)
         props.history.push("/creditscreen")
       }

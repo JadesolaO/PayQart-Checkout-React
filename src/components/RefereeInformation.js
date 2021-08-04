@@ -1,10 +1,7 @@
-import React, { useEffect, useState } from "react"
+/* eslint-disable no-unused-vars */
+import React, { useState } from "react"
 import CreditForm from "./CreditForm"
-import {
-  successToast,
-  submitReferenceInfo,
-  getLoanDetails
-} from "../services/creditFormService"
+
 import "../stylesheets/css/creditapplicationscreen.css"
 
 const RefereeInformation = ({ startPayment, setRefdone }) => {
@@ -22,77 +19,155 @@ const RefereeInformation = ({ startPayment, setRefdone }) => {
   const [loading, setLoading] = useState(Boolean)
 
   const handleChange = (name, e) => {
-    setReferenceInfo({ ...referenceInfo, [name]: e.target.value })
-  }
+    const value = e.target.value
 
-  useEffect(() => {
-    retrieveLoanDetails()
-  }, [])
+    let newValue
 
-  const retrieveLoanDetails = async () => {
-    const user = JSON.parse(localStorage.getItem("userObjFromBckEnd"))
-    if (!user || user.newUser) return
-
-    await getLoanDetails()
-      .then((res) => {
-        if (!res.data) return
-        let loanInfo = (({
-          rname,
-          rtelephone,
-          remail,
-          raddress,
-          rrelationship,
-          rcity,
-          rstate
-        }) => ({
-          rname,
-          rtelephone,
-          remail,
-          raddress,
-          rrelationship,
-          rcity,
-          rstate
-        }))(res.data)
-        const names = loanInfo.rname.split(" ")
-        delete loanInfo.rname
-        loanInfo.rfirstName = names[0]
-        loanInfo.rlastName = names[1]
-        setReferenceInfo(loanInfo)
-      })
-      .catch(() => {})
+    if (name === "rtelephone") {
+      newValue = Number(e.target.value.replace(/\D/g, "")) || ""
+    } else {
+      newValue = value
+    }
+    setReferenceInfo({ ...referenceInfo, [name]: newValue })
   }
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    setLoading(true)
 
-    let newReferenceObj = (({
-      rname,
-      rtelephone,
-      remail,
-      raddress,
-      rrelationship,
-      rcity,
-      rstate
-    }) => ({
-      rname,
-      rtelephone,
-      remail,
-      raddress,
-      rrelationship,
-      rcity,
-      rstate
-    }))(referenceInfo)
-    newReferenceObj.rname =
-      referenceInfo.rfirstName + " " + referenceInfo.rlastName
-    submitReferenceInfo(newReferenceObj)
-      .then((res) => {
-        successToast(res.data)
-        setRefdone(true)
-        startPayment()
-        setLoading(false)
-      })
-      .catch(() => {})
+    let employmentInfoObjForm
+
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"))
+    const loanObj = JSON.parse(localStorage.getItem("loanObj"))
+    const personalInfo = JSON.parse(localStorage.getItem("personalInfo"))
+    const contactInfo = JSON.parse(localStorage.getItem("contactInfo"))
+    const employmentInfo = JSON.parse(localStorage.getItem("employmentInfo"))
+    const bankInfo = JSON.parse(localStorage.getItem("bankInfo"))
+
+    if (employmentInfo.employmenttype === "Salary Earner") {
+      employmentInfoObjForm = {
+        employmentType: employmentInfo.employmenttype,
+        yearsOfEmployment: employmentInfo.workduration,
+        designation: employmentInfo.designation,
+        employmentMode: employmentInfo.employmentmode,
+        employerName: employmentInfo.employername,
+        employerAddress: employmentInfo.employeraddress,
+        employmentCity: employmentInfo.city,
+        employmentState: employmentInfo.state
+      }
+    } else {
+      employmentInfoObjForm = {
+        employmentType: employmentInfo.employmenttype,
+        businessName: employmentInfo.employername,
+        designation: employmentInfo.designation,
+        businessType: employmentInfo.workduration,
+        businessAddress: employmentInfo.employeraddress,
+        businessSector: employmentInfo.employmentmode,
+        businessCity: employmentInfo.city,
+        businessState: employmentInfo.state
+      }
+    }
+
+    let employmentInfoObj = {}
+
+    if (userInfo.employmentType === "paid-employment") {
+      employmentInfoObj = {
+        employmentType: loanObj.typeofbusiness,
+        salaryAmount: Number(loanObj.rsalary).toLocaleString(),
+        salaryDate: loanObj.rpaydate,
+        existingLoans: loanObj.existingloan === "Yes" ? true : false,
+        existingLoanAmount:
+          loanObj.existingloan === "Yes" ? Number(userInfo.loanAmount) : 0
+      }
+    }
+    if (userInfo.employmentType === "self-employment") {
+      employmentInfoObj = {
+        employmentType: loanObj.typeofbusiness,
+        selfEmploymentRevenue: Number(userInfo.income).toLocaleString(),
+        selfEmploymentExpense: Number(userInfo.monthlyExpense).toLocaleString(),
+        existingLoans: loanObj.existingloan === "Yes" ? true : false,
+        existingLoanAmount: Number(userInfo.loanAmount).toLocaleString()
+      }
+    }
+    if (userInfo.employmentType === "corporate-organisation") {
+      employmentInfoObj = {
+        employmentType: loanObj.typeofbusiness,
+        corporateOrganisationRevenue: Number(userInfo.income).toLocaleString(),
+        corporateOrganisationExpense: Number(
+          userInfo.monthlyExpense
+        ).toLocaleString(),
+        existingLoans: loanObj.existingloan === "Yes" ? true : false,
+        existingLoanAmount: Number(userInfo.loanAmount).toLocaleString()
+      }
+    }
+
+    const creditId =
+      Math.floor(Math.random() * (9999 - 1111) + 1111).toString() +
+      Math.floor(Math.random() * (9999 - 1111) + 1111).toString() +
+      "HP"
+
+    localStorage.setItem("creditId", creditId)
+
+    const creditApplicationObj = {
+      employmentInfoObj,
+      preApprovedCreditObj: {
+        creditId,
+        creditAmount: loanObj.ramount,
+        tenor: loanObj.rduration,
+        monthlyRepayment: loanObj.monthlyRepayment,
+        totalRepayment: loanObj.monthlyRepayment * loanObj.rduration,
+        dti: loanObj.debtincomeratio,
+        status: "pending"
+      },
+      creditApplicationFormObj: {
+        personalInfoObj: {
+          title: personalInfo.title,
+          firstName: personalInfo.firstname,
+          middleName: personalInfo.middlename,
+          lastName: personalInfo.lastname,
+          gender: personalInfo.gender,
+          maritalStatus: personalInfo.maritalstatus,
+          educationLevel: personalInfo.educationlevel,
+          numberOfChildren: personalInfo.children
+        },
+        contactInfoObj: {
+          phoneNumber: contactInfo.telephone,
+          email: contactInfo.email,
+          homeAddress: contactInfo.address,
+          city: contactInfo.city,
+          state: contactInfo.state,
+          residenceType: contactInfo.residentialtype,
+          yearsOfResidence: contactInfo.livingduration
+        },
+        employmentInfoObj: employmentInfoObjForm,
+        bankInfoObj: {
+          incomeAccountType: bankInfo.incomeaccounttype,
+          incomeBankType: bankInfo.incomebanktype,
+          commercialBankName: bankInfo.bankname,
+          commercialBankAccountNumber: bankInfo.accountnumber
+        },
+        refereeInfoObj: {
+          refereeFirstName: referenceInfo.rfirstName,
+          refereeLastName: referenceInfo.rlastName,
+          refereeEmail: referenceInfo.remail,
+          refereePhoneNumber: referenceInfo.rtelephone,
+          refereeRelationship: referenceInfo.rrelationship,
+          refereeAddress: referenceInfo.raddress,
+          refereeCity: referenceInfo.rcity,
+          refereeState: referenceInfo.rstate
+        },
+        paymentReference: ""
+      }
+    }
+
+    setRefdone(true)
+    startPayment(creditApplicationObj)
+
+    // submitReferenceInfo(newReferenceObj)
+    //   .then((res) => {
+    //     successToast(res.data)
+
+    //   })
+    //   .catch(() => {})
     // return history.push("/success")
   }
 

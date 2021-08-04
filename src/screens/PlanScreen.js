@@ -86,24 +86,31 @@ const PlanScreen = (props) => {
       rduration: tenureNum,
       downpayment: downPayment,
       debtincomeratio: payInfo.dti,
-      rpaydate: "23"
+      rpaydate: "23",
+      monthlyRepayment: monthlyAmount
     }
 
-    try {
-      const response = await inititiateCredit(loanObj)
+    localStorage.setItem("loanObj", JSON.stringify(loanObj))
 
-      const { data: loanid } = response
+    const nextRoute = localStorage.getItem("nextRoute")
+    if (nextRoute) return props.history.push(nextRoute)
+    props.history.push("/signup/1")
 
-      if (loanid) {
-        localStorage.setItem("loanId", response.data.loanid)
-        const nextRoute = localStorage.getItem("nextRoute")
-        if (nextRoute) return props.history.push(nextRoute)
-        props.history.push("/signup/1")
-      }
-      console.log(response)
-    } catch (error) {
-      console.log(error)
-    }
+    // try {
+    //   const response = await inititiateCredit(loanObj)
+
+    //   const { data: loanid } = response
+
+    //   if (loanid) {
+    //     localStorage.setItem("loanId", response.data.loanid)
+    //     const nextRoute = localStorage.getItem("nextRoute")
+    //     if (nextRoute) return props.history.push(nextRoute)
+    //     props.history.push("/signup/1")
+    //   }
+    //   console.log(response)
+    // } catch (error) {
+    //   console.log(error)
+    // }
 
     // inititiateCredit(loanObj)
     //   .then((response) => {

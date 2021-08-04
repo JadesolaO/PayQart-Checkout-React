@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react"
 import { Container, Row, Col, Button } from "react-bootstrap"
 import FileUpload from "../components/FileUpload"
-import {
-  getDocumentDetails,
-  uploadDocument,
-  successToast,
-  verifyFeePayment
-} from "../services/creditFormService"
+
 import "../stylesheets/css/successScreen.css"
+
+import axios from "axios"
+
+import apiEndpoint from "../utils/apiEndpoint"
+import { useAppContext } from "../utils/contexts/AppContext"
 
 const SuccessScreen = (props) => {
   const [documentStatus, setDocumentStatus] = useState({
@@ -17,45 +17,94 @@ const SuccessScreen = (props) => {
     proofOfAddressSubmitted: 0
   })
 
+  const { userDetails } = useAppContext()
+
   useEffect(() => {
-    checkReference()
-    retrieveDocumentStatus()
+    submitApplicationHandler()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const retrieveDocumentStatus = async () => {
-    await getDocumentDetails()
-      .then((res) => {
-        if (!res.data || !res.data.status) return
-        // console.log(res.data)
-        setDocumentStatus({ ...documentStatus, ...res.data.status })
-      })
-      .catch(() => {})
+  async function submitApplicationHandler() {
+    const token = localStorage.getItem("token")
+
+    const creditApplicationObj = JSON.parse(
+      localStorage.getItem("creditApplicationObj")
+    )
+
+    if (creditApplicationObj) {
+      try {
+        const verifyObj = {
+          reference:
+            creditApplicationObj.creditApplicationFormObj.paymentReference,
+          email:
+            creditApplicationObj.creditApplicationFormObj.contactInfoObj.email,
+          creditId: creditApplicationObj.preApprovedCreditObj.creditId
+        }
+        const verifyResponse = await axios.post(
+          `${apiEndpoint}/utilities/verifyPayments`,
+          verifyObj
+        )
+
+        if (verifyResponse.data.status === "success") {
+          const creditApplicationResponse = await axios.post(
+            `${apiEndpoint}/application/submit`,
+            {
+              creditApplicationObj
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${token}`
+              }
+            }
+          )
+
+          if (creditApplicationResponse.data.status === "success") {
+            localStorage.removeItem("creditApplicationObj")
+            localStorage.removeItem("nextRoute")
+            // console.log(creditApplicationResponse.data)
+          }
+        }
+      } catch (error) {
+        if (error) {
+          console.log(error.response)
+        }
+      }
+    }
   }
 
-  const checkReference = async () => {
-    const user = JSON.parse(localStorage.getItem("userObjFromBckEnd"))
-    const reference = localStorage.getItem("current_reference")
-    if (!reference) return
-    const data = { reference, email: user.email }
-    await verifyFeePayment(data)
-      .then((res) => {
-        localStorage.removeItem("current_reference")
-      })
-      .catch(() => {})
-  }
+  const saveDocument = async (file, type, statusField) => {
+    const token = localStorage.getItem("token")
 
-  const saveDocument = async (file, name, statusField) => {
-    // handleDocStatus({...documentStatus, [statusField]: 1 });
-    // console.log(statusField)
-    const myDoc = { [statusField]: 1, [name]: file }
-    await uploadDocument(myDoc)
-      .then((res) => {
-        successToast(res.data)
-        console.log([statusField])
+    const creditId = localStorage.getItem("creditId")
+
+    const { authid } = userDetails
+
+    const docFormData = new FormData()
+
+    docFormData.append("file", file)
+    docFormData.append("authid", authid)
+    docFormData.append("creditId", creditId)
+    docFormData.append("type", type)
+
+    try {
+      const response = await axios.post(
+        `${apiEndpoint}/application/documents/upload`,
+        docFormData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      )
+
+      const { data } = response
+
+      if (data.status === "success") {
         handleDocStatus({ ...documentStatus, [statusField]: 1 })
-      })
-      .catch(() => {})
+      }
+    } catch (error) {
+      console.log(error.response)
+    }
   }
 
   const handleDocStatus = (obj) => {
@@ -104,7 +153,7 @@ const SuccessScreen = (props) => {
                 documentStatus={documentStatus}
                 handleDocStatus={handleDocStatus}
                 saveDocument={(file) =>
-                  saveDocument(file, [govtID.name], [govtID.statusField])
+                  saveDocument(file, 1, [govtID.statusField])
                 }
                 accept="image/*,.pdf"
               />
@@ -113,7 +162,7 @@ const SuccessScreen = (props) => {
                 documentStatus={documentStatus}
                 handleDocStatus={handleDocStatus}
                 saveDocument={(file) =>
-                  saveDocument(file, [workID.name], [workID.statusField])
+                  saveDocument(file, 2, [workID.statusField])
                 }
                 accept="image/*,.pdf"
               />
@@ -122,11 +171,7 @@ const SuccessScreen = (props) => {
                 documentStatus={documentStatus}
                 handleDocStatus={handleDocStatus}
                 saveDocument={(file) =>
-                  saveDocument(
-                    file,
-                    [proofOfAddress.name],
-                    [proofOfAddress.statusField]
-                  )
+                  saveDocument(file, 3, [proofOfAddress.statusField])
                 }
                 accept=".pdf,.doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
               />
@@ -135,11 +180,7 @@ const SuccessScreen = (props) => {
                 documentStatus={documentStatus}
                 handleDocStatus={handleDocStatus}
                 saveDocument={(file) =>
-                  saveDocument(
-                    file,
-                    [passportPhoto.name],
-                    [passportPhoto.statusField]
-                  )
+                  saveDocument(file, 4, [passportPhoto.statusField])
                 }
                 accept="image/*,.pdf"
               />
@@ -150,10 +191,22 @@ const SuccessScreen = (props) => {
               <div className="btn-buttons text-center">
                 <a href="mailto: ">Send via email</a> <span>Instead?</span>
                 <div className="btom-butn text-center mt-5">
-                  <Button onClick={() => props.history.push("/")}>
+                  <Button
+                    onClick={() => {
+                      props.history.push("/")
+                      localStorage.removeItem("creditId")
+                    }}
+                  >
                     Back To Store
                   </Button>
-                  <Button>Go To Dashboard</Button>
+                  <Button onClick={() => localStorage.removeItem("creditId")}>
+                    <a
+                      className="text-white"
+                      href="https://payqart-shopperweb-demo.netlify.app/signin"
+                    >
+                      Go To Dashboard
+                    </a>
+                  </Button>
                 </div>
               </div>
             </Col>

@@ -47,7 +47,7 @@ const EmploymentScreen = (props) => {
                 <div
                   className="options"
                   tabIndex="1"
-                  onClick={() => setEmploymentType("Paid employment")}
+                  onClick={() => setEmploymentType("paid-employment")}
                 >
                   <div>
                     <Image fluid src={paid} />
@@ -60,7 +60,7 @@ const EmploymentScreen = (props) => {
                 <div
                   className="options"
                   tabIndex="2"
-                  onClick={() => setEmploymentType("self employed/ freelance")}
+                  onClick={() => setEmploymentType("self-employment")}
                 >
                   <div>
                     <Image fluid src={free} />
@@ -73,7 +73,7 @@ const EmploymentScreen = (props) => {
                 <div
                   className="options"
                   tabIndex="3"
-                  onClick={() => setEmploymentType("small business")}
+                  onClick={() => setEmploymentType("corporate-organisation")}
                 >
                   <div>
                     <Image fluid src={coop} />
@@ -85,7 +85,7 @@ const EmploymentScreen = (props) => {
           </Col>
           <Col className="formdiv" md={8} xs={12}>
             <Form onSubmit={handleSubmit}>
-              {employmentType === "Paid employment" && (
+              {employmentType === "paid-employment" && (
                 <Row>
                   <InputField
                     label1="How much do you get paid monthly?"
@@ -104,7 +104,7 @@ const EmploymentScreen = (props) => {
                   />
                 </Row>
               )}
-              {employmentType === "small business" && (
+              {employmentType === "corporate-organisation" && (
                 <Row>
                   <InputField
                     label1="What is your average monthly revenue?"
@@ -122,7 +122,7 @@ const EmploymentScreen = (props) => {
                   />
                 </Row>
               )}
-              {employmentType === "self employed/ freelance" && (
+              {employmentType === "self-employment" && (
                 <Row>
                   <InputField
                     label1="What is your average monthly revenue?"

@@ -40,7 +40,7 @@ const InputField = (props) => {
         </InputGroup>
       </Form.Group>
 
-      {props.employmentType === "Paid employment" ? (
+      {props.employmentType === "paid-employment" ? (
         <Form.Group className="mb-2">
           <Form.Label className="mb-2">
             <span className="formlabel">When is your next salary date?</span>

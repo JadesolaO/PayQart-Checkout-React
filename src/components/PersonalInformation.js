@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from "react"
+/* eslint-disable no-unused-vars */
+import React, { useState } from "react"
 import CreditForm from "./CreditForm"
-import { successToast, submitPersonalInfo } from "../services/creditFormService"
+
 import "../stylesheets/css/creditapplicationscreen.css"
+import { useAppContext } from "../utils/contexts/AppContext"
 
 const PersonalInformation = ({ setPage, setPersonaldone }) => {
   const [personalInfo, setPersonalInfo] = useState({
@@ -19,68 +21,76 @@ const PersonalInformation = ({ setPage, setPersonaldone }) => {
   const [readOnly, setReadOnly] = useState(false)
   const [loading, setLoading] = useState(Boolean)
 
+  const { userDetails } = useAppContext()
+
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => getUser(), [])
+  // useEffect(() => getUser(), [])
 
-  const getUser = () => {
-    const user = JSON.parse(localStorage.getItem("userObjFromBckEnd"))
+  // const getUser = () => {
+  //   const user = JSON.parse(localStorage.getItem("userObjFromBckEnd"))
 
-    if (!user) return
+  //   if (!user) return
 
-    if (user.newUser)
-      return setPersonalInfo({
-        ...personalInfo,
-        authid: user.authid,
-        bvn: user.bvn
-      })
+  //   if (user.newUser)
+  //     return setPersonalInfo({
+  //       ...personalInfo,
+  //       authid: user.authid,
+  //       bvn: user.bvn
+  //     })
 
-    setReadOnly(true)
+  //   setReadOnly(true)
 
-    const userInfo = (({
-      title,
-      gender,
-      firstname,
-      lastname,
-      middlename,
-      maritalstatus,
-      educationlevel,
-      children,
-      dob,
-      bvn,
-      authid
-    }) => ({
-      title,
-      gender,
-      firstname,
-      lastname,
-      middlename,
-      maritalstatus,
-      educationlevel,
-      children,
-      dob,
-      bvn,
-      authid
-    }))(user)
+  //   const userInfo = (({
+  //     title,
+  //     gender,
+  //     firstname,
+  //     lastname,
+  //     middlename,
+  //     maritalstatus,
+  //     educationlevel,
+  //     children,
+  //     dob,
+  //     bvn,
+  //     authid
+  //   }) => ({
+  //     title,
+  //     gender,
+  //     firstname,
+  //     lastname,
+  //     middlename,
+  //     maritalstatus,
+  //     educationlevel,
+  //     children,
+  //     dob,
+  //     bvn,
+  //     authid
+  //   }))(user)
 
-    setPersonalInfo(userInfo)
-  }
+  //   setPersonalInfo(userInfo)
+  // }
 
   const handleChange = (name, e) => {
-    setPersonalInfo({ ...personalInfo, [name]: e.target.value })
+    setPersonalInfo({
+      ...personalInfo,
+      bvn: userDetails.bvn,
+      [name]: e.target.value
+    })
   }
 
   const handleSubmit = (e) => {
     e.preventDefault()
     setLoading(true)
     console.log(personalInfo)
-    submitPersonalInfo(personalInfo)
-      .then((res) => {
-        successToast(res.data)
-        setLoading(false)
-        setPage("contactInfo")
-        setPersonaldone(true)
-      })
-      .catch((err) => console.error(err))
+    localStorage.setItem("personalInfo", JSON.stringify(personalInfo))
+    setPage("contactInfo")
+    setPersonaldone(true)
+    // submitPersonalInfo(personalInfo)
+    //   .then((res) => {
+    //     successToast(res.data)
+    //     setLoading(false)
+
+    //   })
+    //   .catch((err) => console.error(err))
   }
 
   return (
@@ -172,7 +182,7 @@ const PersonalInformation = ({ setPage, setPersonaldone }) => {
           {
             label: "Bank Verification Number",
             type: "number",
-            value: personalInfo.bvn,
+            value: userDetails.bvn,
             name: "bvn",
             readOnly: { readOnly },
             disabled: true,

@@ -1,10 +1,6 @@
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
 import CreditForm from "./CreditForm"
-import {
-  successToast,
-  submitEmploymentInfo,
-  getLoanDetails
-} from "../services/creditFormService"
+
 import "../stylesheets/css/creditapplicationscreen.css"
 
 const EmploymentInformation = ({ setPage, setEmploymentdone }) => {
@@ -24,53 +20,23 @@ const EmploymentInformation = ({ setPage, setEmploymentdone }) => {
     setEmploymentInfo({ ...employmentInfo, [name]: e.target.value })
   }
 
-  useEffect(() => {
-    retrieveLoanDetails()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  const retrieveLoanDetails = async () => {
-    const user = JSON.parse(localStorage.getItem("userObjFromBckEnd"))
-    if (!user || user.newUser) return
-
-    await getLoanDetails()
-      .then((res) => {
-        if (!res.data) return
-        const loanInfo = (({
-          employername,
-          employeraddress,
-          workduration,
-          designation,
-          employmentmode,
-          city,
-          state
-        }) => ({
-          employername,
-          employeraddress,
-          workduration,
-          designation,
-          employmentmode,
-          city,
-          state
-        }))(res.data)
-        setEmploymentInfo(loanInfo)
-        console.log(employmentInfo)
-      })
-      .catch(() => {})
-  }
-
   const handleSubmit = (e) => {
     e.preventDefault()
     setLoading(true)
     console.log(employmentInfo)
-    submitEmploymentInfo(employmentInfo)
-      .then((res) => {
-        successToast(res.data)
-        setPage("bankInfo")
-        setLoading(false)
-        setEmploymentdone(true)
-      })
-      .catch(() => {})
+
+    localStorage.setItem("employmentInfo", JSON.stringify(employmentInfo))
+    setEmploymentdone(true)
+
+    setPage("bankInfo")
+
+    // submitEmploymentInfo(employmentInfo)
+    //   .then((res) => {
+
+    //     setLoading(false)
+
+    //   })
+    //   .catch(() => {})
   }
 
   return (

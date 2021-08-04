@@ -12,7 +12,10 @@ import EmploymentInformation from "../components/EmploymentInformation"
 import BankInformation from "../components/BankInformation"
 import RefereeInformation from "../components/RefereeInformation"
 import { Link } from "react-router-dom"
-import { makeFeePayment } from "../services/creditFormService"
+
+import axios from "axios"
+
+import apiEndpoint from "../utils/apiEndpoint"
 
 const CreditApplicationScreen = (props) => {
   const [form, setForm] = useState("personalInfo")
@@ -26,23 +29,43 @@ const CreditApplicationScreen = (props) => {
     setForm(page)
   }
 
-  const startPayment = () => {
-    var obj = {
-      loanid: localStorage.getItem("loanId"),
-      email: localStorage.getItem("userEmail")
+  async function startPayment(creditApplicationObj) {
+    try {
+      const { email } =
+        creditApplicationObj.creditApplicationFormObj.contactInfoObj
+      const response = await axios.post(
+        `${apiEndpoint}/utilities/initializePayment`,
+        {
+          email
+        }
+      )
+      const { data } = response
+      if (data.status === "success") {
+        const authUrl = data.data.authorization_url
+        const reference = data.data.reference
+
+        creditApplicationObj.creditApplicationFormObj.paymentReference =
+          reference
+
+        localStorage.setItem(
+          "creditApplicationObj",
+          JSON.stringify(creditApplicationObj)
+        )
+
+        localStorage.removeItem("userInfo")
+        localStorage.removeItem("loanObj")
+        localStorage.removeItem("personalInfo")
+        localStorage.removeItem("contactInfo")
+        localStorage.removeItem("employmentInfo")
+        localStorage.removeItem("bankInfo")
+
+        return (window.location.href = authUrl)
+      }
+
+      // console.log(response)
+    } catch (error) {
+      console.log(error)
     }
-    makeFeePayment(obj)
-      .then((res) => {
-        const url = res.data["data"]["data"]["authorization_url"]
-        console.log("Payment made")
-        let reference = res.data["data"]["data"]["reference"]
-        localStorage.setItem("current_reference", reference)
-        window.location.href = url
-        // localStorage.removeItem("nextRoute")
-        // localStorage.removeItem("loanId")
-        // localStorage.removeItem("userInfo")
-      })
-      .catch(() => {})
   }
 
   return (

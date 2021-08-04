@@ -7,7 +7,7 @@ function isDevelopment() {
 }
 
 const apiEndpoint = isDevelopment()
-  ? "http://localhost:2000/user"
-  : "https://cryptic-reef-51266.herokuapp.com/user"
+  ? "https://payqart.compound.ng/api"
+  : "https://payqart.compound.ng/api"
 
 export default apiEndpoint
