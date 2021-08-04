@@ -78,14 +78,36 @@ const CreditForm = (props) => {
                   required
                 />
               ) : (
-                <Form.Control
-                  className="frm-ctrl"
-                  type={type}
-                  readOnly={disabled}
-                  value={value}
-                  onChange={(text) => handleChange(name, text)}
-                  required
-                />
+                <div
+                  className={
+                    name === "telephone" || name === "rtelephone"
+                      ? "d-flex bg-white align-items-center w-100 border rounded-3"
+                      : "d-flex bg-white"
+                  }
+                >
+                  {(name === "telephone" || name === "rtelephone") && (
+                    <span
+                      className="p-1"
+                      style={{
+                        fontSize: "0.75rem"
+                      }}
+                    >
+                      +234
+                    </span>
+                  )}
+                  <Form.Control
+                    className={
+                      name === "telephone" || name === "rtelephone"
+                        ? "frm-ctrl border-0 flex-grow-1"
+                        : "frm-ctrl flex-grow-1"
+                    }
+                    type={type}
+                    readOnly={disabled}
+                    value={value}
+                    onChange={(text) => handleChange(name, text)}
+                    required
+                  />
+                </div>
               )}
             </Form.Group>
           )
