@@ -5,7 +5,9 @@ import "../stylesheets/css/employementscreen.css"
 import paid from "../images/image 4.png"
 import free from "../images/image 5.png"
 import coop from "../images/image 6.png"
-import ProgressSteps from "../components/ProgressSteps"
+import { ProgressSteps } from "../components/ProgressSteps"
+import { Link } from "react-router-dom"
+// import { Link } from "react-router-dom"
 
 const EmploymentScreen = (props) => {
   const [employmentType, setEmploymentType] = useState("")
@@ -36,7 +38,19 @@ const EmploymentScreen = (props) => {
 
   return (
     <div className="pager">
-      <Container fluid>
+      <Container className="position-relative" fluid>
+        <div
+          className="topsection position-absolute top-0 mt-4"
+          style={{ zIndex: "500" }}
+        >
+          {selection !== "wallet-not-funded" && (
+            <Link to="/creditscreen">
+              <i style={{ color: "#FF005E" }} className="fas fa-arrow-left"></i>{" "}
+              Back
+            </Link>
+          )}
+        </div>
+
         <div className="stps">
           {selection === "wallet-funded" ? (
             <ProgressSteps step1 step2 complete />
@@ -44,13 +58,20 @@ const EmploymentScreen = (props) => {
             <ProgressSteps />
           )}
         </div>
-        <Row className="justify-content-md-center f-row mt-3">
+        <Row className="justify-content-md-center f-row w-100">
           <Col md={9} xs={12}>
             <h5 id="occu-text" className="text-center my-3">
               Select Your Employment Type
             </h5>
             <Row className="justify-content-md-center mb-4">
-              <Col className="mx-3 boxs" md={3}>
+              <Col
+                className={
+                  employmentType === "paid-employment"
+                    ? "mx-3 boxs col-p options-border"
+                    : "mx-3 boxs col-p"
+                }
+                md={3}
+              >
                 <div
                   className="options"
                   tabIndex="1"
@@ -59,11 +80,23 @@ const EmploymentScreen = (props) => {
                   <div>
                     <Image fluid src={paid} />
                   </div>
-                  <span className="imgtxt">Paid Employment</span>
+                  <span
+                    className="imgtxt w-100"
+                    style={{ fontSize: "0.75rem" }}
+                  >
+                    Paid Employment
+                  </span>
                 </div>
               </Col>
 
-              <Col className="mx-3 boxs" md={3}>
+              <Col
+                className={
+                  employmentType === "self-employment"
+                    ? "mx-3 boxs col-p options-border"
+                    : "mx-3 boxs col-p"
+                }
+                md={3}
+              >
                 <div
                   className="options"
                   tabIndex="2"
@@ -72,11 +105,20 @@ const EmploymentScreen = (props) => {
                   <div>
                     <Image fluid src={free} />
                   </div>
-                  <span className="imgtxt">Self Employed/ Freelance</span>
+                  <span className="imgtxt" style={{ fontSize: "0.75rem" }}>
+                    Self Employed/ Freelance
+                  </span>
                 </div>
               </Col>
 
-              <Col className="mx-3 boxs" md={3}>
+              <Col
+                className={
+                  employmentType === "corporate-organisation"
+                    ? "mx-3 boxs col-p options-border"
+                    : "mx-3 boxs col-p"
+                }
+                md={3}
+              >
                 <div
                   className="options"
                   tabIndex="3"
@@ -85,7 +127,9 @@ const EmploymentScreen = (props) => {
                   <div>
                     <Image fluid src={coop} />
                   </div>
-                  <span className="imgtxt">Small Business</span>
+                  <span className="imgtxt" style={{ fontSize: "0.75rem" }}>
+                    Small Business
+                  </span>
                 </div>
               </Col>
             </Row>

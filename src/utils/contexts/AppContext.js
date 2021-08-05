@@ -8,8 +8,6 @@ import {
 } from "react"
 import apiEndpoint from "../apiEndpoint"
 
-import { useHistory } from "react-router-dom"
-
 const AppContext = createContext()
 
 export function useAppContext() {
@@ -19,8 +17,6 @@ export function useAppContext() {
 export function AppContextProvider({ children }) {
   const [selection, setSelection] = useState("")
   const [userDetails, setUserDetails] = useState({})
-
-  let history = useHistory()
 
   const getUser = useCallback(async () => {
     const token = localStorage.getItem("token")
@@ -39,9 +35,9 @@ export function AppContextProvider({ children }) {
       }
     } catch (error) {
       console.log(error.response)
-      history.push("/")
+      //   history.push("/")
     }
-  }, [history])
+  }, [])
 
   useEffect(() => {
     getUser()

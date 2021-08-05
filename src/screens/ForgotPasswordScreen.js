@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { Col, Form, Row, Container, Button } from "react-bootstrap"
 import { Link } from "react-router-dom"
-import ProgressSteps from "../components/ProgressSteps"
+import { ProgressSteps } from "../components/ProgressSteps"
 import { successToast, doPasswordReset } from "../services/authService"
 
 const ForgotPasswordScreen = (props) => {

@@ -10,7 +10,7 @@ import {
   Image
 } from "react-bootstrap"
 import { Link, useParams } from "react-router-dom"
-import ProgressSteps from "../components/ProgressSteps"
+import { ProgressSteps, ProgressStepsFunded } from "../components/ProgressSteps"
 import eye from "../images/Path 38.png"
 import { successToast } from "../services/authService"
 import axios from "axios"
@@ -51,14 +51,14 @@ const SignInScreen = (props) => {
   return (
     <div className="signup">
       <div className="top-section">
-        <Link to={{ pathname: `/signup/${status}` }}>
+        <Link to={selection === "wallet-not-funded" ? "/planscreen" : "/"}>
           <i style={{ color: "#FF005E" }} className="fas fa-arrow-left"></i>{" "}
           Back
         </Link>
       </div>
       <div className="steps s-checks">
         {selection === "wallet-funded" ? (
-          <ProgressSteps complete />
+          <ProgressStepsFunded />
         ) : (
           <ProgressSteps step1 step2 complete />
         )}

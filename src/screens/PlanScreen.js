@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react"
 import { Row, Col, Form, Button, Container, InputGroup } from "react-bootstrap"
 import { Link } from "react-router-dom"
-import ProgressSteps from "../components/ProgressSteps"
+import { ProgressSteps } from "../components/ProgressSteps"
 import "../stylesheets/css/planscreen.css"
 import { employeeDti, setStatus } from "../services/Formulae"
 import Message from "../components/Message"
@@ -135,8 +135,14 @@ const PlanScreen = (props) => {
 
   return (
     <div className="planScreen">
-      <div className="topsection">
-        <Link to="/employmentscreen">
+      <div className="topsection position-absolute top-0 mt-5">
+        <Link
+          to={
+            selection === "wallet-not-funded"
+              ? "/creditscreen"
+              : "/employmentscreen"
+          }
+        >
           <i style={{ color: "#FF005E" }} className="fas fa-arrow-left"></i>{" "}
           Back
         </Link>

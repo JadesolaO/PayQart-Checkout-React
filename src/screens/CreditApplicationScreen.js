@@ -68,11 +68,19 @@ const CreditApplicationScreen = (props) => {
     }
   }
 
+  const selection = localStorage.getItem("selection")
+
   return (
     <Container>
       <Row className="justify-content-md-center ">
         <div className="top-sect">
-          <Link to="/">
+          <Link
+            to={
+              selection === "wallet-not-funded"
+                ? "/creditscreen"
+                : "/planscreen"
+            }
+          >
             <i className="fas fa-arrow-left"></i> Back
           </Link>
         </div>
