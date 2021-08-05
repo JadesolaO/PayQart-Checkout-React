@@ -26,6 +26,8 @@ const SignInScreen = (props) => {
 
   const { setUserDetails } = useAppContext()
 
+  const selection = localStorage.getItem("selection")
+
   async function loginUser(e) {
     e.preventDefault()
     const userInfo = { email, pin: password }
@@ -55,7 +57,11 @@ const SignInScreen = (props) => {
         </Link>
       </div>
       <div className="steps s-checks">
-        <ProgressSteps step1 step2 complete />
+        {selection === "wallet-funded" ? (
+          <ProgressSteps complete />
+        ) : (
+          <ProgressSteps step1 step2 complete />
+        )}
       </div>
 
       <Row className="justify-content-md-center text-center">

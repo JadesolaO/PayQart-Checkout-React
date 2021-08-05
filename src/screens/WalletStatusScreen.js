@@ -6,9 +6,13 @@ import fundedWalletIcon from "../images/funded-wallet.svg"
 import "../stylesheets/css/walletStatusScreen.css"
 
 const WalletStatusScreen = (props) => {
+  function selectHandler(selection) {
+    localStorage.setItem("selection", selection)
+  }
+
   const signIn = () => {
     props.history.push("/signin/1")
-    localStorage.removeItem("loanId")
+    // localStorage.removeItem("loanId")
   }
 
   return (
@@ -37,7 +41,10 @@ const WalletStatusScreen = (props) => {
                       <Button
                         variant="outline-secondary"
                         id="wallet-button-id"
-                        onClick={() => props.history.push("/eligibityscreen")}
+                        onClick={() => {
+                          props.history.push("/eligibityscreen")
+                          selectHandler("wallet-not-funded")
+                        }}
                       >
                         Select
                       </Button>
@@ -57,7 +64,10 @@ const WalletStatusScreen = (props) => {
                       <Button
                         variant="outline-secondary"
                         id="wallet-button-id"
-                        onClick={signIn}
+                        onClick={() => {
+                          signIn()
+                          selectHandler("wallet-funded")
+                        }}
                       >
                         Select
                       </Button>
@@ -66,7 +76,7 @@ const WalletStatusScreen = (props) => {
                 </div>
               </Col>
 
-              <Col md={4}>
+              {/* <Col md={4}>
                 <div className="wallet-card" tabIndex="1">
                   <div className="shared-card-div">
                     <div className="logo mt-10">
@@ -85,7 +95,7 @@ const WalletStatusScreen = (props) => {
                     </div>
                   </div>
                 </div>
-              </Col>
+              </Col> */}
             </Row>
 
             {/* <Button

@@ -46,6 +46,7 @@ const PlanScreen = (props) => {
       downPayment,
       tenureNum > 0 ? tenureNum : 1
     )
+
     // console.log(info)
     setInfo(info)
     setTextString(info.textString)
@@ -92,9 +93,17 @@ const PlanScreen = (props) => {
 
     localStorage.setItem("loanObj", JSON.stringify(loanObj))
 
-    const nextRoute = localStorage.getItem("nextRoute")
-    if (nextRoute) return props.history.push(nextRoute)
-    props.history.push("/signup/1")
+    const selection = localStorage.getItem("selection")
+
+    if (selection === "wallet-not-funded") {
+      return props.history.push("/signin/1")
+    }
+
+    props.history.push("/creditapplication")
+
+    // const nextRoute = localStorage.getItem("nextRoute")
+    // if (nextRoute) return props.history.push(nextRoute)
+    // props.history.push("/signup/1")
 
     // try {
     //   const response = await inititiateCredit(loanObj)
@@ -122,6 +131,8 @@ const PlanScreen = (props) => {
     //   .catch(() => {})
   }
 
+  const selection = localStorage.getItem("selection")
+
   return (
     <div className="planScreen">
       <div className="topsection">
@@ -131,7 +142,11 @@ const PlanScreen = (props) => {
         </Link>
       </div>
       <div className="steps">
-        <ProgressSteps step1 complete />
+        {selection === "wallet-funded" ? (
+          <ProgressSteps step1 step2 step3 complete />
+        ) : (
+          <ProgressSteps step1 complete />
+        )}
       </div>
       <Row className="justify-content-md-center">
         <Col>

@@ -31,11 +31,18 @@ const EmploymentScreen = (props) => {
     )
     props.history.push("/planscreen")
   }
+
+  const selection = localStorage.getItem("selection")
+
   return (
     <div className="pager">
       <Container fluid>
         <div className="stps">
-          <ProgressSteps />
+          {selection === "wallet-funded" ? (
+            <ProgressSteps step1 step2 complete />
+          ) : (
+            <ProgressSteps />
+          )}
         </div>
         <Row className="justify-content-md-center f-row mt-3">
           <Col md={9} xs={12}>

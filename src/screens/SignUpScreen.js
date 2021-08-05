@@ -32,6 +32,8 @@ const SignUpScreen = (props) => {
 
   const { setUserDetails } = useAppContext()
 
+  const selection = localStorage.getItem("selection")
+
   async function signUpUser(e) {
     e.preventDefault()
 
@@ -71,7 +73,11 @@ const SignUpScreen = (props) => {
         </Link>
       </div>
       <div className="steps s-checks">
-        <ProgressSteps step1 step2 complete />
+        {selection === "wallet-funded" ? (
+          <ProgressSteps complete />
+        ) : (
+          <ProgressSteps step1 step2 complete />
+        )}
       </div>
       <Row className="justify-content-md-center text-center">
         <Col md={8}>

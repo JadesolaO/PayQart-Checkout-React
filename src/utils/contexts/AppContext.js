@@ -17,6 +17,7 @@ export function useAppContext() {
 }
 
 export function AppContextProvider({ children }) {
+  const [selection, setSelection] = useState("")
   const [userDetails, setUserDetails] = useState({})
 
   let history = useHistory()
@@ -46,7 +47,7 @@ export function AppContextProvider({ children }) {
     getUser()
   }, [getUser])
 
-  const value = { userDetails, setUserDetails }
+  const value = { userDetails, setUserDetails, selection, setSelection }
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>
 }

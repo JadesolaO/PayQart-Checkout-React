@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react"
 import { Container, Row, Col, Button } from "react-bootstrap"
 import { Link } from "react-router-dom"
@@ -32,9 +33,15 @@ const CreditScreen = (props) => {
   }
 
   const proceed = () => {
-    if (loanStatus) return props.history.push("/creditapplication")
+    // if (loanStatus) return props.history.push("/creditapplication")
+    const selection = localStorage.getItem("selection")
+    if (selection === "wallet-not-funded") {
+      return props.history.push("/creditapplication")
+    }
     props.history.push("/employmentscreen")
   }
+
+  const selection = localStorage.getItem("selection")
 
   return (
     <div className="creditscreen">
@@ -45,7 +52,11 @@ const CreditScreen = (props) => {
         </Link>
       </div>
       <div className="steps">
-        <ProgressSteps step1 step2 step3 complete />
+        {selection === "wallet-funded" ? (
+          <ProgressSteps step1 complete />
+        ) : (
+          <ProgressSteps step1 step2 step3 complete />
+        )}
       </div>
       <Container fluid>
         <Row className="justify-content-md-center">
