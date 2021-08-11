@@ -7,7 +7,6 @@ import free from "../images/image 5.png"
 import coop from "../images/image 6.png"
 import { ProgressSteps } from "../components/ProgressSteps"
 import { Link } from "react-router-dom"
-// import { Link } from "react-router-dom"
 
 const EmploymentScreen = (props) => {
   const [employmentType, setEmploymentType] = useState("")
@@ -17,6 +16,8 @@ const EmploymentScreen = (props) => {
   const [salary, setSalary] = useState("")
   const [monthlyExpense, setMonthlyExpense] = useState("")
   const [loanAmount, setLoanAmount] = useState("")
+
+  const [payDay, setPayDay] = useState("")
 
   const dateValue = payDate.toDateString()
 
@@ -28,7 +29,8 @@ const EmploymentScreen = (props) => {
         income: Number(salary.split(",").join("")),
         monthlyExpense: Number(monthlyExpense.split(",").join("")),
         loanAmount: Number(loanAmount.split(",").join("")),
-        employmentType
+        employmentType,
+        payDay
       })
     )
     props.history.push("/planscreen")
@@ -152,6 +154,7 @@ const EmploymentScreen = (props) => {
                     dateValue={dateValue}
                     value3={loanAmount}
                     setValue3={setLoanAmount}
+                    setPayDay={setPayDay}
                   />
                 </Row>
               )}

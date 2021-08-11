@@ -74,7 +74,12 @@ const InputField = (props) => {
                 className="calendar"
                 minDate={new Date()}
                 value={props.value2}
-                onChange={props.setValue2}
+                onChange={(value) => {
+                  const day = value.toString().split(" ")[2]
+                  props.setPayDay(day)
+
+                  props.setValue2(value)
+                }}
                 next2Label={null}
                 prev2Label={null}
                 onClickDay={() => {

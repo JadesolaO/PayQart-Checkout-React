@@ -73,7 +73,7 @@ const RefereeInformation = ({ startPayment, setRefdone }) => {
       employmentInfoObj = {
         employmentType: loanObj.typeofbusiness,
         salaryAmount: Number(loanObj.rsalary).toLocaleString(),
-        salaryDate: loanObj.rpaydate,
+        salaryDate: userInfo.payDay,
         existingLoans: loanObj.existingloan === "Yes" ? true : false,
         existingLoanAmount:
           loanObj.existingloan === "Yes" ? Number(userInfo.loanAmount) : 0
