@@ -17,6 +17,14 @@ import axios from "axios"
 
 import apiEndpoint from "../utils/apiEndpoint"
 
+function isDevelopment() {
+  if (process.env.NODE_ENV === "development") {
+    return true
+  } else {
+    return false
+  }
+}
+
 const CreditApplicationScreen = (props) => {
   const [form, setForm] = useState("personalInfo")
   const [personaldone, setPersonaldone] = useState(false)
@@ -36,7 +44,10 @@ const CreditApplicationScreen = (props) => {
       const response = await axios.post(
         `${apiEndpoint}/utilities/initializePayment`,
         {
-          email
+          email,
+          callbackUrl: isDevelopment()
+            ? "http://localhost:3000/success"
+            : "https://payqart-demo.netlify.app/success"
         }
       )
       const { data } = response
