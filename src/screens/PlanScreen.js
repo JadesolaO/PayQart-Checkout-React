@@ -131,16 +131,18 @@ const PlanScreen = (props) => {
     //   .catch(() => {})
   }
 
-  const selection = localStorage.getItem("selection")
+  const selection = JSON.stringify(localStorage.getItem("selection"))
+
+  console.log(selection)
 
   return (
     <div className="planScreen">
       <div className="topsection position-absolute top-0 mt-5">
         <Link
           to={
-            selection === "wallet-not-funded"
-              ? "/creditscreen"
-              : "/employmentscreen"
+            selection !== "wallet-not-funded"
+              ? "/employmentscreen"
+              : "/creditscreen"
           }
         >
           <i style={{ color: "#FF005E" }} className="fas fa-arrow-left"></i>{" "}
