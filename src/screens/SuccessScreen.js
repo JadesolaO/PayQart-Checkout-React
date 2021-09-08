@@ -97,9 +97,9 @@ const SuccessScreen = (props) => {
     setDocumentStatus(obj)
   }
 
-  const routeToMono = () => {
-    window.location.href = "https://mono.co/statements/3e5AuEa"
-  }
+  // const routeToMono = () => {
+  //   window.location.href = "https://mono.co/statements/3e5AuEa"
+  // }
 
   return (
     <Container className="success" fluid>
@@ -122,9 +122,14 @@ const SuccessScreen = (props) => {
                 <p>
                   <strong>Bank Statement</strong>
                 </p>
-                <label onClick={routeToMono} className="lablef">
-                  Generate
-                </label>
+
+                <a
+                  href="https://mono.co/statements/3e5AuEa"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <label className="lablef">Generate</label>
+                </a>
               </div>
               {/* {documentUploadArray.map((obj) => (
                 <FileUpload
