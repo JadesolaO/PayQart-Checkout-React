@@ -13,6 +13,8 @@ const CreditScreen = (props) => {
   const [loading, setLoading] = useState(true)
   const [showPaymentBreakdown, updateShowPaymentBreakdown] = useState(false)
 
+  const [startingApplication, updateStartingApplication] = useState(false)
+
   useEffect(() => {
     getLoanStatus()
   }, [])
@@ -35,13 +37,47 @@ const CreditScreen = (props) => {
       })
   }
 
-  const proceed = () => {
+  const startApplicationHandler = async () => {
     // if (loanStatus) return props.history.push("/creditapplication")
+    updateStartingApplication(true)
     const selection = localStorage.getItem("selection")
     if (selection === "wallet-not-funded") {
-      return props.history.push("/creditapplication")
+      const startApplicationObj = JSON.parse(
+        localStorage.getItem("startApplicationObj")
+      )
+
+      try {
+        const token = localStorage.getItem("token")
+
+        const response = await axios.post(
+          `${apiEndpoint}/application/start`,
+          startApplicationObj,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          }
+        )
+
+        const { data } = response
+
+        if (data.status === "success") {
+          localStorage.setItem("creditId", data.data.creditId)
+          localStorage.removeItem("startApplicationObj")
+          localStorage.removeItem("userInfo")
+          localStorage.removeItem("nextRoute")
+
+          updateStartingApplication(false)
+          props.history.push("/creditapplication")
+        }
+      } catch (error) {
+        updateStartingApplication(false)
+        if (error) {
+          console.log(error.response)
+        }
+      }
     }
-    props.history.push("/employmentscreen")
+    // props.history.push("/employmentscreen")
   }
 
   async function makeVerificationPayment() {
@@ -203,7 +239,11 @@ const CreditScreen = (props) => {
               </div>
             </Col>
             <div className="apply-button my-3 text-center">
-              <Button size="lg" disabled={loading} onClick={proceed}>
+              <Button
+                size="lg"
+                disabled={startingApplication}
+                onClick={startApplicationHandler}
+              >
                 Apply For Shopping Credit
               </Button>
             </div>

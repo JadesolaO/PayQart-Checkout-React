@@ -4,10 +4,11 @@ import { Row, Col, Form, Button, Container, InputGroup } from "react-bootstrap"
 import { Link } from "react-router-dom"
 import { ProgressSteps } from "../components/ProgressSteps"
 import "../stylesheets/css/planscreen.css"
-import { employeeDti, setStatus } from "../services/Formulae"
+import { setStatus } from "../services/Formulae"
 import Message from "../components/Message"
-import { inititiateCredit } from "../services/creditFormService"
+// import { inititiateCredit } from "../services/creditFormService"
 import axios from "axios"
+import apiEndpoint from "../utils/apiEndpoint"
 
 const PlanScreen = (props) => {
   const data = localStorage.getItem("userInfo")
@@ -28,37 +29,39 @@ const PlanScreen = (props) => {
   const [textString, setTextString] = useState(String)
   const [error, setError] = useState("")
   const [showBreakdown, setShowBreakdown] = useState(Boolean)
-  // console.log(Number(updatedDownPayment.split(',').join('')))
-  // console.log(monthlyAmount.toString())
 
-  const income = data.income
-  const loanAmount = data.loanAmount
-  const monthlyExpense = data.monthlyExpense
-  const interestRate = 0.04
+  const [shoppingCredit, setShoppingCredit] = useState("")
+
+  const [monthlyRepayment, setMonthlyRepayment] = useState(null)
+  const [totalRepayment, setTotalRepayment] = useState(null)
+  // const [downPayment, setDownPayment] = useState(null)
+
+  const [netIncome, setNetIncome] = useState("")
+
+  const [startingApplication, updateStartingApplication] = useState(false)
+
+  const [loadingPlan, updateLoadingPlan] = useState(false)
+
+  const [calculating, updateCalculating] = useState(false)
 
   useEffect(() => {
-    const info = setStatus(
-      cartValue,
-      income,
-      monthlyExpense,
-      loanAmount,
-      interestRate,
-      downPayment,
-      tenureNum > 0 ? tenureNum : 1
-    )
+    let monthsArray = []
 
-    // console.log(info)
-    setInfo(info)
-    setTextString(info.textString)
-    setPlans(info.monthsArray)
-    setPayInfo(info.data)
-    setMonthlyRepay(info.monthlyRepay)
-    // setTenureNum(4)
-    setMonthlyAmount(info.repay)
-  }, [cartValue, downPayment, income, loanAmount, monthlyExpense, tenureNum])
+    for (let i = 0; i < arrayOfStatuses.length; i++) {
+      monthsArray.push({
+        id: i + 1,
+        monthlyRepayment: monthlyRepay[i],
+        text: arrayOfStatuses[0].status,
+        description: arrayOfStatuses[0].description
+      })
+    }
+
+    setPlans(monthsArray)
+  }, [monthlyRepay])
 
   const formSubmit = (e) => {
     e.preventDefault()
+    // alert("True")
     setError("")
     if (Number(updatedDownPayment.split(",").join("")) < cartValue * 0.3) {
       setError(
@@ -73,25 +76,222 @@ const PlanScreen = (props) => {
       return
     }
     setDownPayment(Number(updatedDownPayment.split(",").join("")))
+    planHandler(
+      "updateDownPayment",
+      Number(updatedDownPayment.split(",").join(""))
+    )
   }
 
-  async function initiateCreditApplication() {
-    const existingLoan = loanAmount ? "Yes" : "No"
-    const loanObj = {
-      ramount: payInfo.shoppingCredit,
-      rsalary: income,
-      expenses: data.monthlyExpense,
-      existingloan: existingLoan,
-      typeofbusiness: data.employmentType,
-      currentrepayment: loanAmount,
-      rduration: tenureNum,
-      downpayment: downPayment,
-      debtincomeratio: payInfo.dti,
-      rpaydate: "23",
-      monthlyRepayment: monthlyAmount
+  // async function initiateCreditApplication() {
+  //   const selection = localStorage.getItem("selection")
+
+  //   if (selection === "wallet-not-funded") {
+  //     return props.history.push("/signin/1")
+  //   }
+
+  //   props.history.push("/creditapplication")
+  // }
+
+  async function planHandler(type, value) {
+    updateCalculating(true)
+    let obj
+
+    if (type === "tenor") {
+      obj = {
+        requestedAmount: cartValue - downPayment,
+        tenor: Number(value),
+        employmentType: data.employmentType === "paid-employment" ? 1 : 2,
+        userSalaryDate:
+          data.employmentType === "paid-employment"
+            ? Number(data.payDay)
+            : null,
+        userMonthlyPay:
+          data.employmentType === "paid-employment" ? data.income : null,
+        averageMonthlyRevenue:
+          data.employmentType !== "paid-employment" ? data.income : null, //null if employmenttype is 1
+        averageMonthlyExpense:
+          data.employmentType !== "paid-employment"
+            ? data.monthlyExpense
+            : null,
+        currentMonthlyLoan: data.loanAmount === 0 ? null : data.loanAmount
+      }
+    } else {
+      obj = {
+        requestedAmount: cartValue - Number(value),
+        tenor: Number(tenureNum),
+        employmentType: data.employmentType === "paid-employment" ? 1 : 2,
+        userSalaryDate:
+          data.employmentType === "paid-employment"
+            ? Number(data.payDay)
+            : null,
+        userMonthlyPay:
+          data.employmentType === "paid-employment" ? data.income : null,
+        averageMonthlyRevenue:
+          data.employmentType !== "paid-employment" ? data.income : null, //null if employmenttype is 1
+        averageMonthlyExpense:
+          data.employmentType !== "paid-employment"
+            ? data.monthlyExpense
+            : null,
+        currentMonthlyLoan: data.loanAmount === 0 ? null : data.loanAmount
+      }
     }
 
-    localStorage.setItem("loanObj", JSON.stringify(loanObj))
+    // console.log(obj)
+
+    try {
+      const response = await axios.post(
+        `${apiEndpoint}/application/calculate`,
+        obj
+      )
+
+      const { data } = response
+
+      // console.log(data)
+
+      if (data.status === "success") {
+        updateLoadingPlan(false)
+        if (type === "tenor") {
+          setTenureNum(value)
+        }
+        setShoppingCredit(data["Approved Shopping Credit"])
+        setMonthlyRepayment(data["Monthly Repayment"])
+        setTotalRepayment(data["Total Repayment"])
+        setNetIncome(data["Monthly Net Income"])
+        // setDownPayment(data["Down Payment"])
+
+        let monthsArray = []
+        let textString = ""
+        let repay
+
+        for (let i = 0; i < arrayOfStatuses.length; i++) {
+          if (data.DTI < 16) {
+            monthsArray.push({
+              id: i + 1,
+              monthlyRepayment: monthlyRepay[i],
+              text: arrayOfStatuses[0].status,
+              description: arrayOfStatuses[0].description
+            })
+          } else if (data.DTI < 26) {
+            monthsArray.push({
+              id: i + 1,
+              monthlyRepayment: monthlyRepay[i],
+              text: arrayOfStatuses[1].status,
+              description: arrayOfStatuses[1].description
+            })
+          } else if (data.DTI < 36) {
+            monthsArray.push({
+              id: i + 1,
+              monthlyRepayment: monthlyRepay[i],
+              text: arrayOfStatuses[2].status,
+              description: arrayOfStatuses[2].description
+            })
+          } else if (data.DTI < 41) {
+            monthsArray.push({
+              id: i + 1,
+              monthlyRepayment: monthlyRepay[i],
+              text: arrayOfStatuses[3].status,
+              description: arrayOfStatuses[3].description
+            })
+          } else if (data.DTI < 46) {
+            monthsArray.push({
+              id: i + 1,
+              monthlyRepayment: monthlyRepay[i],
+              text: arrayOfStatuses[4].status,
+              description: arrayOfStatuses[4].description
+            })
+          } else {
+            monthsArray.push({
+              id: i + 1,
+              monthlyRepayment: monthlyRepay[i],
+              text: arrayOfStatuses[5].status,
+              description: arrayOfStatuses[5].description
+            })
+          }
+        }
+
+        setPlans(monthsArray)
+
+        if (type === "tenor") {
+          textString = monthsArray[Number(value) - 1]?.description
+          repay = monthsArray[Number(value) - 1]?.monthlyRepayment
+          setTenure(
+            `${Number(value) > 1 ? `${value} months` : `${value} month`}`
+          )
+          setTenureNum(Number(value))
+          setMonthlyAmount(monthsArray[Number(value) - 1].monthlyRepayment)
+          setTextString(textString)
+          setMonthlyAmount(repay)
+        }
+
+        setShowBreakdown(true)
+
+        updateCalculating(false)
+      }
+    } catch (error) {
+      console.log(error)
+      updateCalculating(false)
+      updateLoadingPlan(false)
+    }
+  }
+
+  async function startApplication() {
+    const startApplicationObj = {
+      requestedAmount: Number(shoppingCredit),
+
+      type: 2,
+
+      currentMonthlyLoan: data.loanAmount === 0 ? null : data.loanAmount,
+
+      userSalaryDate:
+        data.employmentType === "paid-employment" ? data.payDay : null,
+
+      averageMonthlyRevenue:
+        data.employmentType !== "paid-employment" ? data.income : null, //null if employmenttype is 1
+      averageMonthlyExpense:
+        data.employmentType !== "paid-employment" ? data.monthlyExpense : null, //null if employmenttype is 1
+
+      employmentType: data.employmentType === "paid-employment" ? 1 : 2, // 1-salaryearner 2-entrepreneur
+
+      userMonthlyPay:
+        data.employmentType === "paid-employment" ? data.income : null,
+
+      tenor: Number(tenureNum),
+      products: [
+        {
+          productName: "Nike Boots",
+          quantity: 1,
+          price: 30500
+        },
+        {
+          productName: "Tecno phone",
+          quantity: 1,
+          price: 50000
+        }
+      ],
+      onlineStores: [
+        {
+          onlineStoreName: "Jumia",
+          productUrl: "https://hjsdhskjdbsjdjsnkdsjskdn"
+        }
+      ],
+      storeType: "online",
+      inStoreName: null,
+      inStoreAddress: null,
+      inStoreEmail: null,
+      inStoreContactPerson: null,
+      inStorePhoneNumber: null,
+      invoice: null,
+      monthlyNetIncome: Number(netIncome),
+      shoppingCredit: Number(shoppingCredit),
+      monthlyRepayment: Number(monthlyRepayment),
+      totalRepayment: Number(totalRepayment),
+      downPayment: Number(downPayment)
+    }
+
+    localStorage.setItem(
+      "startApplicationObj",
+      JSON.stringify(startApplicationObj)
+    )
 
     const selection = localStorage.getItem("selection")
 
@@ -100,40 +300,11 @@ const PlanScreen = (props) => {
     }
 
     props.history.push("/creditapplication")
-
-    // const nextRoute = localStorage.getItem("nextRoute")
-    // if (nextRoute) return props.history.push(nextRoute)
-    // props.history.push("/signup/1")
-
-    // try {
-    //   const response = await inititiateCredit(loanObj)
-
-    //   const { data: loanid } = response
-
-    //   if (loanid) {
-    //     localStorage.setItem("loanId", response.data.loanid)
-    //     const nextRoute = localStorage.getItem("nextRoute")
-    //     if (nextRoute) return props.history.push(nextRoute)
-    //     props.history.push("/signup/1")
-    //   }
-    //   console.log(response)
-    // } catch (error) {
-    //   console.log(error)
-    // }
-
-    // inititiateCredit(loanObj)
-    //   .then((response) => {
-    //     localStorage.setItem("loanId", response.data.loanid)
-    //     const nextRoute = localStorage.getItem("nextRoute")
-    //     if (nextRoute) return props.history.push(nextRoute)
-    //     props.history.push("/signup/1")
-    //   })
-    //   .catch(() => {})
   }
 
   const selection = JSON.stringify(localStorage.getItem("selection"))
 
-  console.log(selection)
+  // console.log(selection)
 
   return (
     <div className="planScreen">
@@ -167,188 +338,192 @@ const PlanScreen = (props) => {
             >
               Choose Your Plan
             </h3>
-            <Container fluid>
-              <Row>
-                {plans.map((item) => (
-                  <Col
-                    key={item.id}
-                    className={`boxz ${tenureNum === item.id && `focused`}`}
-                    tabIndex={`${item.id}`}
-                    md={2}
-                    xs={3}
-                    onClick={() => {
-                      setShowBreakdown(true)
-                      setTenure(
-                        `${
-                          item.id > 1 ? `${item.id} months` : `${item.id} month`
-                        }`
-                      )
-                      setTenureNum(item.id)
-                      setTextString(plans[item.id - 1].description)
-                      setMonthlyAmount(plans[item.id - 1].monthlyRepayment)
-                    }}
-                  >
-                    <div className={`top top${item.id}`}></div>
-                    <div className="content text-center">
-                      <p>{showBreakdown === true && item.text}</p>
-                      <h5>{`${item.id}`}</h5>
-                      <p>{`${item.id > 1 ? "months" : "month"}`}</p>
-                    </div>
-                  </Col>
-                ))}
-              </Row>
-              <Row className="text-center infotext">
-                <p>{showBreakdown === true && textString}</p>
-              </Row>
-            </Container>
-            <Row className="justify-content-md-center text-center mt-5">
-              {showBreakdown === true && (
-                <h3
-                  style={{
-                    color: "#720056"
-                  }}
-                >
-                  Payment Breakdown
-                </h3>
-              )}
-              {showBreakdown === true && (
-                <div className="paymentbreakdown">
-                  <Container fluid>
-                    {error && (
-                      <Message variant="info">
-                        {error}{" "}
-                        <i
-                          style={{ cursor: "pointer" }}
-                          onClick={() => setError("")}
-                          className="far fa-times-circle"
-                        ></i>
-                      </Message>
-                    )}
-                    <Row className="justify-content-md-center">
-                      <Col className="brkdwn" md={8}>
-                        <Row className="bkdn py-2 justify-content-md-center">
-                          <Row className="">
-                            <Col md={6} xs={6}>
-                              <p className="bdtxt text-muted">
-                                <b>Down Payment</b>
-                              </p>
-                            </Col>
-                            <Col className="lbl" md={6} xs={6}>
-                              <p className="lbo">
-                                <b>{`₦ ${downPayment
-                                  .toString()
-                                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</b>
-                              </p>
-                            </Col>
-                          </Row>
-                          <Row className="sumry">
-                            <Col md={6} xs={6}>
-                              <p className="bdtxt text-muted">
-                                Shopping Credit
-                              </p>
-                            </Col>
-                            <Col className="lbl" md={6} xs={6}>
-                              <p className="lbo">{`₦ ${
-                                payInfo.shoppingCredit
-                                  ? payInfo.shoppingCredit
-                                      .toString()
-                                      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                                  : ""
-                              }`}</p>
-                            </Col>
-                          </Row>
-                          <Row className="">
-                            <Col md={6} xs={6}>
-                              <p className="bdtxt text-muted">
-                                Monthly Installment
-                              </p>
-                            </Col>
-                            <Col className="lbl" md={6} xs={6}>
-                              <p className="lbo">{`₦ ${monthlyAmount
-                                .toString()
-                                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</p>
-                            </Col>
-                          </Row>
-                          <Row className="">
-                            <Col md={6} xs={6}>
-                              <p className="bdtxt text-muted">Tenure</p>
-                            </Col>
-                            <Col className="lbl" md={6} xs={6}>
-                              <p className="lbo">{tenure}</p>
-                            </Col>
-                          </Row>
-                        </Row>
+            {calculating ? (
+              <div className="p-xl-5 mt-lg-5 d-flex align-items-center justify-content-center">
+                Loading...
+              </div>
+            ) : (
+              <>
+                <Container fluid>
+                  <Row>
+                    {plans.map((item) => (
+                      <Col
+                        key={item.id}
+                        className={`boxz ${tenureNum === item.id && `focused`}`}
+                        tabIndex={`${item.id}`}
+                        md={2}
+                        xs={3}
+                        onClick={() => {
+                          planHandler("tenor", item.id)
+                        }}
+                      >
+                        <div className={`top top${item.id}`}></div>
+                        <div className="content text-center">
+                          <p>{showBreakdown === true && item.text}</p>
+                          <h5>{`${item.id}`}</h5>
+                          <p>{`${item.id > 1 ? "months" : "month"}`}</p>
+                        </div>
                       </Col>
-
-                      <Col className="customside" md={4}>
-                        <span>Customize Down Payment</span>
-                        <Row className="justify-content-md-center ">
-                          <Col md={9} xs={6} lg={9}>
-                            <Form className="frmctn" onSubmit={formSubmit}>
-                              <Form.Group>
-                                <InputGroup>
-                                  <InputGroup.Prepend>
-                                    <InputGroup.Text id="inputGroupPrepend2">
-                                      <span className="inputicon">₦</span>
-                                    </InputGroup.Text>
-                                  </InputGroup.Prepend>
-                                  <Form.Control
-                                    type="text"
-                                    className="frm"
-                                    placeholder={`${(cartValue * 0.3)
+                    ))}
+                  </Row>
+                  <Row className="text-center infotext">
+                    <p>{showBreakdown === true && textString}</p>
+                  </Row>
+                </Container>
+                <Row className="justify-content-md-center text-center mt-5">
+                  {showBreakdown === true && (
+                    <h3
+                      style={{
+                        color: "#720056"
+                      }}
+                    >
+                      Payment Breakdown
+                    </h3>
+                  )}
+                  {showBreakdown === true && (
+                    <div className="paymentbreakdown">
+                      <Container fluid>
+                        {error && (
+                          <Message variant="info">
+                            {error}{" "}
+                            <i
+                              style={{ cursor: "pointer" }}
+                              onClick={() => setError("")}
+                              className="far fa-times-circle"
+                            ></i>
+                          </Message>
+                        )}
+                        <Row className="justify-content-md-center">
+                          <Col className="brkdwn" md={8}>
+                            <Row className="bkdn py-2 justify-content-md-center">
+                              <Row className="">
+                                <Col md={6} xs={6}>
+                                  <p className="bdtxt text-muted">
+                                    <b>Down Payment</b>
+                                  </p>
+                                </Col>
+                                <Col className="lbl" md={6} xs={6}>
+                                  <p className="lbo">
+                                    <b>{`₦ ${downPayment
                                       .toString()
-                                      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}
-                                    value={updatedDownPayment}
-                                    onChange={(e) => {
-                                      const {
-                                        target: { value }
-                                      } = e
-                                      setUpdatedDownPayment(
-                                        (
-                                          Number(value.replace(/\D/g, "")) || ""
-                                        ).toLocaleString()
-                                      )
-                                      // setUpdatedDownPayment(e.target.value)
-                                    }}
-                                    required
-                                  />
-                                </InputGroup>
-                              </Form.Group>
-                              <div className="subbtn text-center mx-auto">
-                                <Button
-                                  style={{
-                                    border: "2px solid #fff",
-                                    width: "100%",
-                                    borderRadius: "7px"
-                                  }}
-                                  type="submit"
-                                  variant="outline-success"
-                                  id="sub-btn"
-                                  disabled={!updatedDownPayment}
-                                >
-                                  <span className="uptbtn">
-                                    Update breakdown
-                                  </span>
-                                </Button>
-                              </div>
-                            </Form>
+                                      .replace(
+                                        /\B(?=(\d{3})+(?!\d))/g,
+                                        ","
+                                      )}`}</b>
+                                  </p>
+                                </Col>
+                              </Row>
+                              <Row className="sumry">
+                                <Col md={6} xs={6}>
+                                  <p className="bdtxt text-muted">
+                                    Shopping Credit
+                                  </p>
+                                </Col>
+                                <Col className="lbl" md={6} xs={6}>
+                                  <p className="lbo">{`₦${Number(
+                                    shoppingCredit
+                                  ).toLocaleString()}`}</p>
+                                </Col>
+                              </Row>
+                              <Row className="">
+                                <Col md={6} xs={6}>
+                                  <p className="bdtxt text-muted">
+                                    Monthly Installment
+                                  </p>
+                                </Col>
+                                <Col className="lbl" md={6} xs={6}>
+                                  <p className="lbo">{`₦${Number(
+                                    monthlyRepayment
+                                  ).toLocaleString()}`}</p>
+                                </Col>
+                              </Row>
+                              <Row className="">
+                                <Col md={6} xs={6}>
+                                  <p className="bdtxt text-muted">Tenure</p>
+                                </Col>
+                                <Col className="lbl" md={6} xs={6}>
+                                  <p className="lbo">{tenure}</p>
+                                </Col>
+                              </Row>
+                            </Row>
+                          </Col>
+
+                          <Col className="customside" md={4}>
+                            <span>Customize Down Payment</span>
+                            <Row className="justify-content-md-center ">
+                              <Col md={9} xs={6} lg={9}>
+                                <Form className="frmctn" onSubmit={formSubmit}>
+                                  <Form.Group>
+                                    <InputGroup>
+                                      <InputGroup.Prepend>
+                                        <InputGroup.Text id="inputGroupPrepend2">
+                                          <span className="inputicon">₦</span>
+                                        </InputGroup.Text>
+                                      </InputGroup.Prepend>
+                                      <Form.Control
+                                        type="text"
+                                        className="frm"
+                                        placeholder={`${(cartValue * 0.3)
+                                          .toString()
+                                          .replace(
+                                            /\B(?=(\d{3})+(?!\d))/g,
+                                            ","
+                                          )}`}
+                                        value={updatedDownPayment}
+                                        onChange={(e) => {
+                                          const {
+                                            target: { value }
+                                          } = e
+                                          setUpdatedDownPayment(
+                                            (
+                                              Number(
+                                                value.replace(/\D/g, "")
+                                              ) || ""
+                                            ).toLocaleString()
+                                          )
+                                          // setUpdatedDownPayment(e.target.value)
+                                        }}
+                                        required
+                                      />
+                                    </InputGroup>
+                                  </Form.Group>
+                                  <div className="subbtn text-center mx-auto">
+                                    <Button
+                                      style={{
+                                        border: "2px solid #fff",
+                                        width: "100%",
+                                        borderRadius: "7px"
+                                      }}
+                                      type="submit"
+                                      variant="outline-success"
+                                      id="sub-btn"
+                                      disabled={!updatedDownPayment}
+                                    >
+                                      <span className="uptbtn">
+                                        Update breakdown
+                                      </span>
+                                    </Button>
+                                  </div>
+                                </Form>
+                              </Col>
+                            </Row>
                           </Col>
                         </Row>
-                      </Col>
-                    </Row>
-                  </Container>
-                </div>
-              )}
-              <div className="btmbtn text-center mx-auto">
-                <Button
-                  id="btmbtn"
-                  onClick={initiateCreditApplication}
-                  disabled={!showBreakdown}
-                >
-                  Continue
-                </Button>
-              </div>
-            </Row>
+                      </Container>
+                    </div>
+                  )}
+                  <div className="btmbtn text-center mx-auto">
+                    <Button
+                      id="btmbtn"
+                      onClick={startApplication}
+                      disabled={!showBreakdown}
+                    >
+                      Continue
+                    </Button>
+                  </div>
+                </Row>
+              </>
+            )}
           </div>
         </Col>
       </Row>
@@ -357,3 +532,36 @@ const PlanScreen = (props) => {
 }
 
 export default PlanScreen
+
+const arrayOfStatuses = [
+  {
+    status: "Great",
+    description:
+      "Based on your information, You will be in excellent financial shape with this payment plan. The payback period and down payment option is perfect for you."
+  },
+  {
+    status: "Good",
+    description:
+      "Based on your information,this is a healthy payment plan for You. The payback period and down payment option is just about right."
+  },
+  {
+    status: "Fair",
+    description:
+      "Based on your information,You will still have enough income left over after paying off this purchase. The payback period and down payment option seems ok."
+  },
+  {
+    status: "Stretching",
+    description:
+      "Based on your information,You will be using much of your income to pay off this purchase.Try to increase your payback period or increase your down payment"
+  },
+  {
+    status: "Aggressive",
+    description:
+      "Based on your information,your monthly payment with this plan is excessive and your application may be declined. Adjust your payback period or down payment to increase your odds of getting approved."
+  },
+  {
+    status: "High",
+    description:
+      "We consider the monthly payment under this plan extremely high and your chances of getting this plan approved is slim. We strongly advise that you increase your down payment or payback period."
+  }
+]

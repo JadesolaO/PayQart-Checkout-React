@@ -116,6 +116,8 @@ const CreditForm = (props) => {
     )
   }
 
+  // console.log(props)
+
   return (
     <Container fluid>
       <Form className="crdfrm" onSubmit={props.handleSubmit}>

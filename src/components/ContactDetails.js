@@ -3,8 +3,15 @@ import CreditForm from "./CreditForm"
 
 import "../stylesheets/css/creditapplicationscreen.css"
 import { useAppContext } from "../utils/contexts/AppContext"
+import axios from "axios"
+import apiEndpoint from "../utils/apiEndpoint"
 
-const ContactDetails = ({ setPage, setContactdone }) => {
+const ContactDetails = ({
+  setPage,
+  setContactdone,
+  checkDone,
+  startPayment
+}) => {
   const [contactInfo, setContactInfo] = useState({
     email: "",
     address: "",
@@ -38,14 +45,47 @@ const ContactDetails = ({ setPage, setContactdone }) => {
     })
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     setLoading(true)
-    console.log(contactInfo)
 
-    localStorage.setItem("contactInfo", JSON.stringify(contactInfo))
-    setPage("employmentInfo")
-    setContactdone(true)
+    const creditId = localStorage.getItem("creditId")
+    const contactInfoObj = {
+      creditId,
+      phoneNumber: Number(userDetails.telephone).toString().replace(/^0+/, ""),
+      email: contactInfo.email,
+      homeAddress: contactInfo.address,
+      city: contactInfo.city,
+      state: contactInfo.state,
+      residenceType: contactInfo.residentialtype,
+      yearsOfResidence: contactInfo.livingduration
+    }
+
+    try {
+      const token = localStorage.getItem("token")
+
+      const response = await axios.post(
+        `${apiEndpoint}/application/info/contact`,
+        contactInfoObj,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      )
+
+      // console.log(response)
+
+      const { data } = response
+      if (data.status === "success") {
+        setPage("employmentInfo")
+        setContactdone(true)
+        setLoading(false)
+      }
+    } catch (error) {
+      console.log(error.response)
+      setLoading(false)
+    }
   }
 
   return (
@@ -55,9 +95,10 @@ const ContactDetails = ({ setPage, setContactdone }) => {
           {
             label: "Telephone Number",
             type: "text",
-            value: contactInfo.telephone,
+            value: userDetails.telephone.replace(/^0+/, ""),
             name: "telephone",
-            handleChange: handleChange
+            handleChange: handleChange,
+            disabled: true
           },
           {
             label: "Email Address",
@@ -160,8 +201,8 @@ const ContactDetails = ({ setPage, setContactdone }) => {
             handleChange: handleChange
           }
         ]}
-        handleSubmit={handleSubmit}
-        buttonText="Continue"
+        handleSubmit={checkDone() ? startPayment : handleSubmit}
+        buttonText={checkDone() ? "Pay Verification Fee" : "Continue"}
         loading={loading}
       />
     </div>

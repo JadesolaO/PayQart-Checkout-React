@@ -8,6 +8,7 @@ import axios from "axios"
 
 import apiEndpoint from "../utils/apiEndpoint"
 import { useAppContext } from "../utils/contexts/AppContext"
+import { useLocation } from "react-router-dom"
 
 const SuccessScreen = (props) => {
   const [documentStatus, setDocumentStatus] = useState({
@@ -19,6 +20,8 @@ const SuccessScreen = (props) => {
 
   const { userDetails } = useAppContext()
 
+  const { search } = useLocation()
+
   useEffect(() => {
     submitApplicationHandler()
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -27,48 +30,31 @@ const SuccessScreen = (props) => {
   async function submitApplicationHandler() {
     const token = localStorage.getItem("token")
 
-    const creditApplicationObj = JSON.parse(
-      localStorage.getItem("creditApplicationObj")
-    )
+    const reference = search.split("&")[1].split("=")[1]
 
-    if (creditApplicationObj) {
-      try {
-        const verifyObj = {
-          reference:
-            creditApplicationObj.creditApplicationFormObj.paymentReference,
-          email:
-            creditApplicationObj.creditApplicationFormObj.contactInfoObj.email,
-          creditId: creditApplicationObj.preApprovedCreditObj.creditId
-        }
-        const verifyResponse = await axios.post(
-          `${apiEndpoint}/utilities/verifyPayments`,
-          verifyObj
-        )
+    const creditId = localStorage.getItem("creditId")
 
-        if (verifyResponse.data.status === "success") {
-          const creditApplicationResponse = await axios.post(
-            `${apiEndpoint}/application/submit`,
-            {
-              creditApplicationObj
-            },
-            {
-              headers: {
-                Authorization: `Bearer ${token}`
-              }
-            }
-          )
-
-          if (creditApplicationResponse.data.status === "success") {
-            localStorage.removeItem("creditApplicationObj")
-            localStorage.removeItem("nextRoute")
-            // console.log(creditApplicationResponse.data)
+    try {
+      const response = await axios.post(
+        `${apiEndpoint}/application/submit`,
+        { creditId, reference },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
           }
         }
-      } catch (error) {
-        if (error) {
-          console.log(error.response)
-        }
+      )
+
+      console.log(response)
+
+      const { data } = response
+
+      if (data.status === "success") {
+        localStorage.removeItem("creditApplicationObj")
+        localStorage.removeItem("nextRoute")
       }
+    } catch (error) {
+      console.log(error.response)
     }
   }
 

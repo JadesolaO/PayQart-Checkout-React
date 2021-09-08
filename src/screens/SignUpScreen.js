@@ -41,8 +41,8 @@ const SignUpScreen = (props) => {
 
     const userInfo = {
       email,
-      bvn,
-      telephone,
+      bvn: bvn.toString(),
+      telephone: telephone.toString(),
       firstname,
       lastname,
       pin: password

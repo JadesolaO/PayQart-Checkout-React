@@ -5,7 +5,15 @@ import CreditForm from "./CreditForm"
 import "../stylesheets/css/creditapplicationscreen.css"
 import { useAppContext } from "../utils/contexts/AppContext"
 
-const PersonalInformation = ({ setPage, setPersonaldone }) => {
+import axios from "axios"
+import apiEndpoint from "../utils/apiEndpoint"
+
+const PersonalInformation = ({
+  setPage,
+  setPersonaldone,
+  checkDone,
+  startPayment
+}) => {
   const [personalInfo, setPersonalInfo] = useState({
     title: "",
     gender: "",
@@ -23,52 +31,6 @@ const PersonalInformation = ({ setPage, setPersonaldone }) => {
 
   const { userDetails } = useAppContext()
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  // useEffect(() => getUser(), [])
-
-  // const getUser = () => {
-  //   const user = JSON.parse(localStorage.getItem("userObjFromBckEnd"))
-
-  //   if (!user) return
-
-  //   if (user.newUser)
-  //     return setPersonalInfo({
-  //       ...personalInfo,
-  //       authid: user.authid,
-  //       bvn: user.bvn
-  //     })
-
-  //   setReadOnly(true)
-
-  //   const userInfo = (({
-  //     title,
-  //     gender,
-  //     firstname,
-  //     lastname,
-  //     middlename,
-  //     maritalstatus,
-  //     educationlevel,
-  //     children,
-  //     dob,
-  //     bvn,
-  //     authid
-  //   }) => ({
-  //     title,
-  //     gender,
-  //     firstname,
-  //     lastname,
-  //     middlename,
-  //     maritalstatus,
-  //     educationlevel,
-  //     children,
-  //     dob,
-  //     bvn,
-  //     authid
-  //   }))(user)
-
-  //   setPersonalInfo(userInfo)
-  // }
-
   const handleChange = (name, e) => {
     setPersonalInfo({
       ...personalInfo,
@@ -77,20 +39,49 @@ const PersonalInformation = ({ setPage, setPersonaldone }) => {
     })
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     setLoading(true)
-    console.log(personalInfo)
-    localStorage.setItem("personalInfo", JSON.stringify(personalInfo))
-    setPage("contactInfo")
-    setPersonaldone(true)
-    // submitPersonalInfo(personalInfo)
-    //   .then((res) => {
-    //     successToast(res.data)
-    //     setLoading(false)
 
-    //   })
-    //   .catch((err) => console.error(err))
+    const creditId = localStorage.getItem("creditId")
+
+    const personalInfoObj = {
+      creditId,
+      title: personalInfo.title,
+      firstName: userDetails.firstname,
+      middleName: personalInfo.middlename,
+      lastName: userDetails.lastname,
+      gender: personalInfo.gender,
+      maritalStatus: personalInfo.maritalstatus,
+      educationLevel: personalInfo.educationlevel,
+      numberOfChildren: personalInfo.children,
+      bvn: personalInfo.bvn,
+      dob: personalInfo.dob
+    }
+
+    try {
+      const token = localStorage.getItem("token")
+      const response = await axios.post(
+        `${apiEndpoint}/application/info/personal`,
+        personalInfoObj,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      )
+
+      const { data } = response
+
+      if (data.status === "success") {
+        setLoading(false)
+        setPage("contactInfo")
+        setPersonaldone(true)
+      }
+    } catch (error) {
+      console.log(error.response)
+      setLoading(false)
+    }
   }
 
   return (
@@ -109,9 +100,10 @@ const PersonalInformation = ({ setPage, setPersonaldone }) => {
           {
             label: "First Name",
             type: "text",
-            value: personalInfo.firstname,
+            value: userDetails.firstname,
             name: "firstname",
             readOnly: { readOnly },
+            disabled: true,
             handleChange: handleChange
           }
         ]}
@@ -127,9 +119,10 @@ const PersonalInformation = ({ setPage, setPersonaldone }) => {
           {
             label: "Last Name",
             type: "text",
-            value: personalInfo.lastname,
+            value: userDetails.lastname,
             name: "lastname",
             readOnly: { readOnly },
+            disabled: true,
             handleChange: handleChange
           }
         ]}
@@ -197,8 +190,8 @@ const PersonalInformation = ({ setPage, setPersonaldone }) => {
             handleChange: handleChange
           }
         ]}
-        handleSubmit={handleSubmit}
-        buttonText="Continue"
+        handleSubmit={checkDone() ? startPayment : handleSubmit}
+        buttonText={checkDone() ? "Pay Verification Fee" : "Continue"}
         loading={loading}
       />
     </div>

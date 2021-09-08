@@ -2,8 +2,15 @@ import React, { useState } from "react"
 import CreditForm from "./CreditForm"
 
 import "../stylesheets/css/creditapplicationscreen.css"
+import axios from "axios"
+import apiEndpoint from "../utils/apiEndpoint"
 
-const EmploymentInformation = ({ setPage, setEmploymentdone }) => {
+const EmploymentInformation = ({
+  setPage,
+  setEmploymentdone,
+  checkDone,
+  startPayment
+}) => {
   const [employmentInfo, setEmploymentInfo] = useState({
     employername: "",
     employeraddress: "",
@@ -17,26 +24,90 @@ const EmploymentInformation = ({ setPage, setEmploymentdone }) => {
   const [loading, setLoading] = useState(Boolean)
 
   const handleChange = (name, e) => {
+    if (name === "employmenttype") {
+      return setEmploymentInfo({
+        employername: "",
+        employeraddress: "",
+        workduration: "",
+        employmenttype: e.target.value,
+        designation: "",
+        employmentmode: "",
+        city: "",
+        state: ""
+      })
+    }
     setEmploymentInfo({ ...employmentInfo, [name]: e.target.value })
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     setLoading(true)
-    console.log(employmentInfo)
 
-    localStorage.setItem("employmentInfo", JSON.stringify(employmentInfo))
-    setEmploymentdone(true)
+    let employmentInfoObj
 
-    setPage("bankInfo")
+    const creditId = localStorage.getItem("creditId")
 
-    // submitEmploymentInfo(employmentInfo)
-    //   .then((res) => {
+    if (employmentInfo.employmenttype === "Salary Earner") {
+      employmentInfoObj = {
+        creditId,
+        employmentType: 1, //1-salary earner  2-selfemployed
+        businessName: null,
+        designation: employmentInfo.designation,
+        businessType: null,
+        businessAddress: null,
+        businessSector: null,
+        businessCity: null,
+        businessState: null,
+        yearsOfEmployment: employmentInfo.workduration, //null if employmenttype is 2
+        employmentMode: employmentInfo.employmentmode, //null if employmenttype is 2
+        employerName: employmentInfo.employername, //null if employmenttype is 2
+        employerAddress: employmentInfo.employeraddress, //null if employmenttype is 2
+        employerCity: employmentInfo.city, //null if employmenttype is 2
+        employerState: employmentInfo.state //null if employmenttype is 2
+      }
+    } else {
+      employmentInfoObj = {
+        creditId,
+        employmentType: 2, //1-salary earner  2-selfemployed
+        businessName: employmentInfo.employername,
+        designation: employmentInfo.designation,
+        businessType: employmentInfo.workduration,
+        businessAddress: employmentInfo.employeraddress,
+        businessSector: employmentInfo.employmentmode,
+        businessCity: employmentInfo.city,
+        businessState: employmentInfo.state,
+        yearsOfEmployment: null, //null if employmenttype is 2
+        employmentMode: null, //null if employmenttype is 2
+        employerName: null, //null if employmenttype is 2
+        employerAddress: null, //null if employmenttype is 2
+        employerCity: null, //null if employmenttype is 2
+        employerState: null //null if employmenttype is 2
+      }
+    }
 
-    //     setLoading(false)
+    try {
+      const token = localStorage.getItem("token")
+      const response = await axios.post(
+        `${apiEndpoint}/application/info/employment`,
+        employmentInfoObj,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      )
 
-    //   })
-    //   .catch(() => {})
+      const { data } = response
+
+      if (data.status === "success") {
+        setLoading(false)
+        setEmploymentdone(true)
+        setPage("bankInfo")
+      }
+    } catch (error) {
+      console.log(error.response)
+      setLoading(false)
+    }
   }
 
   return (
@@ -46,12 +117,7 @@ const EmploymentInformation = ({ setPage, setEmploymentdone }) => {
           {
             label: "Employment Type",
             type: "select",
-            options: [
-              "Select",
-              "Salary Earner",
-              "Self Employed",
-              "Business Owner"
-            ],
+            options: ["Select", "Salary Earner", "Self Employed"],
             value: employmentInfo.employmenttype,
             name: "employmenttype",
             handleChange: handleChange
@@ -285,8 +351,8 @@ const EmploymentInformation = ({ setPage, setEmploymentdone }) => {
             handleChange: handleChange
           }
         ]}
-        handleSubmit={handleSubmit}
-        buttonText="Continue"
+        handleSubmit={checkDone() ? startPayment : handleSubmit}
+        buttonText={checkDone() ? "Pay Verification Fee" : "Continue"}
         loading={loading}
       />
     </div>

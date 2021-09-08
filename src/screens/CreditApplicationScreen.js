@@ -16,6 +16,7 @@ import { Link } from "react-router-dom"
 import axios from "axios"
 
 import apiEndpoint from "../utils/apiEndpoint"
+import { useAppContext } from "../utils/contexts/AppContext"
 
 function isDevelopment() {
   if (process.env.NODE_ENV === "development") {
@@ -33,18 +34,33 @@ const CreditApplicationScreen = (props) => {
   const [bankdone, setBankdone] = useState(false)
   const [refdone, setRefdone] = useState(false)
 
+  const { userDetails } = useAppContext()
+
   const setPage = (page) => {
     setForm(page)
   }
 
-  async function startPayment(creditApplicationObj) {
+  function checkDone() {
+    if (personaldone && contactdone && employmentdone && bankdone && refdone) {
+      return true
+    } else {
+      return false
+    }
+  }
+
+  async function startPayment(e) {
+    e.preventDefault()
+
     try {
-      const { email } =
-        creditApplicationObj.creditApplicationFormObj.contactInfoObj
+      const creditId = localStorage.getItem("creditId")
+
+      const { email } = userDetails
+
       const response = await axios.post(
         `${apiEndpoint}/utilities/initializePayment`,
         {
           email,
+          creditId,
           callbackUrl: isDevelopment()
             ? "http://localhost:3002/success"
             : "https://payqart-demo.netlify.app/success"
@@ -53,29 +69,16 @@ const CreditApplicationScreen = (props) => {
       const { data } = response
       if (data.status === "success") {
         const authUrl = data.data.authorization_url
-        const reference = data.data.reference
-
-        creditApplicationObj.creditApplicationFormObj.paymentReference =
-          reference
-
-        localStorage.setItem(
-          "creditApplicationObj",
-          JSON.stringify(creditApplicationObj)
-        )
-
-        localStorage.removeItem("userInfo")
-        localStorage.removeItem("loanObj")
-        localStorage.removeItem("personalInfo")
-        localStorage.removeItem("contactInfo")
-        localStorage.removeItem("employmentInfo")
-        localStorage.removeItem("bankInfo")
 
         return (window.location.href = authUrl)
       }
-
       // console.log(response)
     } catch (error) {
-      console.log(error)
+      console.log(error.response)
+      // if (error) {
+      //   updateError(true)
+      //   setErrorMsg("Network issue. Try again")
+      // }
     }
   }
 
@@ -197,29 +200,37 @@ const CreditApplicationScreen = (props) => {
               {form === "personalInfo" ? (
                 <>
                   <PersonalInformation
+                    startPayment={startPayment}
                     setPage={setPage}
                     setPersonaldone={setPersonaldone}
+                    checkDone={checkDone}
                   />
                 </>
               ) : form === "contactInfo" ? (
                 <>
                   <ContactDetails
+                    startPayment={startPayment}
                     setPage={setPage}
                     setContactdone={setContactdone}
+                    checkDone={checkDone}
                   />
                 </>
               ) : form === "employmentInfo" ? (
                 <>
                   <EmploymentInformation
+                    startPayment={startPayment}
                     setPage={setPage}
                     setEmploymentdone={setEmploymentdone}
+                    checkDone={checkDone}
                   />
                 </>
               ) : form === "bankInfo" ? (
                 <>
                   <BankInformation
+                    startPayment={startPayment}
                     setPage={setPage}
                     setBankdone={setBankdone}
+                    checkDone={checkDone}
                   />
                 </>
               ) : (
@@ -229,6 +240,7 @@ const CreditApplicationScreen = (props) => {
                       startPayment={startPayment}
                       setRefdone={setRefdone}
                       history={props.history}
+                      checkDone={checkDone}
                     />
                   </>
                 )

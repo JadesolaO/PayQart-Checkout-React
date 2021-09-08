@@ -6,7 +6,7 @@ import "../stylesheets/css/creditapplicationscreen.css"
 import axios from "axios"
 import apiEndpoint from "../utils/apiEndpoint"
 
-const BankInformation = ({ setPage, setBankdone }) => {
+const BankInformation = ({ setPage, setBankdone, checkDone, startPayment }) => {
   const [bankInfo, setBankInfo] = useState({
     incomebanktype: "",
     incomeaccounttype: "",
@@ -68,7 +68,7 @@ const BankInformation = ({ setPage, setBankdone }) => {
     e.preventDefault()
     setLoading(true)
 
-    console.log(bankInfo)
+    const token = localStorage.getItem("token")
 
     try {
       const response = await axios.post(
@@ -78,13 +78,38 @@ const BankInformation = ({ setPage, setBankdone }) => {
 
       const { data } = response
 
+      const creditId = localStorage.getItem("creditId")
+
       if (data.status === "success") {
-        localStorage.setItem("bankInfo", JSON.stringify(bankInfo))
-        setPage("refInfo")
-        setBankdone(true)
+        const submitObj = {
+          creditId,
+          incomeAccountType: bankInfo.incomeaccounttype,
+          incomeBankType: bankInfo.incomebanktype,
+          commercialBankName: bankList.filter(
+            (bank) => bank.id === bankInfo.bankname
+          )[0].desc,
+          commercialBankAccountNumber: bankInfo.accountnumber
+        }
+
+        const submitResponse = await axios.post(
+          `${apiEndpoint}/application/info/bank`,
+          submitObj,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          }
+        )
+
+        if (submitResponse.data.status === "success") {
+          setLoading(false)
+          setPage("refInfo")
+          setBankdone(true)
+        }
       }
     } catch (error) {
       console.log(error)
+      setLoading(false)
     }
 
     // submitBankInfo(bankInfo)
@@ -120,12 +145,7 @@ const BankInformation = ({ setPage, setBankdone }) => {
           {
             label: "Income Bank Type",
             type: "select",
-            options: [
-              "Select",
-              "Commercial Bank",
-              "Microfinance Bank"
-              // "Mobile Money/E-Wallet"
-            ],
+            options: ["Select", "Commercial Bank", "Microfinance Bank"],
             value: bankInfo.incomebanktype,
             name: "incomebanktype",
             handleChange: handleChange
@@ -189,8 +209,8 @@ const BankInformation = ({ setPage, setBankdone }) => {
             }
           ]
         }
-        handleSubmit={handleSubmit}
-        buttonText="Continue"
+        handleSubmit={checkDone() ? startPayment : handleSubmit}
+        buttonText={checkDone() ? "Pay Verification Fee" : "Continue"}
         loading={loading}
       />
     </div>
@@ -198,26 +218,3 @@ const BankInformation = ({ setPage, setBankdone }) => {
 }
 
 export default BankInformation
-
-// const listOfBanks = [
-//   { id: "Select", desc: "Select" },
-//   { id: "044", desc: "Access Bank Nigeria Plc" },
-//   { id: "050", desc: "Ecobank Nigeria" },
-//   { id: "084", desc: "	Enterprise Bank Plc" },
-//   { id: "070", desc: "Fidelity Bank Plc" },
-//   { id: "011", desc: "First Bank of Nigeria Plc" },
-//   { id: "214", desc: "First City Monument Bank" },
-//   { id: "058", desc: "Guaranty Trust Bank Plc" },
-//   { id: "030", desc: "Heritaage Banking Company Ltd" },
-//   { id: "301", desc: "Jaiz Bank" },
-//   { id: "082", desc: "Keystone Bank Ltd" },
-//   { id: "014", desc: "Mainstreet Bank Plc" },
-//   { id: "076", desc: "Skye Bank Plc" },
-//   { id: "039", desc: "Stanbic IBTC Plc" },
-//   { id: "232", desc: "Sterling Bank Plc" },
-//   { id: "032", desc: "Union Bank Nigeria Plc" },
-//   { id: "033", desc: "United Bank for Africa Plc" },
-//   { id: "215", desc: "Unity Bank Plc" },
-//   { id: "035", desc: "WEMA Bank Plc" },
-//   { id: "057", desc: "Zenith Bank International" }
-// ]
