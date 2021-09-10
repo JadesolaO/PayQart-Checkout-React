@@ -15,6 +15,7 @@ const BankInformation = ({ setPage, setBankdone, checkDone, startPayment }) => {
   })
   const [loading, setLoading] = useState(Boolean)
   const [bankList, setBankList] = useState([])
+  const [loadingBanks, updateLoadingBanks] = useState(true)
 
   useEffect(() => {
     getBanks()
@@ -36,33 +37,14 @@ const BankInformation = ({ setPage, setBankdone, checkDone, startPayment }) => {
           return { id: bank.code, desc: bank.name }
         })
 
+        updateLoadingBanks(false)
         setBankList(responseData)
       }
     } catch (error) {
       console.log(error.response)
+      updateLoadingBanks(false)
     }
   }
-
-  // const retrieveLoanDetails = async () => {
-  //   const user = JSON.parse(localStorage.getItem("userObjFromBckEnd"))
-  //   if (!user || user.newUser) return
-
-  //   await getLoanDetails()
-  //     .then((res) => {
-  //       if (!res.data) return
-  //       const loanInfo = (({
-  //         incomebanktype,
-  //         incomeaccounttype,
-  //         bankname,
-  //         accountnumber
-  //       }) => ({ incomebanktype, incomeaccounttype, bankname, accountnumber }))(
-  //         res.data
-  //       )
-  //       setBankInfo(loanInfo)
-  //       console.log(loanInfo)
-  //     })
-  //     .catch(() => {})
-  // }
 
   async function handleSubmit(e) {
     e.preventDefault()
@@ -124,6 +106,14 @@ const BankInformation = ({ setPage, setBankdone, checkDone, startPayment }) => {
   // function bankSelectHandler(e) {
   //   console.log(e.target.value)
   // }
+
+  if (loadingBanks) {
+    return (
+      <div className="h-100 w-100 d-flex align-items-center justify-content-center">
+        Loading...
+      </div>
+    )
+  }
 
   return (
     <div>

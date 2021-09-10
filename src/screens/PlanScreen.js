@@ -136,7 +136,7 @@ const PlanScreen = (props) => {
       }
     }
 
-    // console.log(obj)
+    console.log(obj)
 
     try {
       const response = await axios.post(
@@ -168,43 +168,43 @@ const PlanScreen = (props) => {
             monthsArray.push({
               id: i + 1,
               monthlyRepayment: monthlyRepay[i],
-              text: arrayOfStatuses[0].status,
-              description: arrayOfStatuses[0].description
+              text: arrayOfStatuses[i].status,
+              description: arrayOfStatuses[i].description
             })
           } else if (data.DTI < 26) {
             monthsArray.push({
               id: i + 1,
               monthlyRepayment: monthlyRepay[i],
-              text: arrayOfStatuses[1].status,
-              description: arrayOfStatuses[1].description
+              text: arrayOfStatuses[i].status,
+              description: arrayOfStatuses[i].description
             })
           } else if (data.DTI < 36) {
             monthsArray.push({
               id: i + 1,
               monthlyRepayment: monthlyRepay[i],
-              text: arrayOfStatuses[2].status,
-              description: arrayOfStatuses[2].description
+              text: arrayOfStatuses[i].status,
+              description: arrayOfStatuses[i].description
             })
           } else if (data.DTI < 41) {
             monthsArray.push({
               id: i + 1,
               monthlyRepayment: monthlyRepay[i],
-              text: arrayOfStatuses[3].status,
-              description: arrayOfStatuses[3].description
+              text: arrayOfStatuses[i].status,
+              description: arrayOfStatuses[i].description
             })
           } else if (data.DTI < 46) {
             monthsArray.push({
               id: i + 1,
               monthlyRepayment: monthlyRepay[i],
-              text: arrayOfStatuses[4].status,
-              description: arrayOfStatuses[4].description
+              text: arrayOfStatuses[i].status,
+              description: arrayOfStatuses[i].description
             })
           } else {
             monthsArray.push({
               id: i + 1,
               monthlyRepayment: monthlyRepay[i],
-              text: arrayOfStatuses[5].status,
-              description: arrayOfStatuses[5].description
+              text: arrayOfStatuses[i].status,
+              description: arrayOfStatuses[i].description
             })
           }
         }

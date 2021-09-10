@@ -61,6 +61,8 @@ const CreditScreen = (props) => {
 
         const { data } = response
 
+        console.log(data)
+
         if (data.status === "success") {
           localStorage.setItem("creditId", data.data.creditId)
           localStorage.removeItem("startApplicationObj")

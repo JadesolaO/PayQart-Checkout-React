@@ -105,7 +105,7 @@ const CreditForm = (props) => {
                     readOnly={disabled}
                     value={value}
                     onChange={(text) => handleChange(name, text)}
-                    required
+                    required={name === "middlename" ? false : true}
                   />
                 </div>
               )}

@@ -62,7 +62,7 @@ const CreditApplicationScreen = (props) => {
           email,
           creditId,
           callbackUrl: isDevelopment()
-            ? "http://localhost:3002/success"
+            ? "http://localhost:3000/success"
             : "https://payqart-demo.netlify.app/success"
         }
       )
