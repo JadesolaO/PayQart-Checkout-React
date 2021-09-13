@@ -26,7 +26,12 @@ const CreditForm = (props) => {
               className={`frm-grp mb-3 ${className}`}
               as={Col}
             >
-              <Form.Label className="frm-lbl">{label}</Form.Label>
+              <Form.Label className="frm-lbl">
+                {label}{" "}
+                {name !== "middlename" && (
+                  <span style={{ color: "red" }}>*</span>
+                )}
+              </Form.Label>
               {type === "select" ? (
                 extraOptions ? (
                   <Form.Control
@@ -36,6 +41,9 @@ const CreditForm = (props) => {
                     value={value}
                     onChange={(text) => handleChange(name, text)}
                   >
+                    {name === "bankname" && (
+                      <option value="">Select Bank</option>
+                    )}
                     {options.map((option, ind) => (
                       <option
                         key={ind}

@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useCallback } from "react"
 import CreditForm from "./CreditForm"
 
 import "../stylesheets/css/creditapplicationscreen.css"
 
 import axios from "axios"
 import apiEndpoint from "../utils/apiEndpoint"
+import { useHistory } from "react-router-dom"
 
 const BankInformation = ({ setPage, setBankdone, checkDone, startPayment }) => {
   const [bankInfo, setBankInfo] = useState({
@@ -17,16 +18,9 @@ const BankInformation = ({ setPage, setBankdone, checkDone, startPayment }) => {
   const [bankList, setBankList] = useState([])
   const [loadingBanks, updateLoadingBanks] = useState(true)
 
-  useEffect(() => {
-    getBanks()
-  }, [])
+  let history = useHistory()
 
-  const handleChange = (name, e) => {
-    console.log(name, e.target.value)
-    setBankInfo({ ...bankInfo, [name]: e.target.value })
-  }
-
-  async function getBanks() {
+  const getBanks = useCallback(async () => {
     try {
       const response = await axios.get(`${apiEndpoint}/utilities/getBanks`)
 
@@ -39,11 +33,41 @@ const BankInformation = ({ setPage, setBankdone, checkDone, startPayment }) => {
 
         updateLoadingBanks(false)
         setBankList(responseData)
+
+        const bankInfoObj = JSON.parse(localStorage.getItem("bankInfoObj"))
+
+        if (bankInfoObj !== null) {
+          const {
+            incomeAccountType,
+            incomeBankType,
+            commercialBankName,
+            commercialBankAccountNumber
+          } = bankInfoObj
+
+          setBankInfo({
+            incomebanktype: incomeBankType,
+            incomeaccounttype: incomeAccountType,
+            bankname: responseData.filter(
+              (bank) => bank.desc === commercialBankName
+            )[0].id,
+            accountnumber: commercialBankAccountNumber
+          })
+
+          setBankdone(true)
+        }
       }
     } catch (error) {
       console.log(error.response)
       updateLoadingBanks(false)
     }
+  }, [setBankdone])
+  useEffect(() => {
+    getBanks()
+  }, [getBanks])
+
+  const handleChange = (name, e) => {
+    console.log(name, e.target.value)
+    setBankInfo({ ...bankInfo, [name]: e.target.value })
   }
 
   async function handleSubmit(e) {
@@ -85,7 +109,8 @@ const BankInformation = ({ setPage, setBankdone, checkDone, startPayment }) => {
 
         if (submitResponse.data.status === "success") {
           setLoading(false)
-          setPage("refInfo")
+          history.push("/creditapplication/referee")
+          localStorage.setItem("bankInfoObj", JSON.stringify(submitObj))
           setBankdone(true)
         }
       }

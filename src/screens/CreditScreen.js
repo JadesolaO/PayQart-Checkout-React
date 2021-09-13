@@ -70,7 +70,7 @@ const CreditScreen = (props) => {
           localStorage.removeItem("nextRoute")
 
           updateStartingApplication(false)
-          props.history.push("/creditapplication")
+          props.history.push("/creditapplication/personal")
         }
       } catch (error) {
         updateStartingApplication(false)

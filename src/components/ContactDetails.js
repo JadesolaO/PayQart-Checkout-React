@@ -1,10 +1,11 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import CreditForm from "./CreditForm"
 
 import "../stylesheets/css/creditapplicationscreen.css"
 import { useAppContext } from "../utils/contexts/AppContext"
 import axios from "axios"
 import apiEndpoint from "../utils/apiEndpoint"
+import { useHistory } from "react-router-dom"
 
 const ContactDetails = ({
   setPage,
@@ -26,6 +27,35 @@ const ContactDetails = ({
   const [loading, setLoading] = useState(Boolean)
 
   const { userDetails } = useAppContext()
+
+  let history = useHistory()
+
+  useEffect(() => {
+    const contactInfoObj = JSON.parse(localStorage.getItem("contactInfoObj"))
+
+    if (contactInfoObj !== null) {
+      const {
+        phoneNumber,
+        email,
+        homeAddress,
+        city,
+        state,
+        residenceType,
+        yearsOfResidence
+      } = contactInfoObj
+      setContactInfo({
+        email,
+        address: homeAddress,
+        residentialtype: residenceType,
+        livingduration: yearsOfResidence,
+        telephone: phoneNumber,
+        city,
+        state
+      })
+
+      setContactdone(true)
+    }
+  }, [setContactdone])
 
   const handleChange = (name, e) => {
     const value = e.target.value
@@ -78,7 +108,8 @@ const ContactDetails = ({
 
       const { data } = response
       if (data.status === "success") {
-        setPage("employmentInfo")
+        history.push("/creditapplication/employment")
+        localStorage.setItem("contactInfoObj", JSON.stringify(contactInfoObj))
         setContactdone(true)
         setLoading(false)
       }

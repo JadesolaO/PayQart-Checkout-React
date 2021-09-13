@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import CreditForm from "./CreditForm"
 
 import "../stylesheets/css/creditapplicationscreen.css"
@@ -7,6 +7,8 @@ import { useAppContext } from "../utils/contexts/AppContext"
 
 import axios from "axios"
 import apiEndpoint from "../utils/apiEndpoint"
+
+import { useHistory } from "react-router-dom"
 
 const PersonalInformation = ({
   setPage,
@@ -30,6 +32,29 @@ const PersonalInformation = ({
   const [loading, setLoading] = useState(Boolean)
 
   const { userDetails } = useAppContext()
+
+  let history = useHistory()
+
+  useEffect(() => {
+    const personalInfoObj = JSON.parse(localStorage.getItem("personalInfoObj"))
+
+    if (personalInfoObj !== null) {
+      setPersonalInfo({
+        title: personalInfoObj.title,
+        gender: personalInfoObj.gender,
+        firstname: personalInfoObj.firstName,
+        lastname: personalInfoObj.lastName,
+        middlename: personalInfoObj.middleName,
+        maritalstatus: personalInfoObj.maritalStatus,
+        educationlevel: personalInfoObj.educationLevel,
+        children: personalInfoObj.numberOfChildren,
+        bvn: personalInfoObj.bvn,
+        dob: personalInfoObj.dob
+      })
+
+      setPersonaldone(true)
+    }
+  }, [setPersonaldone])
 
   const handleChange = (name, e) => {
     setPersonalInfo({
@@ -75,7 +100,8 @@ const PersonalInformation = ({
 
       if (data.status === "success") {
         setLoading(false)
-        setPage("contactInfo")
+        localStorage.setItem("personalInfoObj", JSON.stringify(personalInfoObj))
+        history.push("/creditapplication/contact")
         setPersonaldone(true)
       }
     } catch (error) {
@@ -165,7 +191,15 @@ const PersonalInformation = ({
           },
           {
             label: "Number Of Children/Dependants",
-            type: "number",
+            type: "select",
+            options: [
+              "Select",
+              "1-3 people",
+              "3-7 people",
+              "8-12 people",
+              "Above 12 people",
+              "None"
+            ],
             value: personalInfo.children,
             name: "children",
             handleChange: handleChange

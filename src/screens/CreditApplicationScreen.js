@@ -1,4 +1,5 @@
-import React, { useState } from "react"
+/* eslint-disable no-unused-vars */
+import React, { useEffect, useState } from "react"
 import { Row, Col, Container, Button, Image } from "react-bootstrap"
 import "../stylesheets/css/creditapplicationscreen.css"
 import contact from "../images/contact.png"
@@ -11,7 +12,7 @@ import ContactDetails from "../components/ContactDetails"
 import EmploymentInformation from "../components/EmploymentInformation"
 import BankInformation from "../components/BankInformation"
 import RefereeInformation from "../components/RefereeInformation"
-import { Link } from "react-router-dom"
+import { Route, useHistory, useLocation } from "react-router-dom"
 
 import axios from "axios"
 
@@ -36,9 +37,42 @@ const CreditApplicationScreen = (props) => {
 
   const { userDetails } = useAppContext()
 
+  let history = useHistory()
+  const { pathname } = useLocation()
+
   const setPage = (page) => {
     setForm(page)
   }
+
+  useEffect(() => {
+    const personalInfoObj = JSON.parse(localStorage.getItem("personalInfoObj"))
+    const contactInfoObj = JSON.parse(localStorage.getItem("contactInfoObj"))
+    const employmentInfoObj = JSON.parse(
+      localStorage.getItem("employmentInfoObj")
+    )
+    const bankInfoObj = JSON.parse(localStorage.getItem("bankInfoObj"))
+    const refereeInfoObj = JSON.parse(localStorage.getItem("refereeInfoObj"))
+
+    if (personalInfoObj !== null) {
+      setPersonaldone(true)
+    }
+
+    if (contactInfoObj !== null) {
+      setContactdone(true)
+    }
+
+    if (employmentInfoObj !== null) {
+      setEmploymentdone(true)
+    }
+
+    if (bankInfoObj !== null) {
+      setBankdone(true)
+    }
+
+    if (refereeInfoObj !== null) {
+      setRefdone(true)
+    }
+  }, [])
 
   function checkDone() {
     if (personaldone && contactdone && employmentdone && bankdone && refdone) {
@@ -62,12 +96,17 @@ const CreditApplicationScreen = (props) => {
           email,
           creditId,
           callbackUrl: isDevelopment()
-            ? "http://localhost:3000/success"
+            ? "http://localhost:3001/success"
             : "https://payqart-demo.netlify.app/success"
         }
       )
       const { data } = response
       if (data.status === "success") {
+        localStorage.removeItem("personalInfoObj")
+        localStorage.removeItem("contactInfoObj")
+        localStorage.removeItem("employmentInfoObj")
+        localStorage.removeItem("bankInfoObj")
+        localStorage.removeItem("refereeInfoObj")
         const authUrl = data.data.authorization_url
 
         return (window.location.href = authUrl)
@@ -82,22 +121,21 @@ const CreditApplicationScreen = (props) => {
     }
   }
 
-  const selection = localStorage.getItem("selection")
+  // const selection = localStorage.getItem("selection")
 
   return (
     <Container>
       <Row className="justify-content-md-center ">
-        <div className="top-sect">
-          <Link
-            to={
-              selection === "wallet-not-funded"
-                ? "/creditscreen"
-                : "/planscreen"
-            }
+        {pathname !== "/creditapplication/personal" && (
+          <div
+            className="top-sect"
+            onClick={() => {
+              history.goBack()
+            }}
           >
             <i className="fas fa-arrow-left"></i> Back
-          </Link>
-        </div>
+          </div>
+        )}
         <Col className="app-form" md={9} xs={12}>
           <Row className="justify-content-md-center">
             <Col className="side-bar text-center" md={4}>
@@ -105,10 +143,13 @@ const CreditApplicationScreen = (props) => {
               <div className="side-buttons text-center">
                 <div className="side-div text-center">
                   <Button
-                    id={`${form === `personalInfo` && `highlighted`}`}
+                    id={
+                      pathname === "/creditapplication/personal" &&
+                      "highlighted"
+                    }
                     // style={form === 'personalInfo' && myStyles}
                     className="side-btn"
-                    onClick={() => setForm("personalInfo")}
+                    onClick={() => history.push("/creditapplication/personal")}
                   >
                     <Image height="14" src={contact} />{" "}
                     <span>Personal Information</span>
@@ -124,9 +165,11 @@ const CreditApplicationScreen = (props) => {
                 </div>
                 <div className="side-div">
                   <Button
-                    id={`${form === `contactInfo` && `highlighted`}`}
+                    id={
+                      pathname === "/creditapplication/contact" && "highlighted"
+                    }
                     className="side-btn"
-                    onClick={() => setForm("contactInfo")}
+                    onClick={() => history.push("/creditapplication/contact")}
                   >
                     <Image height="14" src={mail} />{" "}
                     <span>Contact Information</span>
@@ -142,9 +185,14 @@ const CreditApplicationScreen = (props) => {
                 </div>
                 <div className="side-div">
                   <Button
-                    id={`${form === `employmentInfo` && `highlighted`}`}
+                    id={
+                      pathname === "/creditapplication/employment" &&
+                      "highlighted"
+                    }
                     className="side-btn"
-                    onClick={() => setForm("employmentInfo")}
+                    onClick={() =>
+                      history.push("/creditapplication/employment")
+                    }
                   >
                     <Image height="14" src={Union} />{" "}
                     <span>Employment Information</span>
@@ -160,9 +208,9 @@ const CreditApplicationScreen = (props) => {
                 </div>
                 <div className="side-div">
                   <Button
-                    id={`${form === `bankInfo` && `highlighted`}`}
+                    id={pathname === "/creditapplication/bank" && "highlighted"}
                     className="side-btn"
-                    onClick={() => setForm("bankInfo")}
+                    onClick={() => history.push("/creditapplication/bank")}
                   >
                     <Image height="14" src={bank} />{" "}
                     <span>Bank Information</span>
@@ -178,9 +226,11 @@ const CreditApplicationScreen = (props) => {
                 </div>
                 <div className="side-div">
                   <Button
-                    id={`${form === `refInfo` && `highlighted`}`}
+                    id={
+                      pathname === "/creditapplication/referee" && "highlighted"
+                    }
                     className="side-btn"
-                    onClick={() => setForm("refInfo")}
+                    onClick={() => history.push("/creditapplication/referee")}
                   >
                     <Image height="14" src={ref} />{" "}
                     <span>Referee Information</span>
@@ -197,54 +247,70 @@ const CreditApplicationScreen = (props) => {
               </div>
             </Col>
             <Col className="form-sec" md={8}>
-              {form === "personalInfo" ? (
-                <>
+              <Route
+                exact
+                path="/creditapplication/personal"
+                children={
                   <PersonalInformation
                     startPayment={startPayment}
                     setPage={setPage}
                     setPersonaldone={setPersonaldone}
                     checkDone={checkDone}
                   />
-                </>
-              ) : form === "contactInfo" ? (
-                <>
+                }
+              />
+
+              <Route
+                exact
+                path="/creditapplication/contact"
+                children={
                   <ContactDetails
                     startPayment={startPayment}
                     setPage={setPage}
                     setContactdone={setContactdone}
                     checkDone={checkDone}
                   />
-                </>
-              ) : form === "employmentInfo" ? (
-                <>
+                }
+              />
+
+              <Route
+                exact
+                path="/creditapplication/employment"
+                children={
                   <EmploymentInformation
                     startPayment={startPayment}
                     setPage={setPage}
                     setEmploymentdone={setEmploymentdone}
                     checkDone={checkDone}
                   />
-                </>
-              ) : form === "bankInfo" ? (
-                <>
+                }
+              />
+
+              <Route
+                exact
+                path="/creditapplication/bank"
+                children={
                   <BankInformation
                     startPayment={startPayment}
                     setPage={setPage}
                     setBankdone={setBankdone}
                     checkDone={checkDone}
                   />
-                </>
-              ) : (
-                form === "refInfo" && (
-                  <>
-                    <RefereeInformation
-                      startPayment={startPayment}
-                      setRefdone={setRefdone}
-                      history={props.history}
-                      checkDone={checkDone}
-                    />
-                  </>
-                )
-              )}
+                }
+              />
+
+              <Route
+                exact
+                path="/creditapplication/referee"
+                children={
+                  <RefereeInformation
+                    startPayment={startPayment}
+                    setRefdone={setRefdone}
+                    history={props.history}
+                    checkDone={checkDone}
+                  />
+                }
+              />
             </Col>
           </Row>
         </Col>

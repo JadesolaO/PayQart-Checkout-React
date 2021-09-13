@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import CreditForm from "./CreditForm"
 
 import "../stylesheets/css/creditapplicationscreen.css"
@@ -18,6 +18,35 @@ const RefereeInformation = ({ startPayment, setRefdone, checkDone }) => {
     rstate: ""
   })
   const [loading, setLoading] = useState(Boolean)
+
+  useEffect(() => {
+    const refereeInfoObj = JSON.parse(localStorage.getItem("refereeInfoObj"))
+
+    if (refereeInfoObj !== null) {
+      const {
+        refereeFirstName,
+        refereeLastName,
+        refereeEmail,
+        refereePhoneNumber,
+        refereeRelationship,
+        refereeAddress,
+        refereeCity,
+        refereeState
+      } = refereeInfoObj
+
+      setReferenceInfo({
+        rname: "",
+        rfirstName: refereeFirstName,
+        rlastName: refereeLastName,
+        rtelephone: refereePhoneNumber,
+        remail: refereeEmail,
+        raddress: refereeAddress,
+        rrelationship: refereeRelationship,
+        rcity: refereeCity,
+        rstate: refereeState
+      })
+    }
+  }, [])
 
   const handleChange = (name, e) => {
     const value = e.target.value
@@ -69,6 +98,7 @@ const RefereeInformation = ({ startPayment, setRefdone, checkDone }) => {
       if (data.status === "success") {
         setLoading(false)
         setRefdone(true)
+        localStorage.setItem("refereeInfoObj", JSON.stringify(refereeInfoObj))
       }
     } catch (error) {
       setLoading(false)

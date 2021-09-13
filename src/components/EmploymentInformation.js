@@ -1,9 +1,10 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import CreditForm from "./CreditForm"
 
 import "../stylesheets/css/creditapplicationscreen.css"
 import axios from "axios"
 import apiEndpoint from "../utils/apiEndpoint"
+import { useHistory } from "react-router-dom"
 
 const EmploymentInformation = ({
   setPage,
@@ -22,6 +23,57 @@ const EmploymentInformation = ({
     state: ""
   })
   const [loading, setLoading] = useState(Boolean)
+
+  let history = useHistory()
+
+  useEffect(() => {
+    const employmentInfoObj = JSON.parse(
+      localStorage.getItem("employmentInfoObj")
+    )
+
+    if (employmentInfoObj !== null) {
+      setEmploymentdone(true)
+      const {
+        employmentType,
+        businessName,
+        designation,
+        businessType,
+        businessAddress,
+        businessSector,
+        businessCity,
+        businessState,
+        yearsOfEmployment,
+        employmentMode,
+        employerName,
+        employerAddress,
+        employerCity,
+        employerState
+      } = employmentInfoObj
+      if (employmentType === 1) {
+        setEmploymentInfo({
+          employername: employerName,
+          employeraddress: employerAddress,
+          workduration: yearsOfEmployment,
+          employmenttype: "Salary Earner",
+          designation: designation,
+          employmentmode: employmentMode,
+          city: employerCity,
+          state: employerState
+        })
+      } else {
+        setEmploymentInfo({
+          employername: businessName,
+          employeraddress: businessAddress,
+          workduration: businessType,
+          employmenttype: "Self Employed",
+          designation: designation,
+          employmentmode: businessSector,
+          city: businessCity,
+          state: businessState
+        })
+      }
+    }
+  }, [setEmploymentdone])
 
   const handleChange = (name, e) => {
     if (name === "employmenttype") {
@@ -102,7 +154,11 @@ const EmploymentInformation = ({
       if (data.status === "success") {
         setLoading(false)
         setEmploymentdone(true)
-        setPage("bankInfo")
+        history.push("/creditapplication/bank")
+        localStorage.setItem(
+          "employmentInfoObj",
+          JSON.stringify(employmentInfoObj)
+        )
       }
     } catch (error) {
       console.log(error.response)

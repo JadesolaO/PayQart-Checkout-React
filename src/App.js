@@ -98,7 +98,6 @@ function App() {
 
         <Col md={12}>
           <Route
-            exact
             path="/creditapplication"
             component={CreditApplicationScreen}
           />
