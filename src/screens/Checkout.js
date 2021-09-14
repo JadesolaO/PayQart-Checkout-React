@@ -25,19 +25,19 @@ const Checkout = () => {
           productName: "Samsung A51",
           quantity: 1,
           price: 20000,
-          imageUrl: "https://www.konga.com/eewoiweod.jpg"
+          imageUrl: "https://picsum.photos/80/80"
         },
         {
           productName: "Tecno l32",
           quantity: 1,
           price: 50000,
-          imageUrl: "https://www.konga.com/eewoiweod.jpg"
+          imageUrl: "https://picsum.photos/80/80"
         },
         {
           productName: "Infinix s5",
           quantity: 1,
           price: 10500,
-          imageUrl: "https://www.konga.com/eewoiweod.jpg"
+          imageUrl: "https://picsum.photos/80/80"
         }
       ],
       uniqueIdentifier: v4(),
@@ -80,7 +80,6 @@ const Checkout = () => {
                             style={{
                               border: "1px solid #DCDCDC",
                               padding: "0px",
-                              height: "80px",
                               borderRadius: "5px"
                             }}
                             fluid
@@ -88,12 +87,14 @@ const Checkout = () => {
                           />
                         </div>
                       </Col>
-                      <Col className=" text-muted item-text my-auto">
-                        <span className="lh-1">{product.productName}</span>
-                        <span className="lh-1">
-                          ₦ {Number(product.price).toLocaleString()}
-                        </span>
-                        <span className="lh-1">Qty: {product.quantity}</span>
+                      <Col className="text-muted item-text my-auto">
+                        <div className="lh-1 mb-1">
+                          <b>{product.productName}</b>
+                        </div>
+                        <div className="lh-1 mb-1">
+                          ₦{Number(product.price).toLocaleString()}
+                        </div>
+                        <div className="lh-1">Qty: {product.quantity}</div>
                       </Col>
                     </Row>
                   ))}
@@ -136,18 +137,18 @@ const products = [
     productName: "Samsung A51",
     quantity: 1,
     price: 20000,
-    imageUrl: "https://www.konga.com/eewoiweod.jpg"
+    imageUrl: "https://picsum.photos/80/80"
   },
   {
     productName: "Tecno l32",
     quantity: 1,
     price: 50000,
-    imageUrl: "https://www.konga.com/eewoiweod.jpg"
+    imageUrl: "https://picsum.photos/80/80"
   },
   {
     productName: "Infinix s5",
     quantity: 1,
     price: 10500,
-    imageUrl: "https://www.konga.com/eewoiweod.jpg"
+    imageUrl: "https://picsum.photos/80/80"
   }
 ]
