@@ -12,7 +12,7 @@ import ContactDetails from "../components/ContactDetails"
 import EmploymentInformation from "../components/EmploymentInformation"
 import BankInformation from "../components/BankInformation"
 import RefereeInformation from "../components/RefereeInformation"
-import { Route, useHistory, useLocation } from "react-router-dom"
+import { Route, useHistory, useLocation, useParams } from "react-router-dom"
 
 import axios from "axios"
 
@@ -39,6 +39,8 @@ const CreditApplicationScreen = (props) => {
 
   let history = useHistory()
   const { pathname } = useLocation()
+
+  const { orderId } = useParams()
 
   const setPage = (page) => {
     setForm(page)
@@ -127,14 +129,15 @@ const CreditApplicationScreen = (props) => {
     <Container>
       <Row className="justify-content-md-center ">
         {pathname !== "/creditapplication/personal" && (
-          <div
+          <span
             className="top-sect"
             onClick={() => {
               history.goBack()
             }}
+            style={{ cursor: "pointer" }}
           >
             <i className="fas fa-arrow-left"></i> Back
-          </div>
+          </span>
         )}
         <Col className="app-form" md={9} xs={12}>
           <Row className="justify-content-md-center">
@@ -144,12 +147,14 @@ const CreditApplicationScreen = (props) => {
                 <div className="side-div text-center">
                   <Button
                     id={
-                      pathname === "/creditapplication/personal" &&
+                      pathname === `/${orderId}/creditapplication/personal` &&
                       "highlighted"
                     }
                     // style={form === 'personalInfo' && myStyles}
                     className="side-btn"
-                    onClick={() => history.push("/creditapplication/personal")}
+                    onClick={() =>
+                      history.push(`/${orderId}/creditapplication/personal`)
+                    }
                   >
                     <Image height="14" src={contact} />{" "}
                     <span>Personal Information</span>
@@ -166,10 +171,13 @@ const CreditApplicationScreen = (props) => {
                 <div className="side-div">
                   <Button
                     id={
-                      pathname === "/creditapplication/contact" && "highlighted"
+                      pathname === `/${orderId}/creditapplication/contact` &&
+                      "highlighted"
                     }
                     className="side-btn"
-                    onClick={() => history.push("/creditapplication/contact")}
+                    onClick={() =>
+                      history.push(`/${orderId}/creditapplication/contact`)
+                    }
                   >
                     <Image height="14" src={mail} />{" "}
                     <span>Contact Information</span>
@@ -186,12 +194,12 @@ const CreditApplicationScreen = (props) => {
                 <div className="side-div">
                   <Button
                     id={
-                      pathname === "/creditapplication/employment" &&
+                      pathname === `/${orderId}/creditapplication/employment` &&
                       "highlighted"
                     }
                     className="side-btn"
                     onClick={() =>
-                      history.push("/creditapplication/employment")
+                      history.push(`/${orderId}/creditapplication/employment`)
                     }
                   >
                     <Image height="14" src={Union} />{" "}
@@ -208,9 +216,14 @@ const CreditApplicationScreen = (props) => {
                 </div>
                 <div className="side-div">
                   <Button
-                    id={pathname === "/creditapplication/bank" && "highlighted"}
+                    id={
+                      pathname === `/${orderId}/creditapplication/bank` &&
+                      "highlighted"
+                    }
                     className="side-btn"
-                    onClick={() => history.push("/creditapplication/bank")}
+                    onClick={() =>
+                      history.push(`/${orderId}/creditapplication/bank`)
+                    }
                   >
                     <Image height="14" src={bank} />{" "}
                     <span>Bank Information</span>
@@ -227,10 +240,13 @@ const CreditApplicationScreen = (props) => {
                 <div className="side-div">
                   <Button
                     id={
-                      pathname === "/creditapplication/referee" && "highlighted"
+                      pathname === `/${orderId}/creditapplication/referee` &&
+                      "highlighted"
                     }
                     className="side-btn"
-                    onClick={() => history.push("/creditapplication/referee")}
+                    onClick={() =>
+                      history.push(`/${orderId}/creditapplication/referee`)
+                    }
                   >
                     <Image height="14" src={ref} />{" "}
                     <span>Referee Information</span>
@@ -249,7 +265,7 @@ const CreditApplicationScreen = (props) => {
             <Col className="form-sec" md={8}>
               <Route
                 exact
-                path="/creditapplication/personal"
+                path={`/${orderId}/creditapplication/personal`}
                 children={
                   <PersonalInformation
                     startPayment={startPayment}
@@ -262,7 +278,7 @@ const CreditApplicationScreen = (props) => {
 
               <Route
                 exact
-                path="/creditapplication/contact"
+                path={`/${orderId}/creditapplication/contact`}
                 children={
                   <ContactDetails
                     startPayment={startPayment}
@@ -275,7 +291,7 @@ const CreditApplicationScreen = (props) => {
 
               <Route
                 exact
-                path="/creditapplication/employment"
+                path={`/${orderId}/creditapplication/employment`}
                 children={
                   <EmploymentInformation
                     startPayment={startPayment}
@@ -288,7 +304,7 @@ const CreditApplicationScreen = (props) => {
 
               <Route
                 exact
-                path="/creditapplication/bank"
+                path={`/${orderId}/creditapplication/bank`}
                 children={
                   <BankInformation
                     startPayment={startPayment}
@@ -301,7 +317,7 @@ const CreditApplicationScreen = (props) => {
 
               <Route
                 exact
-                path="/creditapplication/referee"
+                path={`/${orderId}/creditapplication/referee`}
                 children={
                   <RefereeInformation
                     startPayment={startPayment}

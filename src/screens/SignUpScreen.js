@@ -9,7 +9,7 @@ import {
   InputGroup,
   Image
 } from "react-bootstrap"
-import { Link, useParams } from "react-router-dom"
+import { Link, useParams, useHistory } from "react-router-dom"
 import { ProgressSteps, ProgressStepsFunded } from "../components/ProgressSteps"
 import eye from "../images/Path 38.png"
 import lock from "../images/Path 44.png"
@@ -34,6 +34,10 @@ const SignUpScreen = (props) => {
 
   const selection = localStorage.getItem("selection")
 
+  let history = useHistory()
+
+  const orderId = localStorage.getItem("orderId")
+
   async function signUpUser(e) {
     e.preventDefault()
 
@@ -57,7 +61,8 @@ const SignUpScreen = (props) => {
         setUserDetails(data.user)
         localStorage.setItem("token", data.access_token)
         successToast(data.message)
-        props.history.push("/creditscreen")
+        props.history.push(`/${orderId}/creditscreen`)
+        // localStorage.removeItem("orderId")
       }
     } catch (error) {
       console.log(error.response)
@@ -67,10 +72,10 @@ const SignUpScreen = (props) => {
   return (
     <div className="signup">
       <div className="top-section">
-        <Link to={selection === "wallet-not-funded" ? "/planscreen" : "/"}>
+        <span onClick={() => history.goBack()} style={{ cursor: "pointer" }}>
           <i style={{ color: "#FF005E" }} className="fas fa-arrow-left"></i>{" "}
           Back
-        </Link>
+        </span>
       </div>
       <div className="steps s-checks">
         {selection === "wallet-funded" ? (

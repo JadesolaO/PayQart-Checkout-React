@@ -1,13 +1,17 @@
 import React, { useState } from "react"
 import { Row, Col, Image, Button, Container, Spinner } from "react-bootstrap"
 import logo from "../images/pink-logo.svg"
-import { Link } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 import "../stylesheets/css/eligibility.css"
+// import { v4 } from "uuid"
 
 const EligibilityScreen = (props) => {
   localStorage.removeItem("nextRoute")
 
   const [loading, setLoading] = useState(Boolean)
+
+  const { orderId } = useParams()
+
   return (
     <div className="eliscreen">
       <div className="backtostore b-btn">
@@ -75,7 +79,7 @@ const EligibilityScreen = (props) => {
                 className="proced-button"
                 onClick={() => {
                   setLoading(true)
-                  props.history.push("/employmentscreen")
+                  props.history.push(`/${orderId}/employmentscreen`)
                   setLoading(false)
                 }}
               >

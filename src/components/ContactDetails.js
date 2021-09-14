@@ -30,6 +30,8 @@ const ContactDetails = ({
 
   let history = useHistory()
 
+  const orderId = localStorage.getItem("orderId")
+
   useEffect(() => {
     const contactInfoObj = JSON.parse(localStorage.getItem("contactInfoObj"))
 
@@ -108,7 +110,7 @@ const ContactDetails = ({
 
       const { data } = response
       if (data.status === "success") {
-        history.push("/creditapplication/employment")
+        history.push(`/${orderId}/creditapplication/employment`)
         localStorage.setItem("contactInfoObj", JSON.stringify(contactInfoObj))
         setContactdone(true)
         setLoading(false)

@@ -26,6 +26,8 @@ const EmploymentInformation = ({
 
   let history = useHistory()
 
+  const orderId = localStorage.getItem("orderId")
+
   useEffect(() => {
     const employmentInfoObj = JSON.parse(
       localStorage.getItem("employmentInfoObj")
@@ -154,7 +156,7 @@ const EmploymentInformation = ({
       if (data.status === "success") {
         setLoading(false)
         setEmploymentdone(true)
-        history.push("/creditapplication/bank")
+        history.push(`/${orderId}/creditapplication/bank`)
         localStorage.setItem(
           "employmentInfoObj",
           JSON.stringify(employmentInfoObj)

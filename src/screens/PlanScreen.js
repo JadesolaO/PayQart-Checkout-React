@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react"
 import { Row, Col, Form, Button, Container, InputGroup } from "react-bootstrap"
-import { Link } from "react-router-dom"
+import { Link, useHistory } from "react-router-dom"
 import { ProgressSteps } from "../components/ProgressSteps"
 import "../stylesheets/css/planscreen.css"
 import { setStatus } from "../services/Formulae"
@@ -9,6 +9,8 @@ import Message from "../components/Message"
 // import { inititiateCredit } from "../services/creditFormService"
 import axios from "axios"
 import apiEndpoint from "../utils/apiEndpoint"
+
+import { useParams } from "react-router-dom"
 
 const PlanScreen = (props) => {
   const data = localStorage.getItem("userInfo")
@@ -43,6 +45,8 @@ const PlanScreen = (props) => {
   const [loadingPlan, updateLoadingPlan] = useState(false)
 
   const [calculating, updateCalculating] = useState(false)
+
+  const { orderId } = useParams()
 
   useEffect(() => {
     let monthsArray = []
@@ -236,51 +240,10 @@ const PlanScreen = (props) => {
 
   async function startApplication() {
     const startApplicationObj = {
-      requestedAmount: Number(shoppingCredit),
-
-      type: 2,
-
-      currentMonthlyLoan: data.loanAmount === 0 ? null : data.loanAmount,
-
+      orderId,
       userSalaryDate:
         data.employmentType === "paid-employment" ? data.payDay : null,
-
-      averageMonthlyRevenue:
-        data.employmentType !== "paid-employment" ? data.income : null, //null if employmenttype is 1
-      averageMonthlyExpense:
-        data.employmentType !== "paid-employment" ? data.monthlyExpense : null, //null if employmenttype is 1
-
-      employmentType: data.employmentType === "paid-employment" ? 1 : 2, // 1-salaryearner 2-entrepreneur
-
-      userMonthlyPay:
-        data.employmentType === "paid-employment" ? data.income : null,
-
       tenor: Number(tenureNum),
-      products: [
-        {
-          productName: "Nike Boots",
-          quantity: 1,
-          price: 30500
-        },
-        {
-          productName: "Tecno phone",
-          quantity: 1,
-          price: 50000
-        }
-      ],
-      onlineStores: [
-        {
-          onlineStoreName: "Jumia",
-          productUrl: "https://hjsdhskjdbsjdjsnkdsjskdn"
-        }
-      ],
-      storeType: "online",
-      inStoreName: null,
-      inStoreAddress: null,
-      inStoreEmail: null,
-      inStoreContactPerson: null,
-      inStorePhoneNumber: null,
-      invoice: null,
       monthlyNetIncome: Number(netIncome),
       shoppingCredit: Number(shoppingCredit),
       monthlyRepayment: Number(monthlyRepayment),
@@ -296,29 +259,30 @@ const PlanScreen = (props) => {
     const selection = localStorage.getItem("selection")
 
     if (selection === "wallet-not-funded") {
-      return props.history.push("/signin/1")
+      props.history.push("/signin/1")
+      localStorage.setItem("orderId", orderId)
+    } else {
+      props.history.push("/creditapplication")
     }
-
-    props.history.push("/creditapplication")
   }
 
   const selection = JSON.stringify(localStorage.getItem("selection"))
 
   // console.log(selection)
 
+  let history = useHistory()
+
   return (
     <div className="planScreen">
       <div className="topsection position-absolute top-0 mt-5">
-        <Link
-          to={
-            selection !== "wallet-not-funded"
-              ? "/employmentscreen"
-              : "/creditscreen"
-          }
+        <span
+          className=""
+          onClick={() => history.goBack()}
+          style={{ cursor: "pointer" }}
         >
           <i style={{ color: "#FF005E" }} className="fas fa-arrow-left"></i>{" "}
           Back
-        </Link>
+        </span>
       </div>
       <div className="steps">
         {selection === "wallet-funded" ? (

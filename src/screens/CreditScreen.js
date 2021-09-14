@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react"
 import { Container, Row, Col, Button } from "react-bootstrap"
-import { Link } from "react-router-dom"
+import { useHistory, useParams } from "react-router-dom"
 import { ProgressSteps, ProgressStepsFunded } from "../components/ProgressSteps"
 import "../stylesheets/css/creditscreen.css"
 import { getLoanStat } from "../services/creditFormService"
@@ -14,6 +14,10 @@ const CreditScreen = (props) => {
   const [showPaymentBreakdown, updateShowPaymentBreakdown] = useState(false)
 
   const [startingApplication, updateStartingApplication] = useState(false)
+
+  const { orderId } = useParams()
+
+  let history = useHistory()
 
   useEffect(() => {
     getLoanStatus()
@@ -50,7 +54,7 @@ const CreditScreen = (props) => {
         const token = localStorage.getItem("token")
 
         const response = await axios.post(
-          `${apiEndpoint}/application/start`,
+          `${apiEndpoint}/application/external/start`,
           startApplicationObj,
           {
             headers: {
@@ -70,7 +74,7 @@ const CreditScreen = (props) => {
           localStorage.removeItem("nextRoute")
 
           updateStartingApplication(false)
-          props.history.push("/creditapplication/personal")
+          props.history.push(`/${orderId}/creditapplication/personal`)
         }
       } catch (error) {
         updateStartingApplication(false)
@@ -107,10 +111,10 @@ const CreditScreen = (props) => {
   return (
     <div className="creditscreen">
       <div className="topsection">
-        <Link to="/signin/1">
+        <span onClick={() => history.goBack()} style={{ cursor: "pointer" }}>
           <i style={{ color: "#FF005E" }} className="fas fa-arrow-left"></i>{" "}
           Back
-        </Link>
+        </span>
       </div>
       <div className="steps">
         {selection === "wallet-funded" ? (

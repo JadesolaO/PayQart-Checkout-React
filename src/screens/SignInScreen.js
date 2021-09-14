@@ -9,13 +9,14 @@ import {
   InputGroup,
   Image
 } from "react-bootstrap"
-import { Link, useParams } from "react-router-dom"
+import { Link, useParams, useHistory } from "react-router-dom"
 import { ProgressSteps, ProgressStepsFunded } from "../components/ProgressSteps"
 import eye from "../images/Path 38.png"
 import { successToast } from "../services/authService"
 import axios from "axios"
 import apiEndpoint from "../utils/apiEndpoint"
 import { useAppContext } from "../utils/contexts/AppContext"
+import { scrollParent } from "dom-helpers"
 
 const SignInScreen = (props) => {
   const [email, setEmail] = useState("")
@@ -26,7 +27,11 @@ const SignInScreen = (props) => {
 
   const { setUserDetails } = useAppContext()
 
+  let history = useHistory()
+
   const selection = localStorage.getItem("selection")
+
+  const orderId = localStorage.getItem("orderId")
 
   async function loginUser(e) {
     e.preventDefault()
@@ -41,7 +46,8 @@ const SignInScreen = (props) => {
         setUserDetails(data.user)
         localStorage.setItem("token", data.access_token)
         successToast(response.data.message)
-        props.history.push("/creditscreen")
+        props.history.push(`/${orderId}/creditscreen`)
+        // localStorage.removeItem("orderId")
       }
     } catch (error) {
       console.log(error)
@@ -51,10 +57,10 @@ const SignInScreen = (props) => {
   return (
     <div className="signup">
       <div className="top-section">
-        <Link to={selection === "wallet-not-funded" ? "/planscreen" : "/"}>
+        <span onClick={() => history.goBack()} style={{ cursor: "pointer" }}>
           <i style={{ color: "#FF005E" }} className="fas fa-arrow-left"></i>{" "}
           Back
-        </Link>
+        </span>
       </div>
       <div className="steps s-checks">
         {selection === "wallet-funded" ? (

@@ -20,6 +20,8 @@ const BankInformation = ({ setPage, setBankdone, checkDone, startPayment }) => {
 
   let history = useHistory()
 
+  const orderId = localStorage.getItem("orderId")
+
   const getBanks = useCallback(async () => {
     try {
       const response = await axios.get(`${apiEndpoint}/utilities/getBanks`)
@@ -109,7 +111,7 @@ const BankInformation = ({ setPage, setBankdone, checkDone, startPayment }) => {
 
         if (submitResponse.data.status === "success") {
           setLoading(false)
-          history.push("/creditapplication/referee")
+          history.push(`/${orderId}/creditapplication/referee`)
           localStorage.setItem("bankInfoObj", JSON.stringify(submitObj))
           setBankdone(true)
         }

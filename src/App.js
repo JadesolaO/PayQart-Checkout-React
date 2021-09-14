@@ -13,6 +13,7 @@ import EligibilityScreen from "./screens/EligibilityScreen"
 import SuccessScreen from "./screens/SuccessScreen"
 import { ToastContainer } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
+import Checkout from "./screens/Checkout"
 // import Alert from "./components/Alert"
 
 function App() {
@@ -22,37 +23,49 @@ function App() {
       <ToastContainer />
       <Row className="app">
         <Route exact path="/">
-          <Col className="eligibityscreen" md={12}>
-            <Route exact path="/" component={WalletStatusScreen} />
+          <Col className="checkout" md={12}>
+            <Route exact path="/" component={Checkout} />
           </Col>
         </Route>
-        <Route exact path="/eligibityscreen">
+
+        <Route exact path="/:orderId/status">
           <Col className="eligibityscreen" md={12}>
             <Route
               exact
-              path="/eligibityscreen"
+              path="/:orderId/status"
+              component={WalletStatusScreen}
+            />
+          </Col>
+        </Route>
+
+        <Route exact path="/:orderId/eligibityscreen">
+          <Col className="eligibityscreen" md={12}>
+            <Route
+              exact
+              path="/:orderId/eligibityscreen"
               component={EligibilityScreen}
             />
           </Col>
         </Route>
-        <Route exact path="/employmentscreen">
+
+        <Route exact path="/:orderId/employmentscreen">
           <Col md={7}>
             <Cart />
           </Col>
           <Col md={5}>
             <Route
               exact
-              path="/employmentscreen"
+              path="/:orderId/employmentscreen"
               component={EmploymentScreen}
             />
           </Col>
         </Route>
-        <Route exact path="/planscreen">
+        <Route exact path="/:orderId/planscreen">
           <Col md={7}>
             <Cart />
           </Col>
           <Col md={5}>
-            <Route exact path="/planscreen" component={PlanScreen} />
+            <Route exact path="/:orderId/planscreen" component={PlanScreen} />
           </Col>
         </Route>
 
@@ -87,29 +100,35 @@ function App() {
           </Col>
         </Route>
 
-        <Route exact path="/creditscreen">
+        <Route exact path="/:orderId/creditscreen">
           <Col md={7}>
             <Cart />
           </Col>
           <Col md={5}>
-            <Route exact path="/creditscreen" component={CreditScreen} />
+            <Route
+              exact
+              path="/:orderId/creditscreen"
+              component={CreditScreen}
+            />
           </Col>
         </Route>
 
         <Col md={12}>
           <Route
-            path="/creditapplication"
+            path="/:orderId/creditapplication"
             component={CreditApplicationScreen}
           />
         </Col>
 
-        <Col className="successScreen" md={12}>
-          <Route
-            exact
-            path="/success:redirectParam"
-            component={SuccessScreen}
-          />
-        </Col>
+        <Route exact path="/success:redirectParam">
+          <Col className="successScreen" md={12}>
+            <Route
+              exact
+              path="/success:redirectParam"
+              component={SuccessScreen}
+            />
+          </Col>
+        </Route>
       </Row>
     </>
   )

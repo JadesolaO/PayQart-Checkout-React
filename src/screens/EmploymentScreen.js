@@ -6,7 +6,7 @@ import paid from "../images/image 4.png"
 import free from "../images/image 5.png"
 import coop from "../images/image 6.png"
 import { ProgressSteps } from "../components/ProgressSteps"
-import { Link } from "react-router-dom"
+import { useParams, useHistory } from "react-router-dom"
 
 const EmploymentScreen = (props) => {
   const [employmentType, setEmploymentType] = useState("")
@@ -21,6 +21,8 @@ const EmploymentScreen = (props) => {
 
   const dateValue = payDate.toDateString()
 
+  const { orderId } = useParams()
+
   const handleSubmit = (e) => {
     e.preventDefault()
     localStorage.setItem(
@@ -33,10 +35,12 @@ const EmploymentScreen = (props) => {
         payDay
       })
     )
-    props.history.push("/planscreen")
+    props.history.push(`/${orderId}/planscreen`)
   }
 
   const selection = localStorage.getItem("selection")
+
+  let history = useHistory()
 
   return (
     <div className="pager">
@@ -46,10 +50,13 @@ const EmploymentScreen = (props) => {
           style={{ zIndex: "500" }}
         >
           {selection !== "wallet-not-funded" && (
-            <Link to="/creditscreen">
+            <span
+              onClick={() => history.goBack()}
+              style={{ cursor: "pointer" }}
+            >
               <i style={{ color: "#FF005E" }} className="fas fa-arrow-left"></i>{" "}
               Back
-            </Link>
+            </span>
           )}
         </div>
 

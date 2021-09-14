@@ -1,77 +1,48 @@
 import React from "react"
 import { Col, Row, Image } from "react-bootstrap"
 
+import { useAppContext } from "../utils/contexts/AppContext"
+
 const CartItem = () => {
+  const { products } = useAppContext()
+
+  let totalPrice
+
+  if (products.length > 0) {
+    totalPrice = products.reduce((a, c) => a + c.quantity * c.price, 0)
+  }
+
   return (
     <Row className="">
       <Col md={12}>
         <Row className="cart-card mb-5">
           <Col className="m-4">
             <div className="cart-item">
-              <Row className="item-row">
-                <Col>
-                  <div className="image">
-                    <Image
-                      style={{
-                        border: "1px solid #DCDCDC",
-                        padding: "0px",
-                        height: "80px",
-                        borderRadius: "5px"
-                      }}
-                      fluid
-                      src="https://i2.wp.com/mobilityarena.com/wp-content/uploads/2020/11/Meeysoo-P45-Pro.jpg"
-                    />
-                  </div>
-                </Col>
-                <Col className=" text-muted item-text my-auto">
-                  <span className="lh-1">Meeysoo P43 Pro</span>
-                  <span className="lh-1">₦ 40,250</span>
-                  <span className="lh-1">Qty: 2</span>
-                </Col>
-              </Row>
-              <Row className="item-row">
-                <Col>
-                  <div className="image">
-                    <Image
-                      style={{
-                        border: "1px solid #DCDCDC",
-                        padding: "0px",
-                        height: "80px",
-                        borderRadius: "5px"
-                      }}
-                      fluid
-                      src="https://i2.wp.com/mobilityarena.com/wp-content/uploads/2020/11/Meeysoo-P45-Pro.jpg"
-                    />
-                  </div>
-                </Col>
-                <Col className=" text-muted item-text my-auto">
-                  <span className="lh-1">Meeysoo P43 Pro</span>
-                  <span className="lh-1">₦ 40,250</span>
-                  <span className="lh-1">Qty: 2</span>
-                </Col>
-              </Row>
-
-              <Row className="item-row">
-                <Col>
-                  <div className="image">
-                    <Image
-                      style={{
-                        border: "1px solid #DCDCDC",
-                        padding: "0px",
-                        height: "80px",
-                        borderRadius: "5px"
-                      }}
-                      fluid
-                      src="https://i2.wp.com/mobilityarena.com/wp-content/uploads/2020/11/Meeysoo-P45-Pro.jpg"
-                    />
-                  </div>
-                </Col>
-                <Col className=" text-muted item-text my-auto">
-                  <span className="lh-1">Meeysoo P43 Pro</span>
-                  <span className="lh-1">₦ 40,250</span>
-                  <span className="lh-1">Qty: 2</span>
-                </Col>
-              </Row>
+              {products.map((product, i) => (
+                <Row key={i} className="item-row">
+                  <Col>
+                    <div className="image">
+                      <Image
+                        style={{
+                          border: "1px solid #DCDCDC",
+                          padding: "0px",
+                          height: "80px",
+                          borderRadius: "5px"
+                        }}
+                        fluid
+                        src={product.imageUrl}
+                      />
+                    </div>
+                  </Col>
+                  <Col className=" text-muted item-text my-auto">
+                    <span className="lh-1">{product.productName}</span>
+                    <span className="lh-1">
+                      ₦ {Number(product.price).toLocaleString()}
+                    </span>
+                    <span className="lh-1">Qty: {product.quantity}</span>
+                  </Col>
+                </Row>
+              ))}
             </div>
             <br />
             <br />
@@ -83,7 +54,7 @@ const CartItem = () => {
               </Col>
               <Col>
                 <span className="price">
-                  <strong>₦ 80,500</strong>
+                  <strong>₦{Number(totalPrice).toLocaleString()}</strong>
                 </span>
               </Col>
             </Row>

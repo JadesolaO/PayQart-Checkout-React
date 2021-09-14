@@ -4,8 +4,13 @@ import logo from "../images/pink-logo.svg"
 import emptyWalletIcon from "../images/empty-wallet.svg"
 import fundedWalletIcon from "../images/funded-wallet.svg"
 import "../stylesheets/css/walletStatusScreen.css"
+import { useParams } from "react-router-dom"
 
 const WalletStatusScreen = (props) => {
+  const { orderId } = useParams()
+
+  console.log(orderId)
+
   function selectHandler(selection) {
     localStorage.setItem("selection", selection)
   }
@@ -42,7 +47,7 @@ const WalletStatusScreen = (props) => {
                         variant="outline-secondary"
                         id="wallet-button-id"
                         onClick={() => {
-                          props.history.push("/eligibityscreen")
+                          props.history.push(`/${orderId}/eligibityscreen`)
                           selectHandler("wallet-not-funded")
                         }}
                       >

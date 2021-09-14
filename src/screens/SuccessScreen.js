@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import { Container, Row, Col, Button } from "react-bootstrap"
+import { Row, Col, Button } from "react-bootstrap"
 import FileUpload from "../components/FileUpload"
 
 import "../stylesheets/css/successScreen.css"
@@ -102,7 +102,7 @@ const SuccessScreen = (props) => {
   // }
 
   return (
-    <Container className="success" fluid>
+    <div className="success" fluid>
       <Row className="justify-content-md-center">
         <Col md={9}>
           <div className="top-text text-center mb-4">
@@ -204,7 +204,7 @@ const SuccessScreen = (props) => {
           </Row>
         </Col>
       </Row>
-    </Container>
+    </div>
   )
 }
 

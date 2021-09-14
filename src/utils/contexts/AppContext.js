@@ -17,6 +17,7 @@ export function useAppContext() {
 export function AppContextProvider({ children }) {
   const [selection, setSelection] = useState("")
   const [userDetails, setUserDetails] = useState({})
+  const [products, setProducts] = useState([])
 
   const getUser = useCallback(async () => {
     const token = localStorage.getItem("token")
@@ -41,11 +42,38 @@ export function AppContextProvider({ children }) {
     }
   }, [])
 
-  useEffect(() => {
-    getUser()
-  }, [getUser])
+  const orderId = localStorage.getItem("orderId")
 
-  const value = { userDetails, setUserDetails, selection, setSelection }
+  const getOrder = useCallback(async () => {
+    if (orderId) {
+      try {
+        const response = await axios.post(`${apiEndpoint}/order/one`, {
+          orderId
+        })
+
+        const { data } = response
+
+        if (data.status === "success") {
+          setProducts(data.data.products)
+        }
+      } catch (error) {
+        console.log(error.response)
+      }
+    }
+  }, [orderId])
+
+  useEffect(() => {
+    getOrder()
+    getUser()
+  }, [getOrder, getUser])
+
+  const value = {
+    userDetails,
+    setUserDetails,
+    selection,
+    setSelection,
+    products
+  }
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>
 }

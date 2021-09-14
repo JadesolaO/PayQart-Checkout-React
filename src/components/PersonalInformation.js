@@ -8,7 +8,7 @@ import { useAppContext } from "../utils/contexts/AppContext"
 import axios from "axios"
 import apiEndpoint from "../utils/apiEndpoint"
 
-import { useHistory } from "react-router-dom"
+import { useHistory, useParams } from "react-router-dom"
 
 const PersonalInformation = ({
   setPage,
@@ -34,6 +34,8 @@ const PersonalInformation = ({
   const { userDetails } = useAppContext()
 
   let history = useHistory()
+
+  const orderId = localStorage.getItem("orderId")
 
   useEffect(() => {
     const personalInfoObj = JSON.parse(localStorage.getItem("personalInfoObj"))
@@ -101,7 +103,7 @@ const PersonalInformation = ({
       if (data.status === "success") {
         setLoading(false)
         localStorage.setItem("personalInfoObj", JSON.stringify(personalInfoObj))
-        history.push("/creditapplication/contact")
+        history.push(`/${orderId}/creditapplication/contact`)
         setPersonaldone(true)
       }
     } catch (error) {
