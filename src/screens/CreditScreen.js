@@ -7,6 +7,7 @@ import "../stylesheets/css/creditscreen.css"
 import { getLoanStat } from "../services/creditFormService"
 import axios from "axios"
 import apiEndpoint from "../utils/apiEndpoint"
+import { useAppContext } from "../utils/contexts/AppContext"
 
 const CreditScreen = (props) => {
   const [loanStatus, setLoanStatus] = useState(false)
@@ -18,6 +19,8 @@ const CreditScreen = (props) => {
   const { orderId } = useParams()
 
   let history = useHistory()
+
+  const { userDetails } = useAppContext()
 
   useEffect(() => {
     getLoanStatus()
@@ -107,6 +110,8 @@ const CreditScreen = (props) => {
   }
 
   const selection = localStorage.getItem("selection")
+
+  console.log(userDetails)
 
   return (
     <div className="creditscreen">
@@ -201,18 +206,30 @@ const CreditScreen = (props) => {
                 <div className="text">
                   <p className="mb-2">Wallet Balance</p>
                   <h5 className="mb-2" style={{ fontWeight: "bold" }}>
-                    ₦45,000
+                    ₦
+                    {userDetails.wallet_balance === null
+                      ? "0.00"
+                      : Number(userDetails.wallet_balance).toLocaleString()}
                   </h5>
-                  <p className="text-muted">Expires in 29 days</p>
+                  {userDetails.wallet_balance !== null && (
+                    <p className="text-muted">Expires in 29 days</p>
+                  )}
                 </div>
               </Col>
               <Col className="boxes mx-3 mb-3" xs={12} md={6}>
                 <div className="text">
                   <p className="mb-2">Available Shopping Credit</p>
                   <h5 className="mb-2" style={{ fontWeight: "bold" }}>
-                    ₦23,800
+                    ₦
+                    {userDetails.available_shopping_credit === null
+                      ? "0.00"
+                      : Number(
+                          userDetails.available_shopping_credit
+                        ).toLocaleString()}
                   </h5>
-                  <p className="text-muted">Approved Tenor: 5 months</p>
+                  {userDetails.available_shopping_credit !== null && (
+                    <p className="text-muted">Approved Tenor: 5 months</p>
+                  )}
                 </div>
               </Col>
               <div className="apply-button my-3 text-center">

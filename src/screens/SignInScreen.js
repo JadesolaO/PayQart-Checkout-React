@@ -43,6 +43,7 @@ const SignInScreen = (props) => {
       const { data } = response
 
       if (data.status === "success") {
+        // console.log(data)
         setUserDetails(data.user)
         localStorage.setItem("token", data.access_token)
         successToast(response.data.message)

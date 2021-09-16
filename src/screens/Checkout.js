@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom"
 // import CartItem from "../components/CartItem"
 import apiEndpoint from "../utils/apiEndpoint"
 
-import { v4 } from "uuid"
+// import { v4 } from "uuid"
 
 const Checkout = () => {
   let history = useHistory()
@@ -19,6 +19,11 @@ const Checkout = () => {
   }, [])
 
   async function checkoutHandler() {
+    const orderId =
+      Math.floor(Math.random() * (9999 - 1111) + 1111).toString() +
+      Math.floor(Math.random() * (9999 - 1111) + 1111).toString() +
+      "ORD"
+
     const obj = {
       products: [
         {
@@ -40,7 +45,7 @@ const Checkout = () => {
           imageUrl: "https://picsum.photos/80/80"
         }
       ],
-      uniqueIdentifier: v4(),
+      uniqueIdentifier: orderId,
       onlineStores: [
         {
           onlineStoreName: "Konga",
