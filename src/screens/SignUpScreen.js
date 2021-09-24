@@ -27,7 +27,12 @@ const SignUpScreen = (props) => {
   const [password, setPassword] = useState("")
   const [retypedPassword, setRetypedPassword] = useState("")
   const [bvn, setBvn] = useState("")
-  const [agree, setAgree] = useState("")
+  const [agree, setAgree] = useState(null)
+
+  const [error, updateError] = useState(false)
+  const [errorMsg, setErrorMsg] = useState([])
+  const [signingUp, updateSigningUp] = useState(false)
+
   const { status } = useParams()
 
   const { setUserDetails } = useAppContext()
@@ -41,7 +46,16 @@ const SignUpScreen = (props) => {
   async function signUpUser(e) {
     e.preventDefault()
 
-    if (password !== retypedPassword) return
+    updateError(false)
+    setErrorMsg("")
+    updateSigningUp(true)
+
+    if (password !== retypedPassword) {
+      updateError(true)
+      setErrorMsg("Passwords do not match")
+      updateSigningUp(false)
+      return
+    }
 
     const userInfo = {
       email,
@@ -62,10 +76,30 @@ const SignUpScreen = (props) => {
         localStorage.setItem("token", data.access_token)
         successToast(data.message)
         props.history.push(`/${orderId}/creditscreen`)
+        updateSigningUp(false)
         // localStorage.removeItem("orderId")
       }
     } catch (error) {
-      console.log(error.response)
+      if (error.response) {
+        updateError(true)
+
+        const msg = error.response.data.message
+
+        let new_element = document.createRange().createContextualFragment(msg)
+
+        console.log(new_element)
+        // setErrorMsg(new_element)
+
+        const errorElement = document.getElementById("error-msg")
+
+        errorElement.appendChild(new_element)
+
+        updateSigningUp(false)
+      } else {
+        updateError(true)
+        setErrorMsg(error.message)
+        updateSigningUp(false)
+      }
     }
   }
 
@@ -98,6 +132,15 @@ const SignUpScreen = (props) => {
 
             <Container fluid>
               <Form className="form_" onSubmit={signUpUser}>
+                {error && (
+                  <h1
+                    id="error-msg"
+                    className="text-danger mb-1"
+                    style={{ textAlign: "left", fontSize: "0.9rem" }}
+                  >
+                    {errorMsg}
+                  </h1>
+                )}
                 <Form.Group>
                   <Form.Control
                     type="text"

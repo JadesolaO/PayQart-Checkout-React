@@ -23,6 +23,11 @@ const SignInScreen = (props) => {
   const [password, setPassword] = useState("")
   const [remember, setRemember] = useState("")
   const [agree, setAgree] = useState("")
+
+  const [error, updateError] = useState(false)
+  const [errorMsg, setErrorMsg] = useState("")
+  const [signingIn, updateSigningIn] = useState(false)
+
   const { status } = useParams()
 
   const { setUserDetails } = useAppContext()
@@ -35,7 +40,19 @@ const SignInScreen = (props) => {
 
   async function loginUser(e) {
     e.preventDefault()
+
+    updateError(false)
+    setErrorMsg("")
+    updateSigningIn(true)
+
     const userInfo = { email, pin: password }
+
+    if (email === "" || password === "") {
+      updateSigningIn(false)
+      updateError(true)
+      setErrorMsg("Email and Password is required")
+      return
+    }
 
     try {
       const response = await axios.post(`${apiEndpoint}/user/login`, userInfo)
@@ -49,9 +66,18 @@ const SignInScreen = (props) => {
         successToast(response.data.message)
         props.history.push(`/${orderId}/creditscreen`)
         // localStorage.removeItem("orderId")
+        updateSigningIn(false)
       }
     } catch (error) {
-      console.log(error)
+      if (error.response) {
+        updateError(true)
+        setErrorMsg(error.response.data.message)
+        updateSigningIn(false)
+      } else {
+        updateError(true)
+        setErrorMsg(error.message)
+        updateSigningIn(false)
+      }
     }
   }
 
@@ -85,6 +111,14 @@ const SignInScreen = (props) => {
 
             <Container fluid>
               <Form className="form_" onSubmit={loginUser}>
+                {error && (
+                  <h1
+                    className="text-danger mb-1"
+                    style={{ textAlign: "left", fontSize: "0.9rem" }}
+                  >
+                    * {errorMsg}
+                  </h1>
+                )}
                 <Form.Group>
                   <Form.Control
                     type="text"

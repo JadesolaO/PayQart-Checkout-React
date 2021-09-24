@@ -45,13 +45,14 @@ const Checkout = () => {
           imageUrl: "https://picsum.photos/80/80"
         }
       ],
-      uniqueIdentifier: orderId,
+      orderId,
       onlineStores: [
         {
           onlineStoreName: "Konga",
           productUrl: "https://task.compound.ng"
         }
-      ]
+      ],
+      merchantApiKey: "20210924125449"
     }
 
     try {

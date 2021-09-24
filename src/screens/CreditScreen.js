@@ -81,8 +81,11 @@ const CreditScreen = (props) => {
         }
       } catch (error) {
         updateStartingApplication(false)
-        if (error) {
-          console.log(error.response)
+        if (
+          error.response.data.message ===
+          "Authorization Failed, please login to continue"
+        ) {
+          history.push("/signin")
         }
       }
     }

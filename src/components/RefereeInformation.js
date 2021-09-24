@@ -4,6 +4,7 @@ import CreditForm from "./CreditForm"
 import "../stylesheets/css/creditapplicationscreen.css"
 import axios from "axios"
 import apiEndpoint from "../utils/apiEndpoint"
+import { useHistory } from "react-router-dom"
 
 const RefereeInformation = ({ startPayment, setRefdone, checkDone }) => {
   const [referenceInfo, setReferenceInfo] = useState({
@@ -18,6 +19,8 @@ const RefereeInformation = ({ startPayment, setRefdone, checkDone }) => {
     rstate: ""
   })
   const [loading, setLoading] = useState(Boolean)
+
+  let history = useHistory()
 
   useEffect(() => {
     const refereeInfoObj = JSON.parse(localStorage.getItem("refereeInfoObj"))
@@ -103,6 +106,12 @@ const RefereeInformation = ({ startPayment, setRefdone, checkDone }) => {
     } catch (error) {
       setLoading(false)
       console.log(error.response)
+      if (
+        error.response.data.message ===
+        "Authorization Failed, please login to continue"
+      ) {
+        history.push("/signin")
+      }
     }
   }
 

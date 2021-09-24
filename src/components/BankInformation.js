@@ -119,6 +119,12 @@ const BankInformation = ({ setPage, setBankdone, checkDone, startPayment }) => {
     } catch (error) {
       console.log(error)
       setLoading(false)
+      if (
+        error.response.data.message ===
+        "Authorization Failed, please login to continue"
+      ) {
+        history.push("/signin")
+      }
     }
 
     // submitBankInfo(bankInfo)

@@ -118,6 +118,12 @@ const ContactDetails = ({
     } catch (error) {
       console.log(error.response)
       setLoading(false)
+      if (
+        error.response.data.message ===
+        "Authorization Failed, please login to continue"
+      ) {
+        history.push("/signin")
+      }
     }
   }
 
