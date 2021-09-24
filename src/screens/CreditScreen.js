@@ -85,7 +85,7 @@ const CreditScreen = (props) => {
           error.response.data.message ===
           "Authorization Failed, please login to continue"
         ) {
-          history.push("/signin")
+          history.push("/signin/1")
         }
       }
     }

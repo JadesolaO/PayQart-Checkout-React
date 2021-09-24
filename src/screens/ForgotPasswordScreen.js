@@ -13,7 +13,7 @@ const ForgotPasswordScreen = (props) => {
     doPasswordReset(user)
       .then((res) => {
         successToast(res.data)
-        props.history.push("/signin")
+        props.history.push("/signin/1")
       })
       .catch(() => {})
   }

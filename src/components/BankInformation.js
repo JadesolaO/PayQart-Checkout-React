@@ -123,7 +123,7 @@ const BankInformation = ({ setPage, setBankdone, checkDone, startPayment }) => {
         error.response.data.message ===
         "Authorization Failed, please login to continue"
       ) {
-        history.push("/signin")
+        history.push("/signin/1")
       }
     }
 
