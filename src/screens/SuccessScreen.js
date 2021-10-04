@@ -52,6 +52,8 @@ const SuccessScreen = (props) => {
       if (data.status === "success") {
         localStorage.removeItem("creditApplicationObj")
         localStorage.removeItem("nextRoute")
+        localStorage.removeItem("orderId")
+        localStorage.removeItem("creditId")
       }
     } catch (error) {
       console.log(error.response)

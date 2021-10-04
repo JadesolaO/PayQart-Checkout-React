@@ -275,8 +275,8 @@ const SignUpScreen = (props) => {
 
                 <div className="mid"></div>
                 <div className="contdbtn">
-                  <Button id="btmbtn" type="submit">
-                    Create Account
+                  <Button id="btmbtn" type="submit" disabled={signingUp}>
+                    {signingUp ? "Creating Account..." : "Create Account"}
                   </Button>
                 </div>
               </Form>

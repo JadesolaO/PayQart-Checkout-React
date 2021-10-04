@@ -36,7 +36,7 @@ const SignInScreen = (props) => {
 
   const selection = localStorage.getItem("selection")
 
-  const orderId = localStorage.getItem("orderId")
+  // const orderId = localStorage.getItem("orderId")
 
   async function loginUser(e) {
     e.preventDefault()
@@ -64,8 +64,13 @@ const SignInScreen = (props) => {
         setUserDetails(data.user)
         localStorage.setItem("token", data.access_token)
         successToast(response.data.message)
-        props.history.push(`/${orderId}/creditscreen`)
-        // localStorage.removeItem("orderId")
+        const creditId = localStorage.getItem("creditId")
+        const orderId = localStorage.getItem("orderId")
+        if (creditId && orderId) {
+          props.history.push(`/${orderId}/creditapplication/personal`)
+        } else {
+          props.history.push(`/${orderId}/creditscreen`)
+        }
         updateSigningIn(false)
       }
     } catch (error) {
@@ -188,40 +193,10 @@ const SignInScreen = (props) => {
                       </span>
                     </Form.Label>
                   </Form.Group>
-                  {/* <Form.Group>
-                    <Form.Label>
-                      <Form.Check
-                        type="checkbox"
-                        label=""
-                        className="form-check-inline checker"
-                        name="Terms"
-                        value="agree"
-                        onChange={(e) => setAgree(e.target.value)}
-                        required
-                      />
-                      <span
-                        style={{
-                          color: "#720056",
-                          fontSize: "13px",
-                          fontWeight: "bold",
-                          // position: "absolute",
-                          left: "23px"
-                        }}
-                      >
-                        I am over 22years and I have read and agree to PayQart's
-                        Terms and Condtions. I agree that the information are
-                        accurate and can be verified by PayQart.
-                      </span>
-                    </Form.Label>
-                  </Form.Group> */}
                 </div>
                 <div className="contdbtn">
-                  <Button
-                    id="btmbtn"
-                    // onClick={() => props.history.push('/creditscreen')}
-                    type="submit"
-                  >
-                    Sign In
+                  <Button id="btmbtn" type="submit" disabled={signingIn}>
+                    {signingIn ? "Signing In..." : "Sign In"}
                   </Button>
                 </div>
               </Form>
