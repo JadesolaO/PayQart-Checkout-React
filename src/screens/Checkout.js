@@ -52,7 +52,8 @@ const Checkout = () => {
           productUrl: "https://task.compound.ng"
         }
       ],
-      merchantApiKey: "20210924125449"
+      merchantApiKey: "20210924125449",
+      email: "moscolyno98@gmail.com"
     }
 
     try {
