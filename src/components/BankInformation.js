@@ -18,6 +18,9 @@ const BankInformation = ({ setPage, setBankdone, checkDone, startPayment }) => {
   const [bankList, setBankList] = useState([])
   const [loadingBanks, updateLoadingBanks] = useState(true)
 
+  const [error, updateError] = useState(false)
+  const [errorMsg, setErrorMsg] = useState("")
+
   let history = useHistory()
 
   const orderId = localStorage.getItem("orderId")
@@ -75,6 +78,8 @@ const BankInformation = ({ setPage, setBankdone, checkDone, startPayment }) => {
   async function handleSubmit(e) {
     e.preventDefault()
     setLoading(true)
+    updateError(false)
+    setErrorMsg("")
 
     const token = localStorage.getItem("token")
 
@@ -117,8 +122,13 @@ const BankInformation = ({ setPage, setBankdone, checkDone, startPayment }) => {
         }
       }
     } catch (error) {
-      console.log(error)
       setLoading(false)
+      if (
+        error.response.data.message === "Account Number Or Bank Code Invalid"
+      ) {
+        updateError(true)
+        setErrorMsg("Invalid account number")
+      }
       if (
         error.response.data.message ===
         "Authorization Failed, please login to continue"
@@ -150,6 +160,11 @@ const BankInformation = ({ setPage, setBankdone, checkDone, startPayment }) => {
 
   return (
     <div>
+      {error && (
+        <div className="px-4 position-absolute">
+          <p style={{ color: "red" }}>* {errorMsg}</p>
+        </div>
+      )}
       <CreditForm
         formDetails={[
           {

@@ -162,7 +162,7 @@ const SignUpScreen = (props) => {
                   />
                 </Form.Group>
 
-                <Form.Group>
+                <div>
                   <InputGroup className="flex">
                     <span className="py-1 mt-2">+234</span>
                     <Form.Control
@@ -177,7 +177,7 @@ const SignUpScreen = (props) => {
                       required
                     />
                   </InputGroup>
-                </Form.Group>
+                </div>
 
                 <Form.Group>
                   <Form.Control
